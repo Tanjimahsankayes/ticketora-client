@@ -4,7 +4,7 @@ import { Car, Envelope, Handset, LogoFacebook } from "@gravity-ui/icons";
 export default function Footer() {
   const quickLinks = [
     { name: "Home", href: "/" },
-    { name: "All Tickets", href: "/tickets" },
+    { name: "All Tickets", href: "/all-tickets" },
     { name: "Contact Us", href: "/contact" },
     { name: "About", href: "/about" },
   ];

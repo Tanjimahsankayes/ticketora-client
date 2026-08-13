@@ -61,7 +61,7 @@ export default function AboutPage() {
       linkedin: "#",
     },
     {
-      name: "Ayesha Rahman",
+      name: "Tanvir Rahman",
       role: "Head of Product",
       image: "/images/member2.jpg",
       facebook: "#",
@@ -69,7 +69,7 @@ export default function AboutPage() {
       linkedin: "#",
     },
     {
-      name: "Sajid Hasan",
+      name: "Aysa Rahman",
       role: "Lead Engineer",
       image: "/images/member3.jpg",
       facebook: "#",
@@ -77,7 +77,7 @@ export default function AboutPage() {
       linkedin: "#",
     },
     {
-      name: "Nusrat Jahan",
+      name: "Sajid Hasan",
       role: "Customer Success Lead",
       image: "/images/member4.jpg",
       facebook: "#",
@@ -229,7 +229,7 @@ export default function AboutPage() {
                 <div className="relative w-28 h-28 mx-auto rounded-full overflow-hidden bg-zinc-900 border-2 border-white/10 group-hover:border-white/30 transition-all">
                   <div className="w-full h-full bg-zinc-800 flex items-center justify-center text-zinc-500 font-medium text-xs">
                     {/* Placeholder image if local image isn't available yet */}
-                    <img src={member.image} alt={member.name} width={85} height={25} />
+                    <img src={member.image} alt={member.name} width={120} height={25} />
                     {/* <span>{member.name.split(" ")[0]} Photo</span> */}
                   </div>
                 </div>
