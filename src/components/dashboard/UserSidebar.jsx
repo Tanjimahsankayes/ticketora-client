@@ -1,70 +1,48 @@
-"use client"
+"use client";
 
 import { useState } from "react";
-import {
-  LayoutSideContent,
-  Plus,
-  ListUl,
-  ChartLineArrowUp,
-  BookmarkFill,
-  Person,
-} from "@gravity-ui/icons";
+import { Person, Ticket, Receipt, LayoutSideContent } from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
 import Link from "next/link";
 
-export function DashboardSidebar() {
-  const [activeItem, setActiveItem] = useState("Profile");
+export function UserDashboardSidebar() {
+  const [activeItem, setActiveItem] = useState("User Profile");
 
   const navItems = [
     {
       icon: Person,
-      label: "Profile",
-      href: "/dashboard/vendor",
+      label: "User Profile",
+      href: "/dashboard/user",
       color: "from-blue-500 to-cyan-400",
       glow: "group-hover:shadow-blue-500/20",
     },
     {
-      icon: Plus,
-      label: "Add Tickets",
-      href: "/dashboard/vendor/tickets/new",
+      icon: Ticket,
+      label: "My Booked Tickets",
+      href: "/dashboard/user/ticketbook",
       color: "from-emerald-500 to-teal-400",
       glow: "group-hover:shadow-emerald-500/20",
     },
     {
-      icon: ListUl,
-      label: "My Added Tickets",
-      href: "/dashboard/vendor/tickets",
+      icon: Receipt,
+      label: "Transaction History",
+      href: "/dashboard/user/ticketbook/transactions",
       color: "from-violet-500 to-purple-400",
       glow: "group-hover:shadow-violet-500/20",
-    },
-    {
-      icon: BookmarkFill,
-      label: "Requested Bookings",
-      href: "/dashboard/vendor/tickets",
-      color: "from-amber-500 to-orange-400",
-      glow: "group-hover:shadow-amber-500/20",
-    },
-    {
-      icon: ChartLineArrowUp,
-      label: "Revenue Overview",
-      href: "/dashboard/vendor/tickets",
-      color: "from-rose-500 to-pink-400",
-      glow: "group-hover:shadow-rose-500/20",
     },
   ];
 
   const navContent = (
-    <nav className="flex flex-col gap-1.5 p-2 min-h-screen ">
+    <nav className="flex flex-col gap-1.5 p-2 min-h-screen">
       {navItems.map((item) => {
         const isActive = activeItem === item.label;
         const Icon = item.icon;
 
         return (
           <Link
-          href={item.href}
+            href={item.href}
             key={item.label}
             onClick={() => setActiveItem(item.label)}
-            type="button"
             className={`group relative flex items-center gap-3.5 rounded-xl px-3.5 py-3 text-sm font-medium transition-all duration-300 ease-out ${
               isActive
                 ? "bg-slate-800/80 text-white shadow-lg shadow-black/20 border border-slate-700/60"
@@ -102,7 +80,7 @@ export function DashboardSidebar() {
       <aside className="hidden w-68 shrink-0 border-r border-slate-800/80 bg-slate-950 p-3 lg:block min-h-screen">
         <div className="mb-6 px-3.5 pt-2">
           <h2 className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-            Dashboard
+            User Dashboard
           </h2>
         </div>
         {navContent}
@@ -125,7 +103,9 @@ export function DashboardSidebar() {
             <Drawer.Dialog className="bg-slate-950 text-slate-100">
               <Drawer.CloseTrigger />
               <Drawer.Header className="border-b border-slate-800/60 pb-3">
-                <Drawer.Heading className="text-slate-200">Menu</Drawer.Heading>
+                <Drawer.Heading className="text-slate-200">
+                  User Menu
+                </Drawer.Heading>
               </Drawer.Header>
               <Drawer.Body className="pt-4">{navContent}</Drawer.Body>
             </Drawer.Dialog>

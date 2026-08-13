@@ -53,9 +53,9 @@ export default function AboutPage() {
   // Team Members Data
   const team = [
     {
-      name: "Tanvir Ahmed",
+      name: "Kayes Ahmed",
       role: "Founder & CEO",
-      image: "/images/team/member1.jpg", // Add team images in public/images/team/
+      image: "/images/member1.png",
       facebook: "#",
       twitter: "#",
       linkedin: "#",
@@ -63,7 +63,7 @@ export default function AboutPage() {
     {
       name: "Ayesha Rahman",
       role: "Head of Product",
-      image: "/images/team/member2.jpg",
+      image: "/images/member2.jpg",
       facebook: "#",
       twitter: "#",
       linkedin: "#",
@@ -71,7 +71,7 @@ export default function AboutPage() {
     {
       name: "Sajid Hasan",
       role: "Lead Engineer",
-      image: "/images/team/member3.jpg",
+      image: "/images/member3.jpg",
       facebook: "#",
       twitter: "#",
       linkedin: "#",
@@ -79,7 +79,7 @@ export default function AboutPage() {
     {
       name: "Nusrat Jahan",
       role: "Customer Success Lead",
-      image: "/images/team/member4.jpg",
+      image: "/images/member4.jpg",
       facebook: "#",
       twitter: "#",
       linkedin: "#",
@@ -229,7 +229,8 @@ export default function AboutPage() {
                 <div className="relative w-28 h-28 mx-auto rounded-full overflow-hidden bg-zinc-900 border-2 border-white/10 group-hover:border-white/30 transition-all">
                   <div className="w-full h-full bg-zinc-800 flex items-center justify-center text-zinc-500 font-medium text-xs">
                     {/* Placeholder image if local image isn't available yet */}
-                    <span>{member.name.split(" ")[0]} Photo</span>
+                    <img src={member.image} alt={member.name} width={85} height={25} />
+                    {/* <span>{member.name.split(" ")[0]} Photo</span> */}
                   </div>
                 </div>
 
@@ -282,7 +283,7 @@ export default function AboutPage() {
 
           <div>
             <Link
-              href="/tickets"
+              href="/all-tickets"
               className="inline-flex items-center justify-center gap-2.5 bg-white hover:bg-zinc-200 text-black font-semibold py-3.5 px-8 rounded-xl text-base transition-all duration-150 shadow-xl hover:scale-105 active:scale-95"
             >
               <span>Explore Routes</span>

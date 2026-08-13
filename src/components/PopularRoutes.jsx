@@ -151,7 +151,7 @@ export default function PopularRoutes() {
 
               {/* Book Now Button (Matching overall button style) */}
               <Link
-                href="/booking"
+                href="/all-tickets"
                 className="w-full bg-white hover:bg-zinc-200 text-black font-semibold py-3 px-6 rounded-xl text-base flex items-center justify-center gap-2.5 transition-all duration-150 shadow-lg group-hover:shadow-white/5"
               >
                 <span>Book Tickets</span>

@@ -114,10 +114,7 @@ export default function AddTicketPage() {
     setStatusMessage({ type: "", text: "" });
 
     try {
-      // ১. ইমেজ আপলোড করুন (ব্যর্থ হলে এখানে catch-এ চলে যাবে)
       const imageUrl = await uploadImageToImgbb(imageFile);
-
-      // ২. টিকিটের পেলোড তৈরি করুন (Vendor Info dynamic করা হয়েছে)
       const ticketPayload = {
         title: formData.title,
         fromLocation: formData.fromLocation,
@@ -147,7 +144,6 @@ export default function AddTicketPage() {
         text: "Ticket successfully submitted! Status set to Pending.",
       });
 
-      // ফর্ম রিসেট
       setFormData({
         title: "",
         fromLocation: "",

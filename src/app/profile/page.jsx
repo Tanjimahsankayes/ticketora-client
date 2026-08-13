@@ -291,7 +291,7 @@ const ProfilePage = () => {
                   <div>
                     <p className="text-xs text-slate-400">Account Type</p>
                     <p className="text-sm font-bold text-white">
-                      Event Organizer
+                      Ticket Seller
                     </p>
                   </div>
                 </div>
