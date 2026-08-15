@@ -1,6 +1,6 @@
 "use client";
 
-import { getTickets } from "@/lib/actions/tickets";
+import { deleteTicket, getTickets, updateTicket } from "@/lib/actions/tickets";
 import { useSession } from "@/lib/auth-client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -11,6 +11,27 @@ const TicketsPage = () => {
 
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // Delete Modal State
+  const [ticketToDelete, setTicketToDelete] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState("");
+
+  // Edit Modal State
+  const [ticketToEdit, setTicketToEdit] = useState(null);
+  const [editFormData, setEditFormData] = useState({
+    title: "",
+    fromLocation: "",
+    toLocation: "",
+    transportType: "",
+    price: "",
+    quantity: "",
+    departureDateTime: "",
+    imageUrl: "",
+    perks: "",
+  });
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [editError, setEditError] = useState("");
 
   useEffect(() => {
     const fetchVendorTickets = async () => {
@@ -40,9 +61,125 @@ const TicketsPage = () => {
     }
   }, [user?.email, isSessionLoading]);
 
+  // --- DELETE MODAL HANDLERS ---
+  const openDeleteModal = (ticketId) => {
+    setDeleteError("");
+    setTicketToDelete(ticketId);
+  };
+
+  const closeDeleteModal = () => {
+    if (isDeleting) return;
+    setTicketToDelete(null);
+    setDeleteError("");
+  };
+
+  const confirmDelete = async () => {
+    if (!ticketToDelete) return;
+
+    try {
+      setIsDeleting(true);
+      setDeleteError("");
+      const res = await deleteTicket(ticketToDelete);
+
+      if (res.success) {
+        setTickets((prevTickets) =>
+          prevTickets.filter((ticket) => ticket._id !== ticketToDelete),
+        );
+        setTicketToDelete(null);
+      } else {
+        setDeleteError(res.message || "Failed to delete ticket.");
+      }
+    } catch (error) {
+      console.error("Error deleting ticket:", error);
+      setDeleteError("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  // --- EDIT MODAL HANDLERS ---
+  const openEditModal = (ticket) => {
+    // Security check on client UI level
+    if (ticket.vendorEmail !== user?.email) {
+      alert("You are not authorized to edit this ticket.");
+      return;
+    }
+
+    setEditError("");
+    setTicketToEdit(ticket);
+    setEditFormData({
+      title: ticket.title || "",
+      fromLocation: ticket.fromLocation || "",
+      toLocation: ticket.toLocation || "",
+      transportType: ticket.transportType || "Bus",
+      price: ticket.price || "",
+      quantity: ticket.quantity || "",
+      departureDateTime: ticket.departureDateTime || "",
+      imageUrl: ticket.imageUrl || "",
+      perks: Array.isArray(ticket.perks)
+        ? ticket.perks.join(", ")
+        : ticket.perks || "",
+    });
+  };
+
+  const closeEditModal = () => {
+    if (isUpdating) return;
+    setTicketToEdit(null);
+    setEditError("");
+  };
+
+  const handleEditInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const confirmUpdate = async (e) => {
+    e.preventDefault();
+    if (!ticketToEdit) return;
+
+    try {
+      setIsUpdating(true);
+      setEditError("");
+
+      const updatedPayload = {
+        ...editFormData,
+        price: Number(editFormData.price),
+        quantity: Number(editFormData.quantity),
+        perks:
+          typeof editFormData.perks === "string"
+            ? editFormData.perks
+                .split(",")
+                .map((p) => p.trim())
+                .filter(Boolean)
+            : editFormData.perks,
+        vendorEmail: user?.email, // Backend authorization checks against this
+      };
+
+      const res = await updateTicket(ticketToEdit._id, updatedPayload);
+
+      if (res.success) {
+        setTickets((prevTickets) =>
+          prevTickets.map((ticket) =>
+            ticket._id === ticketToEdit._id
+              ? { ...ticket, ...updatedPayload }
+              : ticket,
+          ),
+        );
+        setTicketToEdit(null);
+      } else {
+        setEditError(res.message || "Failed to update ticket.");
+      }
+    } catch (error) {
+      console.error("Error updating ticket:", error);
+      setEditError("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
   if (isSessionLoading || loading) {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center">
+      <div className="flex items-center justify-center py-20">
         <div className="flex items-center space-x-3 text-indigo-400">
           <svg className="animate-spin h-6 w-6" viewBox="0 0 24 24" fill="none">
             <circle
@@ -66,7 +203,7 @@ const TicketsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 py-10 px-4 sm:px-6 lg:px-8 font-sans">
+    <div className="text-slate-100 relative">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-800 pb-6">
@@ -119,7 +256,6 @@ const TicketsPage = () => {
                   )
                 : "";
 
-              // Safe unique key creation
               const itemKey = ticket._id
                 ? String(ticket._id)
                 : `ticket-${index}`;
@@ -243,10 +379,17 @@ const TicketsPage = () => {
                       </div>
 
                       <div className="flex gap-2">
-                        <button className="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium transition-colors">
+                        {/* EDIT BUTTON UPDATED */}
+                        <button
+                          onClick={() => openEditModal(ticket)}
+                          className="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium transition-colors"
+                        >
                           Edit
                         </button>
-                        <button className="px-3 py-1.5 rounded-lg bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white border border-rose-500/30 text-xs font-medium transition-colors">
+                        <button
+                          onClick={() => openDeleteModal(ticket._id)}
+                          className="px-3 py-1.5 rounded-lg bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white border border-rose-500/30 text-xs font-medium transition-colors"
+                        >
                           Delete
                         </button>
                       </div>
@@ -258,6 +401,244 @@ const TicketsPage = () => {
           </div>
         )}
       </div>
+
+      {/* --- EDIT TICKET MODAL --- */}
+      {ticketToEdit && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md overflow-y-auto">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-5 my-8 relative">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+              <h3 className="text-lg font-bold text-white">
+                Edit Ticket Details
+              </h3>
+              <button
+                type="button"
+                onClick={closeEditModal}
+                disabled={isUpdating}
+                className="text-slate-400 hover:text-white text-sm"
+              >
+                ✕
+              </button>
+            </div>
+
+            {editError && (
+              <div className="p-3 bg-rose-500/10 border border-rose-500/20 rounded-lg text-rose-400 text-xs font-medium">
+                {editError}
+              </div>
+            )}
+
+            <form onSubmit={confirmUpdate} className="space-y-4 text-xs">
+              <div>
+                <label className="block text-slate-400 font-semibold mb-1">
+                  Title
+                </label>
+                <input
+                  type="text"
+                  name="title"
+                  value={editFormData.title}
+                  onChange={handleEditInputChange}
+                  required
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-slate-400 font-semibold mb-1">
+                    From Location
+                  </label>
+                  <input
+                    type="text"
+                    name="fromLocation"
+                    value={editFormData.fromLocation}
+                    onChange={handleEditInputChange}
+                    required
+                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-slate-400 font-semibold mb-1">
+                    To Location
+                  </label>
+                  <input
+                    type="text"
+                    name="toLocation"
+                    value={editFormData.toLocation}
+                    onChange={handleEditInputChange}
+                    required
+                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-slate-400 font-semibold mb-1">
+                    Transport Type
+                  </label>
+                  <select
+                    name="transportType"
+                    value={editFormData.transportType}
+                    onChange={handleEditInputChange}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
+                  >
+                    <option value="Bus">Bus</option>
+                    <option value="Train">Train</option>
+                    <option value="Flight">Flight</option>
+                    <option value="Launch">Launch</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-slate-400 font-semibold mb-1">
+                    Price ($)
+                  </label>
+                  <input
+                    type="number"
+                    name="price"
+                    value={editFormData.price}
+                    onChange={handleEditInputChange}
+                    required
+                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-slate-400 font-semibold mb-1">
+                    Quantity
+                  </label>
+                  <input
+                    type="number"
+                    name="quantity"
+                    value={editFormData.quantity}
+                    onChange={handleEditInputChange}
+                    required
+                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-slate-400 font-semibold mb-1">
+                    Departure Date & Time
+                  </label>
+                  <input
+                    type="datetime-local"
+                    name="departureDateTime"
+                    value={editFormData.departureDateTime}
+                    onChange={handleEditInputChange}
+                    required
+                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-slate-400 font-semibold mb-1">
+                    Image URL
+                  </label>
+                  <input
+                    type="url"
+                    name="imageUrl"
+                    value={editFormData.imageUrl}
+                    onChange={handleEditInputChange}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-slate-400 font-semibold mb-1">
+                  Perks (comma separated)
+                </label>
+                <input
+                  type="text"
+                  name="perks"
+                  value={editFormData.perks}
+                  onChange={handleEditInputChange}
+                  placeholder="WiFi, Sleeper Berth, Snacks"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
+                />
+              </div>
+
+              <div className="flex items-center justify-end space-x-3 pt-4 border-t border-slate-800">
+                <button
+                  type="button"
+                  onClick={closeEditModal}
+                  disabled={isUpdating}
+                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold transition-colors disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isUpdating}
+                  className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition-colors shadow-lg shadow-indigo-600/20 flex items-center space-x-2 disabled:opacity-50"
+                >
+                  {isUpdating ? "Saving..." : "Save Changes"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {ticketToDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-5 relative overflow-hidden">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 shrink-0">
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-white">Delete Ticket?</h3>
+                <p className="text-xs text-slate-400">
+                  This action cannot be undone.
+                </p>
+              </div>
+            </div>
+
+            <p className="text-sm text-slate-300 leading-relaxed">
+              Are you sure you want to permanently delete this ticket listing
+              from your account?
+            </p>
+
+            {deleteError && (
+              <div className="p-3 bg-rose-500/10 border border-rose-500/20 rounded-lg text-rose-400 text-xs font-medium">
+                {deleteError}
+              </div>
+            )}
+
+            <div className="flex items-center justify-end space-x-3 pt-2">
+              <button
+                type="button"
+                onClick={closeDeleteModal}
+                disabled={isDeleting}
+                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-colors disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={confirmDelete}
+                disabled={isDeleting}
+                className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold transition-colors shadow-lg shadow-rose-600/20 flex items-center space-x-2 disabled:opacity-50"
+              >
+                {isDeleting ? "Deleting..." : "Delete Ticket"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

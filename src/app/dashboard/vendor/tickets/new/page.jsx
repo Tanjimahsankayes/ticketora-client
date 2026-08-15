@@ -1,6 +1,6 @@
 "use client";
 
-import { creatTicket } from "@/lib/actions/tickets";
+import { createTicket } from "@/lib/actions/tickets";
 import { useSession } from "@/lib/auth-client";
 import { Ticket } from "@gravity-ui/icons";
 import React, { useState } from "react";
@@ -58,11 +58,11 @@ export default function AddTicketPage() {
     setIsUploading(true);
     try {
       const apiKey =
-        process.env.NEXT_PUBLIC_IMAGE_UPLOAD_API ||
-        process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+        process.env.NEXT_PUBLIC_IMGBB_API_KEY ||
+        process.env.NEXT_PUBLIC_IMAGE_UPLOAD_API;
 
       if (!apiKey) {
-        throw new Error("ImgBB API Key পাওয়া যায়নি। .env ফাইল চেক করুন।");
+        throw new Error("ImgBB API Key not found. Please check your .env file.");
       }
 
       const imageData = new FormData();
@@ -85,7 +85,7 @@ export default function AddTicketPage() {
       return result.data.display_url || result.data.url;
     } catch (error) {
       console.error("Image upload error:", error);
-      throw new Error(`ইমেজ আপলোড ব্যর্থ হয়েছে: ${error.message}`);
+      throw new Error(`Image upload failed: ${error.message}`);
     } finally {
       setIsUploading(false);
     }
@@ -131,7 +131,7 @@ export default function AddTicketPage() {
         createdAt: new Date().toISOString(),
       };
 
-      const res = await creatTicket(ticketPayload);
+      const res = await createTicket(ticketPayload);
 
       if (!res?.insertedId) {
         throw new Error("Ticket creation failed in database");

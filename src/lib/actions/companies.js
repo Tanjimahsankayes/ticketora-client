@@ -2,6 +2,10 @@
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
+if (!baseUrl) {
+  console.warn("NEXT_PUBLIC_BASE_URL is not defined in environment variables");
+}
+
 export const getCompanyByUserId = async (userId) => {
   if (!userId) return null;
   try {
@@ -18,17 +22,23 @@ export const getCompanyByUserId = async (userId) => {
 
 
 export const saveCompany = async (newCompanyData) => {
-  const res = await fetch(`${baseUrl}/api/companies`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newCompanyData),
-  });
+  try {
+    const res = await fetch(`${baseUrl}/api/companies`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newCompanyData),
+    });
 
-  if (!res.ok) {
-    throw new Error("Failed to save company profile");
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.message || "Failed to save company profile");
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error("Error saving company profile:", error);
+    throw error;
   }
-
-  return await res.json();
 };

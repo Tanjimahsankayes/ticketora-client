@@ -4,7 +4,13 @@ import { revalidatePath } from "next/cache";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000";
 
-export const creatTicket = async (newTicket) => {
+if (!process.env.NEXT_PUBLIC_BASE_URL) {
+  console.warn(
+    "NEXT_PUBLIC_BASE_URL is not defined, using fallback: http://localhost:5000",
+  );
+}
+
+export const createTicket = async (newTicket) => {
   try {
     const res = await fetch(`${baseUrl}/api/tickets`, {
       method: "POST",
@@ -15,7 +21,10 @@ export const creatTicket = async (newTicket) => {
     });
 
     if (!res.ok) {
-      throw new Error(`Server responded with status ${res.status}`);
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(
+        errorData.message || `Server responded with status ${res.status}`,
+      );
     }
 
     return await res.json();
@@ -73,6 +82,12 @@ export const createBooking = async (bookingData) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(bookingData),
     });
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.message || "Booking failed");
+    }
+
     return await res.json();
   } catch (error) {
     console.error("Booking error:", error);
@@ -84,10 +99,21 @@ export const getBookingsByEmail = async (email) => {
   try {
     const res = await fetch(`${baseUrl}/api/bookings?email=${email}`);
 
+    if (!res.ok) {
+      console.error(`API Error Status: ${res.status}`);
+      return [];
+    }
+
+    const contentType = res.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      console.error("API did not return JSON response");
+      return [];
+    }
+
     return await res.json();
   } catch (error) {
     console.error("Fetch user bookings error:", error);
-    return { success: false, error: error.message };
+    return [];
   }
 };
 
@@ -104,7 +130,7 @@ export async function cancelBooking(bookingId, userEmail) {
       }),
     });
 
-    const data = await res.json();
+    const data = await res.json().catch(() => ({}));
 
     if (!res.ok) {
       return {
@@ -124,7 +150,68 @@ export async function cancelBooking(bookingId, userEmail) {
 
     return {
       success: false,
-      message: error.message,
+      message: error.message || "An error occurred while cancelling booking",
     };
   }
 }
+
+export const deleteTicket = async (id) => {
+  try {
+    const res = await fetch(`${baseUrl}/api/tickets/${id}`, {
+      method: "DELETE",
+    });
+
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+      return {
+        success: false,
+        message: data.message || "Failed to delete ticket",
+      };
+    }
+
+    return {
+      success: true,
+      message: "Ticket deleted successfully",
+    };
+  } catch (error) {
+    console.error("Delete ticket error:", error);
+    return {
+      success: false,
+      message: error.message || "An error occurred while deleting ticket",
+    };
+  }
+};
+
+export const updateTicket = async (id, updatedData) => {
+  try {
+    const res = await fetch(`${baseUrl}/api/tickets/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData),
+    });
+
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+      return {
+        success: false,
+        message: data.message || "Failed to update ticket",
+      };
+    }
+
+    return {
+      success: true,
+      message: "Ticket updated successfully",
+      data,
+    };
+  } catch (error) {
+    console.error("Update ticket error:", error);
+    return {
+      success: false,
+      message: error.message || "An error occurred while updating ticket",
+    };
+  }
+};

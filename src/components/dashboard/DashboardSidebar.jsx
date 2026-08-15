@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import {
@@ -54,17 +54,16 @@ export function DashboardSidebar() {
   ];
 
   const navContent = (
-    <nav className="flex flex-col gap-1.5 p-2 min-h-screen ">
+    <nav className="flex flex-col gap-1.5 p-2">
       {navItems.map((item) => {
         const isActive = activeItem === item.label;
         const Icon = item.icon;
 
         return (
           <Link
-          href={item.href}
+            href={item.href}
             key={item.label}
             onClick={() => setActiveItem(item.label)}
-            type="button"
             className={`group relative flex items-center gap-3.5 rounded-xl px-3.5 py-3 text-sm font-medium transition-all duration-300 ease-out ${
               isActive
                 ? "bg-slate-800/80 text-white shadow-lg shadow-black/20 border border-slate-700/60"
@@ -98,40 +97,44 @@ export function DashboardSidebar() {
 
   return (
     <>
-      {/* Desktop Sidebar */}
-      <aside className="hidden w-68 shrink-0 border-r border-slate-800/80 bg-slate-950 p-3 lg:block min-h-screen">
+      {/* Desktop Sidebar View */}
+      <div className="hidden md:block p-3">
         <div className="mb-6 px-3.5 pt-2">
           <h2 className="text-xs font-semibold uppercase tracking-wider text-slate-500">
             Dashboard
           </h2>
         </div>
         {navContent}
-      </aside>
+      </div>
 
-      {/* Mobile Drawer */}
-      <Drawer>
-        <Button
-          className="lg:hidden bg-slate-900 border border-slate-800 text-slate-200 hover:bg-slate-800"
-          variant="secondary"
-        >
-          <LayoutSideContent className="size-4" />
-          Sidebar
-        </Button>
-        <Drawer.Backdrop>
-          <Drawer.Content
-            placement="left"
-            className="bg-slate-950 border-r border-slate-800"
+      {/* Mobile Drawer View */}
+      <div className="p-4 md:hidden">
+        <Drawer>
+          <Button
+            className="w-full justify-start bg-slate-900 border border-slate-800 text-slate-200 hover:bg-slate-800"
+            variant="secondary"
           >
-            <Drawer.Dialog className="bg-slate-950 text-slate-100">
-              <Drawer.CloseTrigger />
-              <Drawer.Header className="border-b border-slate-800/60 pb-3">
-                <Drawer.Heading className="text-slate-200">Menu</Drawer.Heading>
-              </Drawer.Header>
-              <Drawer.Body className="pt-4">{navContent}</Drawer.Body>
-            </Drawer.Dialog>
-          </Drawer.Content>
-        </Drawer.Backdrop>
-      </Drawer>
+            <LayoutSideContent className="size-4" />
+            Sidebar Menu
+          </Button>
+          <Drawer.Backdrop>
+            <Drawer.Content
+              placement="left"
+              className="bg-slate-950 border-r border-slate-800"
+            >
+              <Drawer.Dialog className="bg-slate-950 text-slate-100">
+                <Drawer.CloseTrigger />
+                <Drawer.Header className="border-b border-slate-800/60 pb-3">
+                  <Drawer.Heading className="text-slate-200">
+                    Menu
+                  </Drawer.Heading>
+                </Drawer.Header>
+                <Drawer.Body className="pt-4">{navContent}</Drawer.Body>
+              </Drawer.Dialog>
+            </Drawer.Content>
+          </Drawer.Backdrop>
+        </Drawer>
+      </div>
     </>
   );
 }

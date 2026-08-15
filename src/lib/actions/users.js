@@ -2,6 +2,10 @@
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
+if (!baseUrl) {
+  console.warn("NEXT_PUBLIC_BASE_URL is not defined in environment variables");
+}
+
 export const getUserProfileByUserId = async (userId) => {
   if (!userId) return null;
   try {
@@ -17,17 +21,23 @@ export const getUserProfileByUserId = async (userId) => {
 };
 
 export const saveUserProfile = async (newUserData) => {
-  const res = await fetch(`${baseUrl}/api/users`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newUserData),
-  });
+  try {
+    const res = await fetch(`${baseUrl}/api/users`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newUserData),
+    });
 
-  if (!res.ok) {
-    throw new Error("Failed to save user profile");
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.message || "Failed to save user profile");
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error("Error saving user profile:", error);
+    throw error;
   }
-
-  return await res.json();
 };

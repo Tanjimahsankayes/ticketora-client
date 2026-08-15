@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-// Import your Better Auth client instance
 import { authClient } from "@/lib/auth-client";
 import {
   Car,
@@ -50,10 +49,19 @@ export default function LoginPage() {
           password: formData.password,
         },
         {
-          onSuccess: () => {
-            toast.success("Ticketora account login successfully!");
-            // Redirect & refresh session state
-            window.location.href = "/"; // অথবা router.push('/'); router.refresh();
+          onSuccess: async (ctx) => {
+            toast.success("Logged in successfully!");
+
+            // সেশন ডাটা থেকে ইউজার রোল চেক করা
+            const role = ctx.data?.user?.role;
+
+            if (role === "admin") {
+              window.location.href = "/dashboard/admin";
+            } else if (role === "vendor") {
+              window.location.href = "/dashboard/vendor";
+            } else {
+              window.location.href = "/dashboard";
+            }
           },
           onError: (ctx) => {
             setError(ctx.error.message || "Invalid email or password");
@@ -75,7 +83,7 @@ export default function LoginPage() {
     try {
       await authClient.signIn.social({
         provider: "google",
-        callbackURL: "/", // Redirect destination after successful login
+        callbackURL: "/dashboard", // সোশ্যাল লগইনের জন্য রিডাইরেক্ট
       });
     } catch (err) {
       setError("Failed to sign in with Google. Please try again.");
@@ -91,15 +99,13 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-[#08090a] flex text-zinc-300">
-      {/*LEFT SIDE: Hero / Branding*/}
+      {/* LEFT SIDE: Hero / Branding */}
       <div
         className="hidden lg:flex lg:w-1/2 p-16 flex-col justify-between border-r border-white/5 relative overflow-hidden bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/images/signupBg.png')" }}
       >
-        {/* Ambient Glow */}
         <div className="absolute -top-40 -left-40 w-80 h-80 bg-blue-500/10 rounded-full blur-[100px]" />
 
-        {/* Top Branding */}
         <div className="relative z-10">
           <Link href="/" className="flex items-center gap-3 mb-10">
             <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-white text-black p-1.5 shadow-lg">
@@ -119,7 +125,6 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* Features */}
         <div className="relative z-10 space-y-10">
           <div className="flex items-center gap-8">
             {modernFeatures.map((feature, index) => (
@@ -142,10 +147,9 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* ----------------- RIGHT SIDE: Login Form ----------------- */}
+      {/* RIGHT SIDE: Login Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12 md:px-16 lg:px-20">
         <div className="w-full max-w-md">
-          {/* Mobile Logo Header */}
           <div className="flex lg:hidden flex-col items-center mb-10 text-center">
             <Link href="/" className="flex items-center gap-2.5 mb-4">
               <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-white text-black p-1">
@@ -163,7 +167,6 @@ export default function LoginPage() {
             </p>
           </div>
 
-          {/* Desktop Header */}
           <div className="hidden lg:block mb-8">
             <h2 className="text-3xl font-bold text-white tracking-tight">
               Sign In
@@ -173,7 +176,6 @@ export default function LoginPage() {
             </p>
           </div>
 
-          {/* Error Message */}
           {error && (
             <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm flex items-center gap-3">
               <ShieldCheck className="w-5 h-5 shrink-0 text-red-400" />
@@ -181,7 +183,6 @@ export default function LoginPage() {
             </div>
           )}
 
-          {/* Prominent Google Social Login */}
           <button
             type="button"
             onClick={handleGoogleSignIn}
@@ -194,7 +195,6 @@ export default function LoginPage() {
             </span>
           </button>
 
-          {/* Divider */}
           <div className="flex items-center gap-4 my-6">
             <div className="h-[1px] w-full bg-white/10" />
             <span className="text-xs uppercase tracking-wider text-zinc-500 font-semibold shrink-0">
@@ -203,9 +203,7 @@ export default function LoginPage() {
             <div className="h-[1px] w-full bg-white/10" />
           </div>
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Email Field */}
             <div>
               <label className="block text-sm font-medium text-zinc-300 mb-2">
                 Email Address
@@ -226,7 +224,6 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {/* Password Field */}
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="text-sm font-medium text-zinc-300">
@@ -252,7 +249,6 @@ export default function LoginPage() {
                   placeholder="••••••••"
                   className="w-full pl-11 pr-12 py-3 bg-[#111215] border border-white/10 rounded-xl text-base text-white placeholder-zinc-600 focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/20 transition-all"
                 />
-                {/* Password Toggle Button */}
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
@@ -268,7 +264,6 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading || googleLoading}
@@ -285,7 +280,6 @@ export default function LoginPage() {
             </button>
           </form>
 
-          {/* Signup Link */}
           <p className="mt-8 text-center text-sm text-zinc-500">
             Don&apos;t have an account?{" "}
             <Link

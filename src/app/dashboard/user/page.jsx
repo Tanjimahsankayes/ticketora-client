@@ -8,7 +8,9 @@ import React, { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const IMGBB_API_KEY =
-  process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+  process.env.NEXT_PUBLIC_IMGBB_API_KEY ||
+  process.env.NEXT_PUBLIC_IMAGE_UPLOAD_API ||
+  "";
 
 const UserDashboardPage = () => {
   const { data: session, isPending } = useSession();
@@ -98,6 +100,10 @@ const UserDashboardPage = () => {
   };
 
   const uploadImageToImgbb = async (file) => {
+    if (!IMGBB_API_KEY) {
+      throw new Error("ImgBB API Key not found. Please check your .env file.");
+    }
+
     const body = new FormData();
     body.append("image", file);
 
@@ -172,7 +178,7 @@ const UserDashboardPage = () => {
   const displayImage = userProfile?.image || user?.image;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 p-4 sm:p-6 lg:p-8">
+    <div className="text-slate-100">
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Welcome Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-800 pb-6 gap-4">

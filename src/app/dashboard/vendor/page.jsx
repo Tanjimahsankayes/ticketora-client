@@ -4,11 +4,14 @@ import { getCompanyByUserId, saveCompany } from "@/lib/actions/companies";
 import { useSession } from "@/lib/auth-client";
 import { Spinner } from "@heroui/react";
 import { redirect } from "next/navigation";
+
 import React, { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const IMGBB_API_KEY =
-  process.env.NEXT_PUBLIC_IMGBB_API_KEY || "YOUR_IMGBB_API_KEY";
+  process.env.NEXT_PUBLIC_IMGBB_API_KEY ||
+  process.env.NEXT_PUBLIC_IMAGE_UPLOAD_API ||
+  "";
 
 const VendorDashboardPage = () => {
   const { data: session, isPending } = useSession();
@@ -31,9 +34,12 @@ const VendorDashboardPage = () => {
 
   const user = session?.user;
 
-   if (session.user.role !== "vendor") {
-     redirect("/dashboard/user");
-   }
+  // Role Guard: Redirect non-vendors to user dashboard safely
+  useEffect(() => {
+    if (!isPending && session?.user?.role !== "vendor") {
+      redirect("/dashboard/user");
+    }
+  }, [session, isPending]);
 
 
   const loadCompanyProfile = useCallback(async () => {
@@ -91,6 +97,10 @@ const VendorDashboardPage = () => {
   };
 
   const uploadImageToImgbb = async (file) => {
+    if (!IMGBB_API_KEY) {
+      throw new Error("ImgBB API Key not found. Please check your .env file.");
+    }
+
     const body = new FormData();
     body.append("image", file);
 
@@ -133,7 +143,7 @@ const VendorDashboardPage = () => {
         throw new Error("Failed to update profile in database");
       }
 
-      // UI ডাটা রিফ্রেশ করা
+      // Refresh UI data
       await loadCompanyProfile();
 
       setIsCreating(false);
@@ -166,7 +176,7 @@ const VendorDashboardPage = () => {
   const displayImage = companyProfile?.image || user?.image;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 p-4 sm:p-6 lg:p-8">
+    <div className="text-slate-100">
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Welcome Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-800 pb-6 gap-4">
