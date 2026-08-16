@@ -6,7 +6,6 @@ if (!baseUrl) {
   console.warn("NEXT_PUBLIC_BASE_URL is not defined in environment variables");
 }
 
-// Admin Profile fetch করা
 export const getAdminProfileByUserId = async (userId) => {
   if (!userId) return null;
   try {
@@ -21,7 +20,6 @@ export const getAdminProfileByUserId = async (userId) => {
   }
 };
 
-// Admin Profile সেভ বা আপডেট করা
 export const saveAdminProfile = async (newAdminData) => {
   try {
     const res = await fetch(`${baseUrl}/api/admin`, {
@@ -45,7 +43,6 @@ export const saveAdminProfile = async (newAdminData) => {
   }
 };
 
-// অ্যাডমিন প্যানেলের জন্য সমস্ত টিকিটের তালিকা আনা
 export const getAllVendorTickets = async () => {
   try {
     const res = await fetch(`${baseUrl}/api/admin/tickets`, {
@@ -59,7 +56,6 @@ export const getAllVendorTickets = async () => {
   }
 };
 
-// টিকিটের স্ট্যাটাস আপডেট করা (approved / rejected)
 export const updateTicketStatus = async (ticketId, status) => {
   try {
     const res = await fetch(`${baseUrl}/api/admin/tickets/${ticketId}`, {
@@ -83,23 +79,42 @@ export const updateTicketStatus = async (ticketId, status) => {
   }
 };
 
-// শুধু Approved টিকিটের তালিকা ফেচ করা (অ্যাডভার্টাইজমেন্টের জন্য)
+
+// GET APPROVED TICKETS
 export const getApprovedTickets = async () => {
   try {
-    const res = await fetch(`${baseUrl}/api/admin/approved-tickets`, {
+    const res = await fetch(`${baseUrl}/api/tickets`, {
       cache: "no-store",
     });
-    if (!res.ok) return [];
-    return await res.json();
+
+    const data = await res.json();
+
+    console.log("Approved tickets response:", data);
+
+    if (!res.ok) {
+      throw new Error(
+        data?.message || data?.error || "Failed to fetch approved tickets",
+      );
+    }
+
+    return Array.isArray(data) ? data : [];
   } catch (error) {
-    console.error("Error fetching approved tickets:", error);
-    return [];
+    console.error("getApprovedTickets error:", error);
+
+    throw error;
   }
 };
 
-// টিকিটের Advertisement Status (isAdvertised) টগল করা
+// TOGGLE ADVERTISEMENT
 export const toggleAdvertiseTicket = async (ticketId) => {
   try {
+    if (!ticketId) {
+      return {
+        success: false,
+        message: "Ticket ID is required",
+      };
+    }
+
     const res = await fetch(
       `${baseUrl}/api/admin/advertise-ticket/${ticketId}`,
       {
@@ -107,7 +122,7 @@ export const toggleAdvertiseTicket = async (ticketId) => {
         headers: {
           "Content-Type": "application/json",
         },
-      },
+      }
     );
 
     const data = await res.json().catch(() => ({}));
@@ -115,27 +130,55 @@ export const toggleAdvertiseTicket = async (ticketId) => {
     if (!res.ok) {
       return {
         success: false,
-        message: data.message || "Failed to update advertisement status",
+        message:
+          data.message ||
+          "Failed to update advertisement status",
       };
     }
 
     return data;
+
   } catch (error) {
-    console.error("Error toggling advertise status:", error);
-    return { success: false, message: error.message };
+    console.error(
+      "Error toggling advertise status:",
+      error
+    );
+
+    return {
+      success: false,
+      message: error.message || "Server error",
+    };
   }
 };
 
-
 export const getAdvertisedTickets = async () => {
   try {
-    const res = await fetch(`${baseUrl}/api/advertised-tickets`, {
-      cache: "no-store",
-    });
-    if (!res.ok) return [];
-    return await res.json();
+    const res = await fetch(
+      `${baseUrl}/api/advertised-tickets`,
+      {
+        cache: "no-store",
+      }
+    );
+
+    const data = await res.json().catch(() => []);
+
+    if (!res.ok) {
+      console.error(
+        "Failed to fetch advertised tickets:",
+        data
+      );
+
+      return [];
+    }
+
+    return Array.isArray(data) ? data : [];
+
   } catch (error) {
-    console.error("Error fetching advertised tickets:", error);
+    console.error(
+      "Error fetching advertised tickets:",
+      error
+    );
+
     return [];
   }
 };

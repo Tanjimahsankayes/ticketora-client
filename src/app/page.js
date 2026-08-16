@@ -1,4 +1,6 @@
 import AboutPage from "@/components/AboutPage";
+import AdvertisePage from "@/components/AdvertisePage";
+import AdvertiseTicket from "@/components/AdvertiseTicket";
 import WhyChooseUs from "@/components/Chooseus";
 import ContactPage from "@/components/ContactPage";
 import Hero from "@/components/Hero";
@@ -10,6 +12,7 @@ export default function Home() {
       <main>
         <Hero></Hero>
         <AboutPage></AboutPage>
+        <AdvertiseTicket></AdvertiseTicket>
         <PopularRoutes></PopularRoutes>
         <WhyChooseUs></WhyChooseUs>
         <ContactPage></ContactPage>

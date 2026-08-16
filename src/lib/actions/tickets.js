@@ -215,3 +215,23 @@ export const updateTicket = async (id, updatedData) => {
     };
   }
 };
+
+export const getAdvertisedTickets = async () => {
+  try {
+    const res = await fetch(`${baseUrl}/api/advertised-tickets`, {
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      console.error("Failed to fetch advertised tickets");
+      return [];
+    }
+
+    const data = await res.json();
+
+    return Array.isArray(data) ? data : [];
+  } catch (error) {
+    console.error("Error fetching advertised tickets:", error);
+    return [];
+  }
+};

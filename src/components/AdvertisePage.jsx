@@ -5,6 +5,7 @@ import { useSession } from "@/lib/auth-client";
 import { Spinner } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { getApprovedTickets, toggleAdvertiseTicket } from "@/lib/actions/admin";
 
 export default function AdvertisePage() {
   const { data: session, isPending } = useSession();
@@ -23,16 +24,13 @@ export default function AdvertisePage() {
 
   const fetchApprovedTickets = useCallback(async () => {
     setLoading(true);
+
     try {
-      const res = await fetch("/api/admin/approved-tickets");
-      const data = await res.json();
-      if (res.ok) {
-        setTickets(data || []);
-      } else {
-        toast.error(data.message || "Failed to load approved tickets");
-      }
-    } catch (err) {
-      toast.error("Network error while fetching tickets");
+      const data = await getApprovedTickets();
+      setTickets(data || []);
+    } catch (error) {
+      console.error("Error fetching approved tickets:", error);
+      toast.error("Failed to load approved tickets");
     } finally {
       setLoading(false);
     }
@@ -46,42 +44,44 @@ export default function AdvertisePage() {
 
   const advertisedCount = tickets.filter((t) => t.isAdvertised).length;
 
-  const handleToggleAdvertise = async (ticketId, currentIsAdvertised) => {
-    if (!currentIsAdvertised && advertisedCount >= 6) {
-      toast.error("Limit reached! Maximum 6 tickets can be advertised.");
-      return;
-    }
+ const handleToggleAdvertise = async (ticketId, currentIsAdvertised) => {
+   if (!currentIsAdvertised && advertisedCount >= 6) {
+     toast.error("Limit reached! Maximum 6 tickets can be advertised.");
+     return;
+   }
 
-    setActionLoadingId(ticketId);
-    try {
-      const res = await fetch(`/api/admin/advertise-ticket/${ticketId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-      });
-      const data = await res.json();
+   setActionLoadingId(ticketId);
 
-      if (res.ok) {
-        toast.success(
-          data.ticket.isAdvertised
-            ? "Ticket added to homepage advertisements!"
-            : "Ticket removed from advertisements.",
-        );
-        setTickets((prev) =>
-          prev.map((t) =>
-            (t._id || t.id) === ticketId
-              ? { ...t, isAdvertised: data.ticket.isAdvertised }
-              : t,
-          ),
-        );
-      } else {
-        toast.error(data.message || "Failed to update status");
-      }
-    } catch (err) {
-      toast.error("Error connecting to server");
-    } finally {
-      setActionLoadingId(null);
-    }
-  };
+   try {
+     const data = await toggleAdvertiseTicket(ticketId);
+
+     if (data.success) {
+       toast.success(
+         data.ticket.isAdvertised
+           ? "Ticket added to homepage advertisements!"
+           : "Ticket removed from advertisements.",
+       );
+
+       setTickets((prev) =>
+         prev.map((t) =>
+           (t._id || t.id) === ticketId
+             ? {
+                 ...t,
+                 isAdvertised: data.ticket.isAdvertised,
+               }
+             : t,
+         ),
+       );
+     } else {
+       toast.error(data.message || "Failed to update status");
+     }
+   } catch (error) {
+     console.error(error);
+     toast.error("Error connecting to server");
+   } finally {
+     setActionLoadingId(null);
+   }
+ };
 
   if (isPending || loading) {
     return (
