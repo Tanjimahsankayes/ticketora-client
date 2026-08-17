@@ -73,7 +73,7 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#08090a] text-slate-700 dark:text-zinc-300 py-16 px-6 relative overflow-hidden theme-transition">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#08090a] text-slate-700 dark:text-zinc-300 py-16 px-6 relative overflow-hidden transition-colors duration-200">
       {/* Decorative Ambient Glows */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none" />
@@ -81,8 +81,8 @@ export default function ContactPage() {
       <div className="max-w-7xl mx-auto relative z-10 space-y-20">
         {/* Page Header */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-slate-200/50 dark:bg-white/5 border border-slate-300 dark:border-white/10 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-zinc-300">
-            <Envelope className="w-4 h-4 text-slate-800 dark:text-white" />
+          <div className="inline-flex items-center gap-2 bg-slate-200/70 dark:bg-white/5 border border-slate-300 dark:border-white/10 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-zinc-300">
+            <Envelope className="w-4 h-4 text-slate-900 dark:text-white" />
             <span>24/7 Dedicated Support</span>
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
@@ -110,7 +110,7 @@ export default function ContactPage() {
 
             {/* Info Cards */}
             <div className="space-y-4">
-              <div className="bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-2xl p-5 flex items-start gap-4 transition-colors hover:border-slate-300 dark:hover:border-white/20">
+              <div className="bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-2xl p-5 flex items-start gap-4 transition-colors hover:border-slate-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
                 <div className="p-3 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-white/5 rounded-xl text-slate-800 dark:text-white shrink-0">
                   <Handset className="w-6 h-6" />
                 </div>
@@ -127,7 +127,7 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-2xl p-5 flex items-start gap-4 transition-colors hover:border-slate-300 dark:hover:border-white/20">
+              <div className="bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-2xl p-5 flex items-start gap-4 transition-colors hover:border-slate-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
                 <div className="p-3 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-white/5 rounded-xl text-slate-800 dark:text-white shrink-0">
                   <Envelope className="w-6 h-6" />
                 </div>
@@ -144,7 +144,7 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-2xl p-5 flex items-start gap-4 transition-colors hover:border-slate-300 dark:hover:border-white/20">
+              <div className="bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-2xl p-5 flex items-start gap-4 transition-colors hover:border-slate-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
                 <div className="p-3 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-white/5 rounded-xl text-slate-800 dark:text-white shrink-0">
                   <MapPin className="w-6 h-6" />
                 </div>
@@ -177,7 +177,7 @@ export default function ContactPage() {
                   <a
                     key={i}
                     href={social.href}
-                    className="p-3 bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-xl text-slate-500 dark:text-zinc-400 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-800 hover:border-slate-300 dark:hover:border-white/20 transition-all"
+                    className="p-3 bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-xl text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-800 hover:border-slate-300 dark:hover:border-white/20 transition-all shadow-sm dark:shadow-none"
                   >
                     <social.icon className="w-4 h-4" />
                   </a>
@@ -187,7 +187,7 @@ export default function ContactPage() {
           </div>
 
           {/* Right Side: Contact Form */}
-          <div className="lg:col-span-7 bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-3xl p-8 sm:p-10 shadow-2xl relative">
+          <div className="lg:col-span-7 bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-3xl p-8 sm:p-10 shadow-xl dark:shadow-2xl relative transition-colors duration-200">
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">
               Send Us a Message
             </h2>
@@ -210,7 +210,7 @@ export default function ContactPage() {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Tanvir Ahmed"
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-[#08090a] border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-600 focus:outline-none focus:border-slate-400 dark:focus:border-white/20 transition-all text-sm"
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-[#08090a] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-white/20 focus:border-transparent transition-all text-sm"
                   />
                 </div>
 
@@ -226,7 +226,7 @@ export default function ContactPage() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="name@example.com"
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-[#08090a] border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-600 focus:outline-none focus:border-slate-400 dark:focus:border-white/20 transition-all text-sm"
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-[#08090a] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-white/20 focus:border-transparent transition-all text-sm"
                   />
                 </div>
               </div>
@@ -243,7 +243,7 @@ export default function ContactPage() {
                   value={formData.subject}
                   onChange={handleChange}
                   placeholder="e.g. Booking Cancellation Query"
-                  className="w-full px-4 py-3 bg-slate-50 dark:bg-[#08090a] border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-600 focus:outline-none focus:border-slate-400 dark:focus:border-white/20 transition-all text-sm"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-[#08090a] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-white/20 focus:border-transparent transition-all text-sm"
                 />
               </div>
 
@@ -259,7 +259,7 @@ export default function ContactPage() {
                   value={formData.message}
                   onChange={handleChange}
                   placeholder="Type your message here..."
-                  className="w-full px-4 py-3 bg-slate-50 dark:bg-[#08090a] border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-600 focus:outline-none focus:border-slate-400 dark:focus:border-white/20 transition-all text-sm resize-none"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-[#08090a] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-white/20 focus:border-transparent transition-all text-sm resize-none"
                 />
               </div>
 
@@ -297,7 +297,7 @@ export default function ContactPage() {
             {faqs.map((faq, index) => (
               <div
                 key={index}
-                className="bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden transition-colors"
+                className="bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden transition-colors shadow-sm dark:shadow-none"
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
@@ -308,7 +308,9 @@ export default function ContactPage() {
                   </span>
                   <ChevronDown
                     className={`w-5 h-5 text-slate-500 dark:text-zinc-400 transition-transform duration-200 shrink-0 ${
-                      openFaq === index ? "rotate-180 text-slate-900 dark:text-white" : ""
+                      openFaq === index
+                        ? "rotate-180 text-slate-900 dark:text-white"
+                        : ""
                     }`}
                   />
                 </button>
