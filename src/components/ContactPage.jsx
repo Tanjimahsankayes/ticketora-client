@@ -73,22 +73,22 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#08090a] text-zinc-300 py-16 px-6 relative overflow-hidden">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#08090a] text-slate-700 dark:text-zinc-300 py-16 px-6 relative overflow-hidden theme-transition">
       {/* Decorative Ambient Glows */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-96 h-96 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10 space-y-20">
         {/* Page Header */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider text-zinc-300">
-            <Envelope className="w-4 h-4 text-white" />
+          <div className="inline-flex items-center gap-2 bg-slate-200/50 dark:bg-white/5 border border-slate-300 dark:border-white/10 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-zinc-300">
+            <Envelope className="w-4 h-4 text-slate-800 dark:text-white" />
             <span>24/7 Dedicated Support</span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight leading-tight">
+          <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
             Get in Touch With Us
           </h1>
-          <p className="text-lg text-zinc-400 leading-relaxed">
+          <p className="text-lg text-slate-600 dark:text-zinc-400 leading-relaxed">
             Have questions about your booking, ticket confirmation, or route
             options? We're here to help you around the clock.
           </p>
@@ -99,10 +99,10 @@ export default function ContactPage() {
           {/* Left Side: Contact Info & Support Channels */}
           <div className="lg:col-span-5 space-y-8">
             <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-white tracking-tight">
+              <h2 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
                 Contact Information
               </h2>
-              <p className="text-zinc-400 text-sm leading-relaxed">
+              <p className="text-slate-600 dark:text-zinc-400 text-sm leading-relaxed">
                 Reach out to us through any of the channels below or fill out
                 the form. Our support team responds within minutes!
               </p>
@@ -110,52 +110,52 @@ export default function ContactPage() {
 
             {/* Info Cards */}
             <div className="space-y-4">
-              <div className="bg-[#111215] border border-white/10 rounded-2xl p-5 flex items-start gap-4 transition-colors hover:border-white/20">
-                <div className="p-3 bg-zinc-900 border border-white/5 rounded-xl text-white shrink-0">
+              <div className="bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-2xl p-5 flex items-start gap-4 transition-colors hover:border-slate-300 dark:hover:border-white/20">
+                <div className="p-3 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-white/5 rounded-xl text-slate-800 dark:text-white shrink-0">
                   <Handset className="w-6 h-6" />
                 </div>
                 <div>
-                  <span className="block text-xs text-zinc-500 font-medium uppercase tracking-wider">
+                  <span className="block text-xs text-slate-500 dark:text-zinc-500 font-medium uppercase tracking-wider">
                     Call Us
                   </span>
-                  <span className="block text-base font-semibold text-white mt-0.5">
+                  <span className="block text-base font-semibold text-slate-900 dark:text-white mt-0.5">
                     +880 1700-000000
                   </span>
-                  <span className="block text-xs text-zinc-400 mt-1">
+                  <span className="block text-xs text-slate-500 dark:text-zinc-400 mt-1">
                     Available 24/7 for urgent assistance
                   </span>
                 </div>
               </div>
 
-              <div className="bg-[#111215] border border-white/10 rounded-2xl p-5 flex items-start gap-4 transition-colors hover:border-white/20">
-                <div className="p-3 bg-zinc-900 border border-white/5 rounded-xl text-white shrink-0">
+              <div className="bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-2xl p-5 flex items-start gap-4 transition-colors hover:border-slate-300 dark:hover:border-white/20">
+                <div className="p-3 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-white/5 rounded-xl text-slate-800 dark:text-white shrink-0">
                   <Envelope className="w-6 h-6" />
                 </div>
                 <div>
-                  <span className="block text-xs text-zinc-500 font-medium uppercase tracking-wider">
+                  <span className="block text-xs text-slate-500 dark:text-zinc-500 font-medium uppercase tracking-wider">
                     Email Support
                   </span>
-                  <span className="block text-base font-semibold text-white mt-0.5">
+                  <span className="block text-base font-semibold text-slate-900 dark:text-white mt-0.5">
                     support@ticketora.com
                   </span>
-                  <span className="block text-xs text-zinc-400 mt-1">
+                  <span className="block text-xs text-slate-500 dark:text-zinc-400 mt-1">
                     Typical response time: Within 1 hour
                   </span>
                 </div>
               </div>
 
-              <div className="bg-[#111215] border border-white/10 rounded-2xl p-5 flex items-start gap-4 transition-colors hover:border-white/20">
-                <div className="p-3 bg-zinc-900 border border-white/5 rounded-xl text-white shrink-0">
+              <div className="bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-2xl p-5 flex items-start gap-4 transition-colors hover:border-slate-300 dark:hover:border-white/20">
+                <div className="p-3 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-white/5 rounded-xl text-slate-800 dark:text-white shrink-0">
                   <MapPin className="w-6 h-6" />
                 </div>
                 <div>
-                  <span className="block text-xs text-zinc-500 font-medium uppercase tracking-wider">
+                  <span className="block text-xs text-slate-500 dark:text-zinc-500 font-medium uppercase tracking-wider">
                     Head Office
                   </span>
-                  <span className="block text-base font-semibold text-white mt-0.5">
+                  <span className="block text-base font-semibold text-slate-900 dark:text-white mt-0.5">
                     Level 4, Ticketora Tower, Gulshan-2, Dhaka
                   </span>
-                  <span className="block text-xs text-zinc-400 mt-1">
+                  <span className="block text-xs text-slate-500 dark:text-zinc-400 mt-1">
                     Open Mon - Fri (9:00 AM - 6:00 PM)
                   </span>
                 </div>
@@ -164,7 +164,7 @@ export default function ContactPage() {
 
             {/* Social Links */}
             <div className="pt-4 space-y-3">
-              <span className="block text-xs text-zinc-500 font-medium uppercase tracking-wider">
+              <span className="block text-xs text-slate-500 dark:text-zinc-500 font-medium uppercase tracking-wider">
                 Follow Ticketora
               </span>
               <div className="flex items-center gap-3">
@@ -177,7 +177,7 @@ export default function ContactPage() {
                   <a
                     key={i}
                     href={social.href}
-                    className="p-3 bg-[#111215] border border-white/10 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800 hover:border-white/20 transition-all"
+                    className="p-3 bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-xl text-slate-500 dark:text-zinc-400 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-800 hover:border-slate-300 dark:hover:border-white/20 transition-all"
                   >
                     <social.icon className="w-4 h-4" />
                   </a>
@@ -187,11 +187,11 @@ export default function ContactPage() {
           </div>
 
           {/* Right Side: Contact Form */}
-          <div className="lg:col-span-7 bg-[#111215] border border-white/10 rounded-3xl p-8 sm:p-10 shadow-2xl relative">
-            <h2 className="text-2xl font-bold text-white tracking-tight mb-2">
+          <div className="lg:col-span-7 bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-3xl p-8 sm:p-10 shadow-2xl relative">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">
               Send Us a Message
             </h2>
-            <p className="text-sm text-zinc-400 mb-8">
+            <p className="text-sm text-slate-600 dark:text-zinc-400 mb-8">
               Fill in the form below and we will get back to you as soon as
               possible.
             </p>
@@ -200,7 +200,7 @@ export default function ContactPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {/* Full Name */}
                 <div>
-                  <label className="block text-sm font-medium text-zinc-300 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-2">
                     Full Name
                   </label>
                   <input
@@ -210,13 +210,13 @@ export default function ContactPage() {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Tanvir Ahmed"
-                    className="w-full px-4 py-3 bg-[#08090a] border border-white/10 rounded-xl text-white placeholder-zinc-600 focus:outline-none focus:border-white/20 transition-all text-sm"
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-[#08090a] border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-600 focus:outline-none focus:border-slate-400 dark:focus:border-white/20 transition-all text-sm"
                   />
                 </div>
 
                 {/* Email Address */}
                 <div>
-                  <label className="block text-sm font-medium text-zinc-300 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-2">
                     Email Address
                   </label>
                   <input
@@ -226,14 +226,14 @@ export default function ContactPage() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="name@example.com"
-                    className="w-full px-4 py-3 bg-[#08090a] border border-white/10 rounded-xl text-white placeholder-zinc-600 focus:outline-none focus:border-white/20 transition-all text-sm"
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-[#08090a] border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-600 focus:outline-none focus:border-slate-400 dark:focus:border-white/20 transition-all text-sm"
                   />
                 </div>
               </div>
 
               {/* Subject */}
               <div>
-                <label className="block text-sm font-medium text-zinc-300 mb-2">
+                <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-2">
                   Subject
                 </label>
                 <input
@@ -243,13 +243,13 @@ export default function ContactPage() {
                   value={formData.subject}
                   onChange={handleChange}
                   placeholder="e.g. Booking Cancellation Query"
-                  className="w-full px-4 py-3 bg-[#08090a] border border-white/10 rounded-xl text-white placeholder-zinc-600 focus:outline-none focus:border-white/20 transition-all text-sm"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-[#08090a] border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-600 focus:outline-none focus:border-slate-400 dark:focus:border-white/20 transition-all text-sm"
                 />
               </div>
 
               {/* Message */}
               <div>
-                <label className="block text-sm font-medium text-zinc-300 mb-2">
+                <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-2">
                   Message
                 </label>
                 <textarea
@@ -259,7 +259,7 @@ export default function ContactPage() {
                   value={formData.message}
                   onChange={handleChange}
                   placeholder="Type your message here..."
-                  className="w-full px-4 py-3 bg-[#08090a] border border-white/10 rounded-xl text-white placeholder-zinc-600 focus:outline-none focus:border-white/20 transition-all text-sm resize-none"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-[#08090a] border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-600 focus:outline-none focus:border-slate-400 dark:focus:border-white/20 transition-all text-sm resize-none"
                 />
               </div>
 
@@ -267,7 +267,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-white hover:bg-zinc-200 text-black font-semibold py-3.5 px-6 rounded-xl text-base flex items-center justify-center gap-2.5 transition-all duration-150 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-zinc-200 text-white dark:text-black font-semibold py-3.5 px-6 rounded-xl text-base flex items-center justify-center gap-2.5 transition-all duration-150 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <span>Sending Message...</span>
@@ -285,10 +285,10 @@ export default function ContactPage() {
         {/* FAQ Section */}
         <div className="pt-10 space-y-10">
           <div className="text-center space-y-3">
-            <h2 className="text-3xl font-bold text-white tracking-tight">
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
               Frequently Asked Questions
             </h2>
-            <p className="text-zinc-400 text-sm">
+            <p className="text-slate-600 dark:text-zinc-400 text-sm">
               Quick answers to common questions about booking and cancellation.
             </p>
           </div>
@@ -297,23 +297,23 @@ export default function ContactPage() {
             {faqs.map((faq, index) => (
               <div
                 key={index}
-                className="bg-[#111215] border border-white/10 rounded-2xl overflow-hidden transition-colors"
+                className="bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden transition-colors"
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
                   className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
                 >
-                  <span className="text-base font-semibold text-white">
+                  <span className="text-base font-semibold text-slate-900 dark:text-white">
                     {faq.question}
                   </span>
                   <ChevronDown
-                    className={`w-5 h-5 text-zinc-400 transition-transform duration-200 shrink-0 ${
-                      openFaq === index ? "rotate-180 text-white" : ""
+                    className={`w-5 h-5 text-slate-500 dark:text-zinc-400 transition-transform duration-200 shrink-0 ${
+                      openFaq === index ? "rotate-180 text-slate-900 dark:text-white" : ""
                     }`}
                   />
                 </button>
                 {openFaq === index && (
-                  <div className="px-6 pb-6 text-sm text-zinc-400 leading-relaxed border-t border-white/5 pt-4">
+                  <div className="px-6 pb-6 text-sm text-slate-600 dark:text-zinc-400 leading-relaxed border-t border-slate-200 dark:border-white/5 pt-4">
                     {faq.answer}
                   </div>
                 )}

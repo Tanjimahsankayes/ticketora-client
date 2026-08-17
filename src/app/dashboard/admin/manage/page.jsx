@@ -77,47 +77,47 @@ export default function ManageTicketsPage() {
   }
 
   return (
-    <div className="min-h-screen text-slate-100 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen text-slate-700 dark:text-slate-100 p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
-        <div className="border-b border-slate-800 pb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="border-b border-slate-200 dark:border-slate-800 pb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-rose-500/10 text-rose-400 border border-rose-500/20">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-rose-100 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-500/20">
                 Admin Panel
               </span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-1">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
               Manage Vendor Tickets
             </h1>
-            <p className="text-sm text-slate-400 mt-1">
+            <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
               Review, approve, or reject tickets submitted by system vendors.
             </p>
           </div>
           <button
             onClick={fetchTickets}
-            className="px-4 py-2 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-xl text-xs font-semibold text-slate-300 transition-all self-start sm:self-auto"
+            className="px-4 py-2 bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 transition-all self-start sm:self-auto"
           >
             🔄 Refresh List
           </button>
         </div>
 
         {/* Tickets Table */}
-        <div className="bg-slate-900/80 border border-slate-800 rounded-2xl shadow-xl overflow-hidden backdrop-blur-md">
+        <div className="bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl overflow-hidden backdrop-blur-md">
           {tickets.length === 0 ? (
-            <div className="p-12 text-center text-slate-400 space-y-2">
+            <div className="p-12 text-center text-slate-600 dark:text-slate-400 space-y-2">
               <p className="text-3xl">🎫</p>
-              <p className="text-base font-medium text-white">
+              <p className="text-base font-medium text-slate-900 dark:text-white">
                 No tickets found
               </p>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-500 dark:text-slate-500">
                 There are currently no tickets submitted by vendors.
               </p>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs sm:text-sm">
-                <thead className="bg-slate-950/80 text-slate-400 uppercase text-[10px] font-bold tracking-wider border-b border-slate-800">
+                <thead className="bg-slate-100 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 uppercase text-[10px] font-bold tracking-wider border-b border-slate-200 dark:border-slate-800">
                   <tr>
                     <th className="py-4 px-6">Route / Title</th>
                     <th className="py-4 px-6">Vendor</th>
@@ -128,7 +128,7 @@ export default function ManageTicketsPage() {
                     <th className="py-4 px-6 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/60">
+                <tbody className="divide-y divide-slate-200 dark:divide-slate-800/60">
                   {tickets.map((ticket) => {
                     const id = ticket._id || ticket.id;
                     const isProcessing = actionLoadingId === id;
@@ -136,20 +136,20 @@ export default function ManageTicketsPage() {
                     return (
                       <tr
                         key={id}
-                        className="hover:bg-slate-800/30 transition-colors"
+                        className="hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors"
                       >
                         {/* Title / Departure */}
-                        <td className="py-4 px-6 font-semibold text-white">
+                        <td className="py-4 px-6 font-semibold text-slate-900 dark:text-white">
                           <div>
                             {ticket.title || `${ticket.from} ➔ ${ticket.to}`}
                           </div>
-                          <div className="text-[11px] text-slate-500 font-normal">
+                          <div className="text-[11px] text-slate-500 dark:text-slate-500 font-normal">
                             Date: {ticket.departureDate || "N/A"}
                           </div>
                         </td>
 
                         {/* Vendor Name */}
-                        <td className="py-4 px-6 text-slate-300">
+                        <td className="py-4 px-6 text-slate-700 dark:text-slate-300">
                           {ticket.vendorName ||
                             ticket.vendor?.name ||
                             "Unknown Vendor"}
@@ -157,35 +157,35 @@ export default function ManageTicketsPage() {
 
                         {/* Transport Type */}
                         <td className="py-4 px-6 capitalize">
-                          <span className="px-2 py-1 rounded-md bg-slate-800 border border-slate-700 text-slate-300 text-[11px]">
+                          <span className="px-2 py-1 rounded-md bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-[11px]">
                             {ticket.type || "Bus"}
                           </span>
                         </td>
 
                         {/* Price */}
-                        <td className="py-4 px-6 text-slate-200 font-medium">
+                        <td className="py-4 px-6 text-slate-800 dark:text-slate-200 font-medium">
                           ${ticket.price}
                         </td>
 
                         {/* Available Seats */}
-                        <td className="py-4 px-6 text-slate-400">
+                        <td className="py-4 px-6 text-slate-600 dark:text-slate-400">
                           {ticket.availableSeats ?? ticket.seats ?? 0} seats
                         </td>
 
                         {/* Status Badge */}
                         <td className="py-4 px-6">
                           {ticket.status === "approved" && (
-                            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20">
                               Approved
                             </span>
                           )}
                           {ticket.status === "rejected" && (
-                            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-rose-100 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 border border-rose-200 dark:border-rose-500/20">
                               Rejected
                             </span>
                           )}
                           {(!ticket.status || ticket.status === "pending") && (
-                            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20">
                               Pending
                             </span>
                           )}

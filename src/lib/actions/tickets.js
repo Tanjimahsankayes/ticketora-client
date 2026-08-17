@@ -235,3 +235,26 @@ export const getAdvertisedTickets = async () => {
     return [];
   }
 };
+
+export const getLatestTickets = async (limit = 6) => {
+  try {
+    const res = await fetch(
+      `${baseUrl}/api/tickets?latest=true&limit=${limit}`,
+      {
+        cache: "no-store",
+      },
+    );
+
+    if (!res.ok) {
+      console.error("Failed to fetch latest tickets");
+      return [];
+    }
+
+    const data = await res.json();
+
+    return Array.isArray(data) ? data : [];
+  } catch (error) {
+    console.error("Get latest tickets error:", error);
+    return [];
+  }
+};

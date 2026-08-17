@@ -1,7 +1,67 @@
 @import "tailwindcss";
 @import "@heroui/styles";
 
+:root {
+  /* Light Theme Colors */
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #4f46e5;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #f1f5f9;
+  --accent-foreground: #0f172a;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #4f46e5;
+  --radius: 0.75rem;
+}
+
+.dark {
+  /* Dark Theme Colors */
+  --background: #08090a;
+  --foreground: #f4f4f5;
+  --card: #111215;
+  --card-foreground: #f4f4f5;
+  --popover: #111215;
+  --popover-foreground: #f4f4f5;
+  --primary: #6366f1;
+  --primary-foreground: #ffffff;
+  --secondary: #1e293b;
+  --secondary-foreground: #f4f4f5;
+  --muted: #1e293b;
+  --muted-foreground: #a1a1aa;
+  --accent: #1e293b;
+  --accent-foreground: #f4f4f5;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #27272a;
+  --input: #27272a;
+  --ring: #6366f1;
+  --radius: 0.75rem;
+}
+
 body {
   font-family: var(--font-inter), sans-serif;
   /* font-family: var(--font-jakarta), sans-serif; */
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+* {
+  border-color: var(--border);
+}
+
+/* Smooth theme transition */
+.theme-transition {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }

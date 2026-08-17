@@ -8,12 +8,12 @@ export default function Hero() {
   const slides = [
     {
       id: 1,
-      image: "/images/car.jpg", // public/images/hero/slide1.jpg এ ছবি রাখুন
+      image: "/images/car.jpg",
       title: "Explore Bangladesh Without Boundries",
       subtitle:
         "Book Bus, Train, and Flight tickets seamlessly with Ticketora.",
       buttonText: "Book Tickets Now",
-      buttonLink: "/tickets",
+      buttonLink: "/all-tickets",
     },
     {
       id: 2,
@@ -22,7 +22,7 @@ export default function Hero() {
       subtitle:
         "Enjoy comfortable and hassle-free train journeys across the country.",
       buttonText: "Find Trains",
-      buttonLink: "/tickets?type=train",
+      buttonLink: "/all-tickets",
     },
     {
       id: 3,
@@ -31,7 +31,7 @@ export default function Hero() {
       subtitle:
         "Travel to Cox's Bazar, Sylhet, and Chittagong in top-tier comfort.",
       buttonText: "Explore Buses",
-      buttonLink: "/tickets?type=bus",
+      buttonLink: "/all-tickets",
     },
     {
       id: 4,
@@ -40,7 +40,7 @@ export default function Hero() {
       subtitle:
         "Get instant flight ticketing with unbeatable prices and zero hidden fees.",
       buttonText: "Search Flights",
-      buttonLink: "/tickets?type=flight",
+      buttonLink: "/all-tickets",
     },
     {
       id: 5,
@@ -49,7 +49,7 @@ export default function Hero() {
       subtitle:
         "Unlock special promo codes and save big on your next destination.",
       buttonText: "View Offers",
-      buttonLink: "/offers",
+      buttonLink: "/all-tickets",
     },
     {
       id: 6,
@@ -81,7 +81,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative w-full h-[85vh] min-h-[600px] bg-[#08090a] overflow-hidden text-white flex items-center justify-center">
+    <section className="relative w-full h-[85vh] min-h-[600px] bg-slate-900 dark:bg-[#08090a] overflow-hidden text-slate-900 dark:text-white flex items-center justify-center theme-transition">
       {/* Background Images Layer */}
       {slides.map((slide, index) => (
         <div
@@ -97,28 +97,28 @@ export default function Hero() {
           }}
         >
           {/* Dark Overlay with Blur Effects to match app design */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#08090a] via-[#08090a]/80 to-transparent" />
-          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900 dark:from-[#08090a] via-slate-900/80 dark:via-[#08090a]/80 to-transparent" />
+          <div className="absolute inset-0 bg-black/20 dark:bg-black/40" />
         </div>
       ))}
 
       {/* Decorative Ambient Glows */}
-      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-blue-500/20 rounded-full blur-[120px] pointer-events-none z-20" />
+      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-blue-500/10 dark:bg-blue-500/20 rounded-full blur-[120px] pointer-events-none z-20" />
 
       {/* Content Container */}
       <div className="relative z-20 max-w-7xl w-full mx-auto px-6 flex flex-col justify-center h-full">
         <div className="max-w-2xl space-y-6">
           {/* Tagline Badge */}
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-zinc-300">
+          <div className="inline-flex items-center gap-2 bg-slate-100/80 dark:bg-white/10 backdrop-blur-md border border-slate-200 dark:border-white/10 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-zinc-300">
             <span>Ticketora Premium Travel</span>
           </div>
 
           {/* Title & Subtitle with smooth transition */}
           <div className="min-h-[160px] flex flex-col justify-center space-y-4">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight transition-all duration-500 text-white">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight transition-all duration-500 text-slate-900 dark:text-white">
               {slides[currentSlide].title}
             </h1>
-            <p className="text-lg sm:text-xl text-zinc-300 font-normal leading-relaxed">
+            <p className="text-lg sm:text-xl text-slate-600 dark:text-zinc-300 font-normal leading-relaxed">
               {slides[currentSlide].subtitle}
             </p>
           </div>
@@ -127,7 +127,7 @@ export default function Hero() {
           <div className="pt-2">
             <Link
               href={slides[currentSlide].buttonLink}
-              className="inline-flex items-center justify-center gap-3 bg-white hover:bg-zinc-200 text-black font-semibold px-8 py-4 rounded-xl text-base transition-all duration-200 shadow-xl hover:scale-105 active:scale-95"
+              className="inline-flex items-center justify-center gap-3 bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-zinc-200 text-white dark:text-black font-semibold px-8 py-4 rounded-xl text-base transition-all duration-200 shadow-xl hover:scale-105 active:scale-95"
             >
               <span>{slides[currentSlide].buttonText}</span>
               <ArrowRight className="w-5 h-5" />
@@ -140,14 +140,14 @@ export default function Hero() {
       <div className="absolute bottom-10 right-10 z-30 hidden sm:flex items-center gap-3">
         <button
           onClick={prevSlide}
-          className="p-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white backdrop-blur-md transition-all active:scale-95"
+          className="p-3 rounded-full bg-slate-200/50 dark:bg-white/10 hover:bg-slate-300/50 dark:hover:bg-white/20 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white backdrop-blur-md transition-all active:scale-95"
           aria-label="Previous Slide"
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
         <button
           onClick={nextSlide}
-          className="p-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white backdrop-blur-md transition-all active:scale-95"
+          className="p-3 rounded-full bg-slate-200/50 dark:bg-white/10 hover:bg-slate-300/50 dark:hover:bg-white/20 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white backdrop-blur-md transition-all active:scale-95"
           aria-label="Next Slide"
         >
           <ChevronRight className="w-6 h-6" />
@@ -162,8 +162,8 @@ export default function Hero() {
             onClick={() => setCurrentSlide(index)}
             className={`h-2.5 rounded-full transition-all duration-300 ${
               index === currentSlide
-                ? "w-8 bg-white"
-                : "w-2.5 bg-white/30 hover:bg-white/50"
+                ? "w-8 bg-slate-900 dark:bg-white"
+                : "w-2.5 bg-slate-300 dark:bg-white/30 hover:bg-slate-400 dark:hover:bg-white/50"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />

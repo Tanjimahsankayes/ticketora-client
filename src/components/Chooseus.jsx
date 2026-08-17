@@ -41,18 +41,18 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section className="w-full bg-[#08090a] py-20 px-6 text-zinc-300 relative overflow-hidden">
+    <section className="w-full bg-slate-50 dark:bg-[#08090a] py-20 px-6 text-slate-700 dark:text-zinc-300 relative overflow-hidden theme-transition">
       {/* Decorative ambient glows */}
-      <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16 space-y-3">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white leading-tight tracking-tighter">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white leading-tight tracking-tighter">
             Why Choose TicketTora?
           </h2>
-          <p className="text-lg text-zinc-400 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-lg text-slate-600 dark:text-zinc-400 leading-relaxed max-w-2xl mx-auto">
             Experience seamless travel booking with unmatched reliability and
             service. Here's what sets us apart.
           </p>
@@ -65,10 +65,10 @@ export default function WhyChooseUs() {
               key={index}
               className="flex flex-col items-center gap-3 text-center"
             >
-              <div className="p-4 bg-zinc-900 border border-white/5 rounded-2xl text-white">
+              <div className="p-4 bg-slate-200 dark:bg-zinc-900 border border-slate-300 dark:border-white/5 rounded-2xl text-slate-800 dark:text-white">
                 <item.icon className="w-10 h-10" />
               </div>
-              <span className="text-sm text-zinc-500 font-medium max-w-[100px]">
+              <span className="text-sm text-slate-500 dark:text-zinc-500 font-medium max-w-[100px]">
                 {item.label}
               </span>
             </div>
@@ -80,20 +80,20 @@ export default function WhyChooseUs() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-[#111215] border border-white/10 rounded-3xl p-8 shadow-2xl transition-all duration-300 hover:border-white/20 hover:bg-[#16171a] space-y-6 flex flex-col items-start"
+              className="bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-3xl p-8 shadow-2xl transition-all duration-300 hover:border-slate-300 dark:hover:border-white/20 hover:bg-slate-50 dark:hover:bg-[#16171a] space-y-6 flex flex-col items-start"
             >
               {/* Feature Icon */}
-              <div className="p-4 bg-zinc-900 border border-white/5 rounded-2xl text-white">
+              <div className="p-4 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-white/5 rounded-2xl text-slate-800 dark:text-white">
                 <feature.icon className="w-8 h-8" />
               </div>
 
               {/* Feature Title */}
-              <h3 className="text-2xl font-semibold text-white tracking-tight">
+              <h3 className="text-2xl font-semibold text-slate-900 dark:text-white tracking-tight">
                 {feature.title}
               </h3>
 
               {/* Feature Description */}
-              <p className="text-base text-zinc-400 leading-relaxed flex-grow">
+              <p className="text-base text-slate-600 dark:text-zinc-400 leading-relaxed flex-grow">
                 {feature.description}
               </p>
             </div>

@@ -114,9 +114,7 @@ export default function TicketDetailsPage() {
       };
 
       const res = await createBooking(payload);
-      console.log(user);
-      console.log("IMAGE:", user?.imageUrl);
-      if (res?.insertedId) {
+      if (res?.success && res?.result?.insertedId) {
         toast.success("Booking submitted successfully!");
         setIsModalOpen(false);
         router.push("/dashboard/user/ticketbook");

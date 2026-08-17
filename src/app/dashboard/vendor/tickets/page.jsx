@@ -203,23 +203,23 @@ const TicketsPage = () => {
   }
 
   return (
-    <div className="text-slate-100 relative">
+    <div className="text-slate-700 dark:text-slate-100 relative">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header Section */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-800 pb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 dark:border-slate-800 pb-6">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
               My Tickets Management
             </h1>
-            <p className="mt-1 text-sm text-slate-400">
+            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
               Overview and quick actions for tickets added by{" "}
-              <span className="text-indigo-400 font-semibold">
+              <span className="text-indigo-600 dark:text-indigo-400 font-semibold">
                 {user?.name || user?.email || "Vendor"}
               </span>
             </p>
           </div>
           <div className="mt-4 sm:mt-0">
-            <span className="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+            <span className="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-indigo-100 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-500/20">
               My Total Tickets: {tickets.length}
             </span>
           </div>
@@ -227,8 +227,8 @@ const TicketsPage = () => {
 
         {/* 3-Column Grid for Tickets */}
         {tickets.length === 0 ? (
-          <div className="text-center py-16 bg-slate-900/50 rounded-2xl border border-slate-800">
-            <p className="text-slate-400 font-medium">
+          <div className="text-center py-16 bg-slate-100 dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-800">
+            <p className="text-slate-600 dark:text-slate-400 font-medium">
               You haven't listed any tickets yet.
             </p>
           </div>
@@ -263,10 +263,10 @@ const TicketsPage = () => {
               return (
                 <div
                   key={itemKey}
-                  className="group relative bg-slate-900/80 border border-slate-800 hover:border-indigo-500/50 rounded-2xl overflow-hidden flex flex-col justify-between shadow-xl transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/10"
+                  className="group relative bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 rounded-2xl overflow-hidden flex flex-col justify-between shadow-xl transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/10"
                 >
                   {/* Top Image Banner */}
-                  <div className="relative w-full h-44 bg-slate-800 overflow-hidden">
+                  <div className="relative w-full h-44 bg-slate-200 dark:bg-slate-800 overflow-hidden">
                     {ticket.imageUrl ? (
                       <Image
                         src={ticket.imageUrl}
@@ -276,15 +276,15 @@ const TicketsPage = () => {
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-tr from-slate-900 via-slate-800 to-indigo-950 flex items-center justify-center text-slate-500 text-xs font-medium">
+                      <div className="w-full h-full bg-gradient-to-tr from-slate-300 via-slate-200 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-950 flex items-center justify-center text-slate-500 dark:text-slate-500 text-xs font-medium">
                         No Image Available
                       </div>
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-black/30" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 dark:from-slate-900 via-transparent to-black/30" />
 
                     {/* Floating Badges */}
                     <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 z-10">
-                      <span className="px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider bg-slate-950/80 backdrop-blur-md text-indigo-400 border border-slate-700/80 shadow-md">
+                      <span className="px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider bg-slate-950/80 dark:bg-slate-950/80 backdrop-blur-md text-indigo-400 border border-slate-700/80 dark:border-slate-700/80 shadow-md">
                         {ticket.transportType || "Transport"}
                       </span>
 
@@ -319,48 +319,48 @@ const TicketsPage = () => {
                       </h2>
 
                       {/* Route */}
-                      <div className="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80 flex items-center justify-between text-sm">
+                      <div className="bg-slate-100 dark:bg-slate-950/60 p-3 rounded-xl border border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-sm">
                         <div className="truncate">
-                          <p className="text-[10px] uppercase font-bold text-slate-500">
+                          <p className="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-500">
                             From
                           </p>
-                          <p className="font-semibold text-slate-200 truncate">
+                          <p className="font-semibold text-slate-800 dark:text-slate-200 truncate">
                             {ticket.fromLocation}
                           </p>
                         </div>
 
-                        <div className="px-2 text-indigo-400 font-bold text-xs">
+                        <div className="px-2 text-indigo-600 dark:text-indigo-400 font-bold text-xs">
                           ➔
                         </div>
 
                         <div className="text-right truncate">
-                          <p className="text-[10px] uppercase font-bold text-slate-500">
+                          <p className="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-500">
                             To
                           </p>
-                          <p className="font-semibold text-slate-200 truncate">
+                          <p className="font-semibold text-slate-800 dark:text-slate-200 truncate">
                             {ticket.toLocation}
                           </p>
                         </div>
                       </div>
 
                       {/* Departure & Seats */}
-                      <div className="grid grid-cols-2 gap-2 text-xs text-slate-400">
+                      <div className="grid grid-cols-2 gap-2 text-xs text-slate-600 dark:text-slate-400">
                         <div>
-                          <p className="text-[10px] text-slate-500 font-semibold uppercase">
+                          <p className="text-[10px] text-slate-500 dark:text-slate-500 font-semibold uppercase">
                             Departure
                           </p>
-                          <p className="text-slate-300 font-medium">
+                          <p className="text-slate-800 dark:text-slate-300 font-medium">
                             {departureDate}
                           </p>
-                          <p className="text-slate-400 text-[11px]">
+                          <p className="text-slate-600 dark:text-slate-400 text-[11px]">
                             {departureTime}
                           </p>
                         </div>
                         <div>
-                          <p className="text-[10px] text-slate-500 font-semibold uppercase">
+                          <p className="text-[10px] text-slate-500 dark:text-slate-500 font-semibold uppercase">
                             Quantity
                           </p>
-                          <p className="text-slate-300 font-medium">
+                          <p className="text-slate-800 dark:text-slate-300 font-medium">
                             {ticket.quantity} Seats
                           </p>
                         </div>
@@ -368,12 +368,12 @@ const TicketsPage = () => {
                     </div>
 
                     {/* Footer */}
-                    <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                    <div className="pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between">
                       <div>
-                        <p className="text-[10px] uppercase font-bold text-slate-500">
+                        <p className="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-500">
                           Price
                         </p>
-                        <p className="text-xl font-black text-emerald-400">
+                        <p className="text-xl font-black text-emerald-600 dark:text-emerald-400">
                           ${ticket.price}
                         </p>
                       </div>
@@ -405,16 +405,16 @@ const TicketsPage = () => {
       {/* --- EDIT TICKET MODAL --- */}
       {ticketToEdit && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md overflow-y-auto">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-5 my-8 relative">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-              <h3 className="text-lg font-bold text-white">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-5 my-8 relative">
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">
                 Edit Ticket Details
               </h3>
               <button
                 type="button"
                 onClick={closeEditModal}
                 disabled={isUpdating}
-                className="text-slate-400 hover:text-white text-sm"
+                className="text-slate-400 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm"
               >
                 ✕
               </button>
@@ -428,7 +428,7 @@ const TicketsPage = () => {
 
             <form onSubmit={confirmUpdate} className="space-y-4 text-xs">
               <div>
-                <label className="block text-slate-400 font-semibold mb-1">
+                <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">
                   Title
                 </label>
                 <input
@@ -437,13 +437,13 @@ const TicketsPage = () => {
                   value={editFormData.title}
                   onChange={handleEditInputChange}
                   required
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-slate-400 font-semibold mb-1">
+                  <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">
                     From Location
                   </label>
                   <input
@@ -452,11 +452,11 @@ const TicketsPage = () => {
                     value={editFormData.fromLocation}
                     onChange={handleEditInputChange}
                     required
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-400 font-semibold mb-1">
+                  <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">
                     To Location
                   </label>
                   <input
@@ -465,21 +465,21 @@ const TicketsPage = () => {
                     value={editFormData.toLocation}
                     onChange={handleEditInputChange}
                     required
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-slate-400 font-semibold mb-1">
+                  <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">
                     Transport Type
                   </label>
                   <select
                     name="transportType"
                     value={editFormData.transportType}
                     onChange={handleEditInputChange}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                   >
                     <option value="Bus">Bus</option>
                     <option value="Train">Train</option>
@@ -488,7 +488,7 @@ const TicketsPage = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-slate-400 font-semibold mb-1">
+                  <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">
                     Price ($)
                   </label>
                   <input
@@ -497,11 +497,11 @@ const TicketsPage = () => {
                     value={editFormData.price}
                     onChange={handleEditInputChange}
                     required
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-400 font-semibold mb-1">
+                  <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">
                     Quantity
                   </label>
                   <input
@@ -510,14 +510,14 @@ const TicketsPage = () => {
                     value={editFormData.quantity}
                     onChange={handleEditInputChange}
                     required
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-slate-400 font-semibold mb-1">
+                  <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">
                     Departure Date & Time
                   </label>
                   <input
@@ -526,11 +526,11 @@ const TicketsPage = () => {
                     value={editFormData.departureDateTime}
                     onChange={handleEditInputChange}
                     required
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-400 font-semibold mb-1">
+                  <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">
                     Image URL
                   </label>
                   <input
@@ -538,13 +538,13 @@ const TicketsPage = () => {
                     name="imageUrl"
                     value={editFormData.imageUrl}
                     onChange={handleEditInputChange}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-slate-400 font-semibold mb-1">
+                <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">
                   Perks (comma separated)
                 </label>
                 <input
@@ -553,16 +553,16 @@ const TicketsPage = () => {
                   value={editFormData.perks}
                   onChange={handleEditInputChange}
                   placeholder="WiFi, Sleeper Berth, Snacks"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                 />
               </div>
 
-              <div className="flex items-center justify-end space-x-3 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end space-x-3 pt-4 border-t border-slate-200 dark:border-slate-800">
                 <button
                   type="button"
                   onClick={closeEditModal}
                   disabled={isUpdating}
-                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold transition-colors disabled:opacity-50"
+                  className="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold transition-colors disabled:opacity-50"
                 >
                   Cancel
                 </button>
@@ -582,9 +582,9 @@ const TicketsPage = () => {
       {/* Delete Confirmation Modal */}
       {ticketToDelete && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-5 relative overflow-hidden">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-5 relative overflow-hidden">
             <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 shrink-0">
+              <div className="w-12 h-12 rounded-xl bg-rose-100 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 flex items-center justify-center text-rose-600 dark:text-rose-400 shrink-0">
                 <svg
                   className="w-6 h-6"
                   fill="none"
@@ -600,20 +600,20 @@ const TicketsPage = () => {
                 </svg>
               </div>
               <div>
-                <h3 className="text-lg font-bold text-white">Delete Ticket?</h3>
-                <p className="text-xs text-slate-400">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Delete Ticket?</h3>
+                <p className="text-xs text-slate-600 dark:text-slate-400">
                   This action cannot be undone.
                 </p>
               </div>
             </div>
 
-            <p className="text-sm text-slate-300 leading-relaxed">
+            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
               Are you sure you want to permanently delete this ticket listing
               from your account?
             </p>
 
             {deleteError && (
-              <div className="p-3 bg-rose-500/10 border border-rose-500/20 rounded-lg text-rose-400 text-xs font-medium">
+              <div className="p-3 bg-rose-100 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 rounded-lg text-rose-600 dark:text-rose-400 text-xs font-medium">
                 {deleteError}
               </div>
             )}
@@ -623,7 +623,7 @@ const TicketsPage = () => {
                 type="button"
                 onClick={closeDeleteModal}
                 disabled={isDeleting}
-                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-colors disabled:opacity-50"
+                className="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors disabled:opacity-50"
               >
                 Cancel
               </button>

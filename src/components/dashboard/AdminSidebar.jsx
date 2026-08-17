@@ -58,8 +58,8 @@ export function AdminDashboardSidebar() {
             key={item.label}
             onClick={() => setActiveItem(item.label)}
             className={`group relative flex items-center gap-3.5 rounded-xl px-3.5 py-3.5 text-sm font-medium transition-all duration-300 ease-out ${isActive
-                ? "bg-slate-900/90 text-white shadow-xl shadow-black/40 border border-slate-700/80 backdrop-blur-md"
-                : "text-slate-400 hover:bg-slate-900/50 hover:text-slate-100 hover:translate-x-1"
+                ? "bg-slate-900/90 dark:bg-slate-900/90 text-white shadow-xl shadow-black/40 border border-slate-700/80 dark:border-slate-700/80 backdrop-blur-md"
+                : "text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-900/50 hover:text-slate-900 dark:hover:text-slate-100 hover:translate-x-1"
               }`}
           >
             {/* Active Glow Light */}
@@ -73,7 +73,7 @@ export function AdminDashboardSidebar() {
             <div
               className={`flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-300 ${isActive
                   ? `bg-gradient-to-tr ${item.color} text-white shadow-lg shadow-black/50 scale-105`
-                  : `bg-slate-900/80 text-slate-400 border border-slate-800/80 group-hover:border-slate-700 group-hover:text-slate-100 ${item.glow}`
+                  : `bg-slate-100 dark:bg-slate-900/80 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-800/80 group-hover:border-slate-300 dark:group-hover:border-slate-700 group-hover:text-slate-900 dark:group-hover:text-slate-100 ${item.glow}`
                 }`}
             >
               <Icon className="size-5" />
@@ -90,23 +90,23 @@ export function AdminDashboardSidebar() {
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden w-72 shrink-0 border-r border-slate-800/80 p-4 lg:block min-h-screen">
+      <aside className="hidden w-72 shrink-0 border-r border-slate-200 dark:border-slate-800/80 p-4 lg:block min-h-screen">
         {/* Header Section */}
         <div className="mb-6 px-2 pt-2 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20">
               <ShieldCheck className="size-4" />
             </div>
-            <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
               Admin Panel
             </h2>
           </div>
-          <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-400 border border-amber-500/30">
+          <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30 dark:border-amber-500/30">
             Pro
           </span>
         </div>
 
-        <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-slate-800 to-transparent mb-4" />
+        <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent mb-4" />
 
         {navContent}
       </aside>
@@ -114,7 +114,7 @@ export function AdminDashboardSidebar() {
       {/* Mobile Drawer */}
       <Drawer>
         <Button
-          className="lg:hidden bg-slate-900 border border-amber-500/20 text-amber-400 hover:bg-slate-800"
+          className="lg:hidden bg-slate-100 dark:bg-slate-900 border border-amber-200 dark:border-amber-500/20 text-amber-600 dark:text-amber-400 hover:bg-slate-200 dark:hover:bg-slate-800"
           variant="secondary"
         >
           <LayoutSideContent className="size-4" />
@@ -123,13 +123,13 @@ export function AdminDashboardSidebar() {
         <Drawer.Backdrop>
           <Drawer.Content
             placement="left"
-            className="bg-slate-950 border-r border-slate-800"
+            className="bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800"
           >
-            <Drawer.Dialog className="bg-slate-950 text-slate-100">
+            <Drawer.Dialog className="bg-white dark:bg-slate-950 text-slate-700 dark:text-slate-100">
               <Drawer.CloseTrigger />
-              <Drawer.Header className="border-b border-slate-800/60 pb-3">
-                <Drawer.Heading className="text-slate-200 flex items-center gap-2">
-                  <ShieldCheck className="size-4 text-amber-400" />
+              <Drawer.Header className="border-b border-slate-200 dark:border-slate-800/60 pb-3">
+                <Drawer.Heading className="text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                  <ShieldCheck className="size-4 text-amber-600 dark:text-amber-400" />
                   Admin Controls
                 </Drawer.Heading>
               </Drawer.Header>

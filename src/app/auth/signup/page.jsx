@@ -74,26 +74,26 @@ export default function RegisterPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#08090a] flex text-zinc-300">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#08090a] flex text-slate-700 dark:text-zinc-300 theme-transition">
       <div
-        className="hidden lg:flex lg:w-1/2 p-16 flex-col justify-between border-r border-white/5 relative overflow-hidden bg-cover bg-center bg-no-repeat"
+        className="hidden lg:flex lg:w-1/2 p-16 flex-col justify-between border-r border-slate-200 dark:border-white/5 relative overflow-hidden bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/images/signupBg.png')" }}
       >
-        <div className="absolute -top-40 -left-40 w-80 h-80 bg-blue-500/10 rounded-full blur-[100px]" />
+        <div className="absolute -top-40 -left-40 w-80 h-80 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-[100px]" />
         <div className="relative z-10">
           <Link href="/" className="flex items-center gap-3 mb-10">
-            <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-white text-black p-1.5 shadow-lg">
+            <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-white dark:bg-slate-800 text-black dark:text-white p-1.5 shadow-lg">
               <Car className="w-7 h-7" />
             </div>
-            <span className="font-bold text-2xl text-white tracking-tight">
+            <span className="font-bold text-2xl text-slate-900 dark:text-white tracking-tight">
               TicketTora
             </span>
           </Link>
 
-          <h1 className="text-5xl font-extrabold text-white leading-tight tracking-tighter mb-6">
+          <h1 className="text-5xl font-extrabold text-slate-900 dark:text-white leading-tight tracking-tighter mb-6">
             Your Journey <br /> Starts Here.
           </h1>
-          <p className="text-lg text-zinc-400 leading-relaxed max-w-md">
+          <p className="text-lg text-slate-600 dark:text-zinc-400 leading-relaxed max-w-md">
             Book tickets seamlessly for Bus, Train, Launch & Flight. Secure,
             fast, and reliable platform trusted by thousands.
           </p>
@@ -107,16 +107,16 @@ export default function RegisterPage() {
                 key={index}
                 className="flex flex-col items-center gap-3 text-center"
               >
-                <div className="p-4 bg-zinc-900 border border-white/5 rounded-2xl text-white">
+                <div className="p-4 bg-slate-200 dark:bg-zinc-900 border border-slate-300 dark:border-white/5 rounded-2xl text-slate-800 dark:text-white">
                   <feature.icon className="w-8 h-8" />
                 </div>
-                <span className="text-xs text-zinc-500 font-medium max-w-[100px]">
+                <span className="text-xs text-slate-500 dark:text-zinc-500 font-medium max-w-[100px]">
                   {feature.text}
                 </span>
               </div>
             ))}
           </div>
-          <p className="text-sm text-zinc-600 font-medium">
+          <p className="text-sm text-slate-500 dark:text-zinc-600 font-medium">
             Trusted by thousands of travelers across the country.
           </p>
         </div>
@@ -127,27 +127,27 @@ export default function RegisterPage() {
           {/* Mobile Logo (Visible only on small screens) */}
           <div className="flex lg:hidden flex-col items-center mb-10 text-center">
             <Link href="/" className="flex items-center gap-2.5 mb-4">
-              <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-white text-black p-1">
+              <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-white dark:bg-slate-800 text-black dark:text-white p-1">
                 <Car className="w-6 h-6" />
               </div>
-              <span className="font-bold text-xl text-white tracking-tight">
+              <span className="font-bold text-xl text-slate-900 dark:text-white tracking-tight">
                 TicketTora
               </span>
             </Link>
-            <h2 className="text-2xl font-bold text-white tracking-tight">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
               Create Your Account
             </h2>
-            <p className="text-sm text-zinc-400 mt-1.5">
+            <p className="text-sm text-slate-600 dark:text-zinc-400 mt-1.5">
               Fill in the details below to register and start booking.
             </p>
           </div>
 
           {/* Desktop Header (Visible only on large screens) */}
           <div className="hidden lg:block mb-10">
-            <h2 className="text-3xl font-bold text-white tracking-tight">
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
               Create Your Account
             </h2>
-            <p className="text-base text-zinc-400 mt-2">
+            <p className="text-base text-slate-600 dark:text-zinc-400 mt-2">
               Fill in the details below to register.
             </p>
           </div>
@@ -164,11 +164,11 @@ export default function RegisterPage() {
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Name Field */}
             <div>
-              <label className="block text-sm font-medium text-zinc-300 mb-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-2">
                 Full Name
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-zinc-600">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 dark:text-zinc-600">
                   <Person className="w-5 h-5" />
                 </div>
                 <input
@@ -178,18 +178,18 @@ export default function RegisterPage() {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="John Doe"
-                  className="w-full pl-11 pr-4 py-3 bg-[#111215] border border-white/10 rounded-xl text-base text-white placeholder-zinc-600 focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/20 transition-all"
+                  className="w-full pl-11 pr-4 py-3 bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-xl text-base text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-600 focus:outline-none focus:border-slate-400 dark:focus:border-white/20 focus:ring-1 focus:ring-slate-200 dark:focus:ring-white/20 transition-all"
                 />
               </div>
             </div>
 
             {/* Email Field */}
             <div>
-              <label className="block text-sm font-medium text-zinc-300 mb-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-2">
                 Email Address
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-zinc-600">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 dark:text-zinc-600">
                   <Envelope className="w-5 h-5" />
                 </div>
                 <input
@@ -199,30 +199,30 @@ export default function RegisterPage() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="name@example.com"
-                  className="w-full pl-11 pr-4 py-3 bg-[#111215] border border-white/10 rounded-xl text-base text-white placeholder-zinc-600 focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/20 transition-all"
+                  className="w-full pl-11 pr-4 py-3 bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-xl text-base text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-600 focus:outline-none focus:border-slate-400 dark:focus:border-white/20 focus:ring-1 focus:ring-slate-200 dark:focus:ring-white/20 transition-all"
                 />
               </div>
             </div>
 
             {/* Role Select Option */}
             <div>
-              <label className="block text-sm font-medium text-zinc-300 mb-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-2">
                 Join As
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-zinc-600">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 dark:text-zinc-600">
                   <Shield className="w-5 h-5" />
                 </div>
                 <select
                   name="role"
                   value={formData.role}
                   onChange={handleChange}
-                  className="w-full pl-11 pr-4 py-3 bg-[#111215] border border-white/10 rounded-xl text-base text-white focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/20 transition-all appearance-none cursor-pointer"
+                  className="w-full pl-11 pr-4 py-3 bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-xl text-base text-slate-900 dark:text-white focus:outline-none focus:border-slate-400 dark:focus:border-white/20 focus:ring-1 focus:ring-slate-200 dark:focus:ring-white/20 transition-all appearance-none cursor-pointer"
                 >
-                  <option value="user" className="bg-[#111215] text-white">
+                  <option value="user" className="bg-white dark:bg-[#111215] text-slate-900 dark:text-white">
                     User (Book Tickets)
                   </option>
-                  <option value="vendor" className="bg-[#111215] text-white">
+                  <option value="vendor" className="bg-white dark:bg-[#111215] text-slate-900 dark:text-white">
                     Vendor (Manage & Sell Tickets)
                   </option>
                 </select>
@@ -231,11 +231,11 @@ export default function RegisterPage() {
 
             {/* Password Field with Toggle */}
             <div>
-              <label className="block text-sm font-medium text-zinc-300 mb-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-2">
                 Password
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-zinc-600">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 dark:text-zinc-600">
                   <Lock className="w-5 h-5" />
                 </div>
                 <input
@@ -246,13 +246,13 @@ export default function RegisterPage() {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="••••••••"
-                  className="w-full pl-11 pr-12 py-3 bg-[#111215] border border-white/10 rounded-xl text-base text-white placeholder-zinc-600 focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/20 transition-all"
+                  className="w-full pl-11 pr-12 py-3 bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-xl text-base text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-600 focus:outline-none focus:border-slate-400 dark:focus:border-white/20 focus:ring-1 focus:ring-slate-200 dark:focus:ring-white/20 transition-all"
                 />
                 {/* Password Toggle Button */}
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-zinc-600 hover:text-zinc-400 transition-colors"
+                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-500 dark:text-zinc-600 hover:text-slate-700 dark:hover:text-zinc-400 transition-colors"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? (
@@ -268,7 +268,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-6 bg-white hover:bg-zinc-200 text-black font-semibold py-3 px-6 rounded-xl text-base flex items-center justify-center gap-2.5 transition-all duration-150 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full mt-6 bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-zinc-200 text-white dark:text-black font-semibold py-3 px-6 rounded-xl text-base flex items-center justify-center gap-2.5 transition-all duration-150 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <span>Creating Account...</span>
@@ -282,11 +282,11 @@ export default function RegisterPage() {
           </form>
 
           {/* Footer Link */}
-          <p className="mt-8 text-center text-sm text-zinc-500">
+          <p className="mt-8 text-center text-sm text-slate-500 dark:text-zinc-500">
             Already have an account?{" "}
             <Link
               href="/auth/signin"
-              className="text-white hover:underline font-medium ml-1"
+              className="text-slate-900 dark:text-white hover:underline font-medium ml-1"
             >
               Log in
             </Link>

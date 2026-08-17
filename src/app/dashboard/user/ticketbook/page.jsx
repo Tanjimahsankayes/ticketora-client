@@ -2,7 +2,7 @@
 
 import { getBookingsByEmail, cancelBooking } from "@/lib/actions/tickets";
 import { useSession } from "@/lib/auth-client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 const CountdownTimer = ({ targetDate }) => {
   const [timeLeft, setTimeLeft] = useState({
@@ -67,23 +67,14 @@ const MyBookedTickets = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  // Modal & Cancellation States
   const [selectedBookingForCancel, setSelectedBookingForCancel] =
     useState(null);
   const [isCancelling, setIsCancelling] = useState(false);
   const [cancelError, setCancelError] = useState(null);
 
-  useEffect(() => {
-    if (user?.email) {
-      fetchUserBookings(user.email);
-    } else {
-      setLoading(false);
-    }
-  }, [user?.email]);
-
-  const fetchUserBookings = async (email) => {
-    setLoading(true);
+  // isInitial = true হলে লোডার দেখাবে, false হলে ব্যাকগ্রাউন্ডে সাইলেন্টলি ফেচ করবে
+  const fetchUserBookings = useCallback(async (email, isInitial = false) => {
+    if (isInitial) setLoading(true);
     try {
       const data = await getBookingsByEmail(email);
       if (Array.isArray(data)) {
@@ -93,30 +84,52 @@ const MyBookedTickets = () => {
       }
     } catch (err) {
       console.error("Error fetching bookings:", err);
-      setError("Failed to load your booked tickets.");
+      if (isInitial) setError("Failed to load your booked tickets.");
     } finally {
-      setLoading(false);
+      if (isInitial) setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (!user?.email) {
+      setLoading(false);
+      return;
+    }
+
+
+    fetchUserBookings(user.email, true);
+
+    const handleFocus = () => {
+      fetchUserBookings(user.email, false);
+    };
+
+    window.addEventListener("focus", handleFocus);
+
+    const interval = setInterval(() => {
+      fetchUserBookings(user.email, false);
+    }, 50000);
+
+    return () => {
+      window.removeEventListener("focus", handleFocus);
+      clearInterval(interval);
+    };
+  }, [user?.email, fetchUserBookings]);
 
   const handlePayNow = (booking) => {
     console.log("Proceeding to payment for booking:", booking);
   };
 
-  // Modal ওপেন করার হ্যান্ডলার
   const openCancelModal = (booking) => {
     setCancelError(null);
     setSelectedBookingForCancel(booking);
   };
 
-  // Modal ক্লোজ করার হ্যান্ডলার
   const closeCancelModal = () => {
-    if (isCancelling) return; // ক্যানসেল হওয়া অবস্থায় বন্ধ করা যাবে না
+    if (isCancelling) return;
     setSelectedBookingForCancel(null);
     setCancelError(null);
   };
 
-  // Modal থেকে ফাইনাল ক্যানসেল করার হ্যান্ডলার
   const handleConfirmCancel = async () => {
     if (!selectedBookingForCancel || !user?.email) return;
 
@@ -130,10 +143,14 @@ const MyBookedTickets = () => {
       );
 
       if (result.success) {
-        // ক্যানসেল সফল হলে স্টেট থেকে বুকিংটি ফিল্টার করে রিমুভ করে দেওয়া হচ্ছে
         setBookings((prev) =>
-          prev.filter((item) => item._id !== selectedBookingForCancel._id),
+          prev.map((item) =>
+            item._id === selectedBookingForCancel._id
+              ? { ...item, status: "Cancelled" }
+              : item,
+          ),
         );
+
         closeCancelModal();
       } else {
         setCancelError(result.message || "Failed to cancel booking.");
@@ -302,7 +319,6 @@ const MyBookedTickets = () => {
 
                   {/* Countdown & Action Footer */}
                   <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-3">
-                    {/* Hide countdown if status is rejected or cancelled */}
                     {!isRejected && !isCancelled && (
                       <div className="flex items-center justify-between">
                         <span className="text-xs text-slate-500">
@@ -314,7 +330,6 @@ const MyBookedTickets = () => {
                       </div>
                     )}
 
-                    {/* Cancel Ticket Button (শুধুমাত্র Pending অবস্থায় দেখাবে) */}
                     {isPendingStatus && (
                       <button
                         onClick={() => openCancelModal(booking)}
@@ -324,7 +339,6 @@ const MyBookedTickets = () => {
                       </button>
                     )}
 
-                    {/* Pay Now Button (Accepted অবস্থায় দেখাবে) */}
                     {isAccepted && !isExpired && (
                       <button
                         onClick={() => handlePayNow(booking)}
@@ -334,7 +348,6 @@ const MyBookedTickets = () => {
                       </button>
                     )}
 
-                    {/* Departure passed label */}
                     {isAccepted && isExpired && (
                       <p className="text-xs text-center text-red-500 font-medium">
                         Payment unavailable — Departure date has passed.
@@ -352,7 +365,6 @@ const MyBookedTickets = () => {
       {selectedBookingForCancel && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn">
           <div className="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full p-6 shadow-xl border border-slate-200 dark:border-slate-800 transform transition-all">
-            {/* Modal Header Icon & Title */}
             <div className="flex items-center space-x-3 text-rose-600 mb-4">
               <div className="p-2 bg-rose-100 dark:bg-rose-950/50 rounded-full">
                 <svg
@@ -374,7 +386,6 @@ const MyBookedTickets = () => {
               </h3>
             </div>
 
-            {/* Modal Body */}
             <p className="text-sm text-slate-600 dark:text-slate-300 mb-2">
               Are you sure you want to cancel your booking for{" "}
               <span className="font-semibold text-slate-900 dark:text-white">
@@ -384,17 +395,15 @@ const MyBookedTickets = () => {
             </p>
             <p className="text-xs text-slate-500 dark:text-slate-400 mb-6">
               This action cannot be undone. Once cancelled, this ticket card
-              will be removed from your dashboard.
+              will be updated in your dashboard.
             </p>
 
-            {/* Error Message inside Modal */}
             {cancelError && (
               <div className="mb-4 p-3 bg-red-50 dark:bg-red-950/50 text-red-600 dark:text-red-400 text-xs rounded-lg border border-red-200 dark:border-red-900">
                 {cancelError}
               </div>
             )}
 
-            {/* Modal Footer Action Buttons */}
             <div className="flex items-center justify-end space-x-3">
               <button
                 onClick={closeCancelModal}
