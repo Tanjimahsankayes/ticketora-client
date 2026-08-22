@@ -156,9 +156,8 @@ export async function POST(request) {
         },
       ],
 
-      // VERY IMPORTANT
       metadata: {
-        bookingId: booking._id,
+        bookingId: bookingId.toString(),
       },
 
       success_url:

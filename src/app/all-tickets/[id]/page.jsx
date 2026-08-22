@@ -31,7 +31,6 @@ export default function TicketDetailsPage() {
   const [bookingLoading, setBookingLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-
   useEffect(() => {
     const fetchDetails = async () => {
       if (!params?.id) return;
@@ -41,13 +40,12 @@ export default function TicketDetailsPage() {
         setTicket(data);
       } catch (err) {
         console.error("Error loading ticket:", err);
-      } finally {
+      }{
         setLoading(false);
       }
     };
     fetchDetails();
   }, [params?.id]);
-
 
   useEffect(() => {
     if (!ticket?.departureDateTime) return;
@@ -76,7 +74,6 @@ export default function TicketDetailsPage() {
     return () => clearInterval(interval);
   }, [ticket?.departureDateTime]);
 
-
   const handleBookingSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage("");
@@ -90,7 +87,7 @@ export default function TicketDetailsPage() {
 
     if (qty > ticket.quantity) {
       setErrorMessage(
-        `Booking quantity cannot exceed available seats (${ticket.quantity}).`,
+        `Booking quantity cannot exceed available seats (${ticket.quantity}).`
       );
       return;
     }
@@ -114,13 +111,13 @@ export default function TicketDetailsPage() {
       };
 
       const res = await createBooking(payload);
-      if (res?.success && res?.result?.insertedId) {
+      if (res?.success || res?.insertedId || res?.acknowledged) {
         toast.success("Booking submitted successfully!");
         setIsModalOpen(false);
         router.push("/dashboard/user/ticketbook");
       } else {
-        throw new Error("Failed to save booking.");
-      }
+        throw new Error(res?.error || "Failed to save booking.");
+      } 
     } catch (err) {
       toast.error(err.message || "Booking failed.");
       setErrorMessage(err.message);
@@ -131,9 +128,9 @@ export default function TicketDetailsPage() {
 
   if (loading || isSessionLoading) {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center">
-        <div className="flex items-center space-x-3 text-indigo-400">
-          <span className="animate-pulse">Loading Details...</span>
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex items-center justify-center">
+        <div className="flex items-center space-x-3 text-indigo-600 dark:text-indigo-400">
+          <span className="animate-pulse font-medium">Loading Details...</span>
         </div>
       </div>
     );
@@ -141,8 +138,8 @@ export default function TicketDetailsPage() {
 
   if (!ticket) {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center">
-        <p className="text-slate-400">Ticket not found!</p>
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex items-center justify-center">
+        <p className="text-slate-500 dark:text-slate-400">Ticket not found!</p>
       </div>
     );
   }
@@ -151,10 +148,10 @@ export default function TicketDetailsPage() {
   const isButtonDisabled = isExpired || isOutOfStock;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 py-12 px-4 sm:px-6 lg:px-8 font-sans">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 py-12 px-4 sm:px-6 lg:px-8 font-sans">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Banner Image */}
-        <div className="relative w-full h-72 sm:h-96 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl">
+        <div className="relative w-full h-72 sm:h-96 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl dark:shadow-2xl">
           {ticket.imageUrl ? (
             <Image
               src={ticket.imageUrl}
@@ -164,22 +161,22 @@ export default function TicketDetailsPage() {
               className="object-cover"
             />
           ) : (
-            <div className="w-full h-full bg-slate-900 flex items-center justify-center text-slate-500">
+            <div className="w-full h-full bg-slate-200 dark:bg-slate-900 flex items-center justify-center text-slate-500">
               No Image
             </div>
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent" />
           <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
             <div>
               <span className="px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider bg-indigo-600 text-white shadow-md">
                 {ticket.transportType}
               </span>
-              <h1 className="text-2xl sm:text-4xl font-extrabold text-white mt-2">
+              <h1 className="text-2xl sm:text-4xl font-extrabold text-white mt-2 drop-shadow-md">
                 {ticket.title}
               </h1>
             </div>
             <div className="text-right">
-              <span className="text-xs uppercase text-slate-400 font-bold block">
+              <span className="text-xs uppercase text-slate-300 font-bold block">
                 Price
               </span>
               <span className="text-2xl sm:text-3xl font-black text-emerald-400">
@@ -192,43 +189,43 @@ export default function TicketDetailsPage() {
         {/* Countdown & Quick Status Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Countdown Card */}
-          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 flex flex-col justify-center items-center text-center space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+          <div className="bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 flex flex-col justify-center items-center text-center space-y-3 shadow-sm dark:shadow-none">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Departure Countdown
             </h3>
 
             {isExpired ? (
-              <span className="px-4 py-2 bg-rose-500/10 border border-rose-500/30 text-rose-400 text-sm font-bold rounded-xl">
+              <span className="px-4 py-2 bg-rose-500/10 border border-rose-500/30 text-rose-600 dark:text-rose-400 text-sm font-bold rounded-xl">
                 Departure Time Passed
               </span>
             ) : (
               <div className="grid grid-cols-4 gap-3">
-                <div className="bg-slate-950 border border-slate-800 px-3 py-2 rounded-xl">
-                  <span className="text-xl font-black text-indigo-400">
+                <div className="bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 px-3 py-2 rounded-xl">
+                  <span className="text-xl font-black text-indigo-600 dark:text-indigo-400">
                     {timeLeft.days}
                   </span>
                   <span className="block text-[10px] uppercase text-slate-500 font-semibold">
                     Days
                   </span>
                 </div>
-                <div className="bg-slate-950 border border-slate-800 px-3 py-2 rounded-xl">
-                  <span className="text-xl font-black text-indigo-400">
+                <div className="bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 px-3 py-2 rounded-xl">
+                  <span className="text-xl font-black text-indigo-600 dark:text-indigo-400">
                     {timeLeft.hours}
                   </span>
                   <span className="block text-[10px] uppercase text-slate-500 font-semibold">
                     Hours
                   </span>
                 </div>
-                <div className="bg-slate-950 border border-slate-800 px-3 py-2 rounded-xl">
-                  <span className="text-xl font-black text-indigo-400">
+                <div className="bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 px-3 py-2 rounded-xl">
+                  <span className="text-xl font-black text-indigo-600 dark:text-indigo-400">
                     {timeLeft.minutes}
                   </span>
                   <span className="block text-[10px] uppercase text-slate-500 font-semibold">
                     Mins
                   </span>
                 </div>
-                <div className="bg-slate-950 border border-slate-800 px-3 py-2 rounded-xl">
-                  <span className="text-xl font-black text-indigo-400">
+                <div className="bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 px-3 py-2 rounded-xl">
+                  <span className="text-xl font-black text-indigo-600 dark:text-indigo-400">
                     {timeLeft.seconds}
                   </span>
                   <span className="block text-[10px] uppercase text-slate-500 font-semibold">
@@ -240,24 +237,30 @@ export default function TicketDetailsPage() {
           </div>
 
           {/* Logistics Summary */}
-          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 space-y-4">
+          <div className="bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm dark:shadow-none">
             <div className="flex justify-between items-center text-sm">
-              <span className="text-slate-400">Route:</span>
-              <span className="text-slate-200 font-semibold">
+              <span className="text-slate-500 dark:text-slate-400">Route:</span>
+              <span className="text-slate-800 dark:text-slate-200 font-semibold">
                 {ticket.fromLocation} ➔ {ticket.toLocation}
               </span>
             </div>
             <div className="flex justify-between items-center text-sm">
-              <span className="text-slate-400">Available Quantity:</span>
+              <span className="text-slate-500 dark:text-slate-400">
+                Available Quantity:
+              </span>
               <span
-                className={`font-semibold ${isOutOfStock ? "text-rose-400" : "text-emerald-400"}`}
+                className={`font-semibold ${
+                  isOutOfStock
+                    ? "text-rose-600 dark:text-rose-400"
+                    : "text-emerald-600 dark:text-emerald-400"
+                }`}
               >
                 {isOutOfStock ? "Out of Stock" : `${ticket.quantity} Seats`}
               </span>
             </div>
             <div className="flex justify-between items-center text-sm">
-              <span className="text-slate-400">Vendor:</span>
-              <span className="text-indigo-300 font-semibold">
+              <span className="text-slate-500 dark:text-slate-400">Vendor:</span>
+              <span className="text-indigo-600 dark:text-indigo-300 font-semibold">
                 {ticket.vendorName || "TravelCorp"}
               </span>
             </div>
@@ -271,23 +274,23 @@ export default function TicketDetailsPage() {
               {isExpired
                 ? "Departure Passed"
                 : isOutOfStock
-                  ? "Sold Out"
-                  : "Book Now"}
+                ? "Sold Out"
+                : "Book Now"}
             </button>
           </div>
         </div>
 
         {/* Perks Section */}
         {ticket.perks && ticket.perks.length > 0 && (
-          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
+          <div className="bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm dark:shadow-none">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">
               Included Perks
             </h3>
             <div className="flex flex-wrap gap-2">
               {ticket.perks.map((perk, idx) => (
                 <span
                   key={idx}
-                  className="px-3 py-1.5 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-medium"
+                  className="px-3 py-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 text-indigo-700 dark:text-indigo-300 text-xs font-medium"
                 >
                   ✓ {perk}
                 </span>
@@ -299,19 +302,21 @@ export default function TicketDetailsPage() {
 
       {/* Booking Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-md w-full p-6 space-y-6 relative shadow-2xl">
-            <h2 className="text-xl font-bold text-white">Book Ticket</h2>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 dark:bg-black/70 backdrop-blur-sm p-4">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 space-y-6 relative shadow-2xl">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+              Book Ticket
+            </h2>
 
             {errorMessage && (
-              <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-medium">
+              <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs font-medium">
                 {errorMessage}
               </div>
             )}
 
             <form onSubmit={handleBookingSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold uppercase text-slate-400 mb-2">
+                <label className="block text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 mb-2">
                   Select Ticket Quantity (Max: {ticket.quantity})
                 </label>
                 <input
@@ -320,17 +325,19 @@ export default function TicketDetailsPage() {
                   max={ticket.quantity}
                   value={bookQuantity}
                   onChange={(e) => setBookQuantity(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   required
                 />
               </div>
 
-              <div className="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 flex justify-between items-center text-sm">
-                <span className="text-slate-400">Total Price:</span>
-                <span className="text-emerald-400 font-extrabold text-lg">
+              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800/80 flex justify-between items-center text-sm">
+                <span className="text-slate-500 dark:text-slate-400">
+                  Total Price:
+                </span>
+                <span className="text-emerald-600 dark:text-emerald-400 font-extrabold text-lg">
                   $
                   {(ticket.price * (parseInt(bookQuantity, 10) || 0)).toFixed(
-                    2,
+                    2
                   )}
                 </span>
               </div>
@@ -342,7 +349,7 @@ export default function TicketDetailsPage() {
                     setIsModalOpen(false);
                     setErrorMessage("");
                   }}
-                  className="w-1/2 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-xl transition-colors"
+                  className="w-1/2 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-xl transition-colors"
                 >
                   Cancel
                 </button>

@@ -363,6 +363,16 @@ const MyBookedTickets = () => {
                       </button>
                     )}
 
+                    {isCancelled && (
+                      <button
+                        type="button"
+                        disabled
+                        className="w-full py-2.5 px-4 bg-gray-200 text-gray-500 dark:bg-gray-800 dark:text-gray-400 font-semibold rounded-xl cursor-not-allowed"
+                      >
+                        Cancelled
+                      </button>
+                    )}
+
                     {isAccepted &&
                       !isExpired &&
                       booking.paymentStatus !== "paid" && (

@@ -5,7 +5,6 @@ const backendUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000";
 
 export async function POST(request) {
   const body = await request.text();
-
   const signature = request.headers.get("stripe-signature");
 
   if (!signature) {
@@ -15,7 +14,6 @@ export async function POST(request) {
   }
 
   let event;
-
   try {
     event = stripe.webhooks.constructEvent(
       body,
@@ -34,10 +32,14 @@ export async function POST(request) {
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
 
+      // Get metadata
+
       const bookingId = session.metadata?.bookingId;
+      const userId = session.metadata?.userId;
+      const ticketId = session.metadata?.ticketId;
 
       if (!bookingId) {
-        console.error("Booking ID missing from metadata");
+        console.error("Booking ID missing from Stripe metadata");
 
         return NextResponse.json(
           {
@@ -49,13 +51,43 @@ export async function POST(request) {
         );
       }
 
+      if (!userId) {
+        console.error("User ID missing from Stripe metadata");
+
+        return NextResponse.json(
+          {
+            error: "User ID missing",
+          },
+          {
+            status: 400,
+          },
+        );
+      }
+
+      if (!ticketId) {
+        console.error("Ticket ID missing from Stripe metadata");
+
+        return NextResponse.json(
+          {
+            error: "Ticket ID missing",
+          },
+          {
+            status: 400,
+          },
+        );
+      }
+
+      // Stripe Payment Intent
+  
       const paymentIntentId =
         typeof session.payment_intent === "string"
           ? session.payment_intent
           : null;
 
-      // Update MongoDB through Express backend
-      const response = await fetch(
+
+      // Update Booking
+
+      const bookingResponse = await fetch(
         `${backendUrl}/api/bookings/${bookingId}/payment`,
         {
           method: "PATCH",
@@ -66,16 +98,14 @@ export async function POST(request) {
 
           body: JSON.stringify({
             paymentStatus: "paid",
-
             stripeSessionId: session.id,
-
             stripePaymentIntentId: paymentIntentId,
           }),
         },
       );
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
+      if (!bookingResponse.ok) {
+        const errorData = await bookingResponse.json().catch(() => ({}));
 
         console.error("Backend payment update failed:", errorData);
 
@@ -84,9 +114,17 @@ export async function POST(request) {
         });
       }
 
-      console.log("Payment completed:", bookingId);
-    }
 
+      console.log("Payment completed successfully:", {
+        bookingId,
+        userId,
+        ticketId,
+        transactionId: `TXN-${session.id.slice(-8).toUpperCase()}`,
+        amount: session.amount_total ? session.amount_total / 100 : 0,
+      });
+    }
+    // Response
+ 
     return NextResponse.json({
       received: true,
     });

@@ -52,7 +52,7 @@ const DashboardLayout = ({ children }) => {
       </aside>
 
       {/* Main Content Area */}
-      <main className="relative z-10 flex-1 min-w-0 p-4 sm:p-6 lg:p-8 xl:p-10 transition-all duration-300">
+      <main className="relative z-10 flex-1 min-w-0 sm:p-6 lg:p-8 xl:p-10 transition-all duration-300">
         <div className="mx-auto max-w-7xl">{children}</div>
       </main>
     </div>
