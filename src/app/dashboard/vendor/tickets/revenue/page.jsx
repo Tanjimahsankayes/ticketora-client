@@ -13,6 +13,7 @@ import {
   Ticket,
 } from "@gravity-ui/icons";
 import { useSession } from "@/lib/auth-client";
+import { getVendorRevenueTrend } from "@/lib/actions/vendor";
 
 const API_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000";
 
@@ -53,6 +54,9 @@ const RevenuePage = () => {
 
         setError("");
 
+        // -----------------------------------------
+        // 1. Fetch main revenue/statistics data
+        // -----------------------------------------
         const response = await fetch(
           `${API_URL}/api/vendor-revenue?vendorEmail=${encodeURIComponent(
             user.email,
@@ -67,17 +71,60 @@ const RevenuePage = () => {
           throw new Error("Failed to fetch revenue data");
         }
 
-        const data = await response.json();
+        const revenueResult = await response.json();
 
-        if (!data?.success) {
+        if (!revenueResult?.success) {
           throw new Error(
-            data?.message || "Failed to load revenue information",
+            revenueResult?.message || "Failed to load revenue information",
           );
         }
 
-        setRevenueData(data);
+        // -----------------------------------------
+        // 2. Fetch monthly revenue trend
+        // -----------------------------------------
+        const trendResult = await getVendorRevenueTrend(
+          user.email,
+          new Date().getFullYear(),
+        );
+
+        // -----------------------------------------
+        // 3. Convert trend API response
+        // -----------------------------------------
+        let monthlyRevenue = [];
+
+        if (trendResult?.success) {
+          const trendData = Array.isArray(trendResult.data)
+            ? trendResult.data
+            : [];
+
+          monthlyRevenue = trendData.map((item) => ({
+            month: new Date(
+              new Date().getFullYear(),
+              Number(item?._id?.month || 1) - 1,
+              1,
+            ).toLocaleString("en-US", {
+              month: "short",
+            }),
+
+            revenue: Number(item?.revenue || 0),
+
+            bookings: Number(item?.bookings || 0),
+
+            ticketsSold: Number(item?.ticketsSold || 0),
+          }));
+        }
+
+        // -----------------------------------------
+        // 4. Keep main revenue data
+        //    + add monthly trend
+        // -----------------------------------------
+        setRevenueData({
+          ...revenueResult,
+          monthlyRevenue,
+        });
       } catch (err) {
         console.error("Revenue fetch error:", err);
+
         setError(err?.message || "Something went wrong while loading revenue.");
       } finally {
         setLoading(false);
@@ -87,11 +134,12 @@ const RevenuePage = () => {
     [user?.email, dateRange],
   );
 
-  useEffect(() => {
-    if (!user?.email) return;
 
-    fetchRevenue();
-  }, [user?.email, dateRange, fetchRevenue]);
+ useEffect(() => {
+   if (!user?.email) return;
+
+   fetchRevenue(false);
+ }, [user?.email, dateRange, fetchRevenue]);
 
   const stats = useMemo(() => {
     const added = Number(revenueData?.totalTicketsAdded || 0);
@@ -303,10 +351,6 @@ const RevenuePage = () => {
   );
 };
 
-/* ---------------------------------- */
-/* Stat Card */
-/* ---------------------------------- */
-
 const StatCard = ({ title, value, subtitle, icon, loading }) => {
   return (
     <div className="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
@@ -335,10 +379,8 @@ const StatCard = ({ title, value, subtitle, icon, loading }) => {
   );
 };
 
-/* ---------------------------------- */
-/* Revenue Chart */
-/* ---------------------------------- */
 
+/* Revenue Chart */
 const RevenueChart = ({ data, loading }) => {
   if (loading) {
     return (
@@ -354,66 +396,103 @@ const RevenueChart = ({ data, loading }) => {
     );
   }
 
-  if (!data?.length) {
+  if (!Array.isArray(data) || data.length === 0) {
     return <EmptyChart message="No revenue data available yet." />;
   }
 
   const maxRevenue = Math.max(
-    ...data.map((item) => Number(item.revenue || 0)),
+    ...data.map((item) => Number(item?.revenue || 0)),
     1,
   );
 
+  const totalRevenue = data.reduce(
+    (sum, item) => sum + Number(item?.revenue || 0),
+    0,
+  );
+
   return (
-    <div className="space-y-4">
-      <div className="flex h-[300px] items-end gap-2 overflow-x-auto pb-8 sm:gap-3">
-        {data.map((item, index) => {
-          const revenue = Number(item.revenue || 0);
-
-          const height = Math.max(
-            (revenue / maxRevenue) * 100,
-            revenue > 0 ? 4 : 0,
-          );
-
-          return (
+    <div className="space-y-5">
+      {/* Chart */}
+      <div className="relative h-[300px] w-full">
+        {/* Horizontal grid */}
+        <div className="absolute inset-0 flex flex-col justify-between pb-8">
+          {[0, 1, 2, 3, 4].map((item) => (
             <div
-              key={`${item.month}-${index}`}
-              className="group flex min-w-[42px] flex-1 flex-col items-center justify-end gap-2"
-            >
-              <div className="relative flex h-full w-full items-end justify-center">
-                <div
-                  className="w-full max-w-[42px] rounded-t-lg bg-blue-600 transition-all duration-500 hover:bg-blue-500 dark:bg-blue-500 dark:hover:bg-blue-400"
-                  style={{ height: `${height}%` }}
-                  title={formatCurrency(revenue)}
-                />
-              </div>
+              key={item}
+              className="border-t border-slate-200 dark:border-slate-800"
+            />
+          ))}
+        </div>
 
-              <span className="whitespace-nowrap text-[11px] text-slate-500 dark:text-slate-400">
-                {item.month}
-              </span>
-            </div>
-          );
-        })}
+        {/* Bars */}
+        <div className="relative flex h-full items-end gap-3 overflow-x-auto px-2 pb-8">
+          {data.map((item, index) => {
+            const revenue = Number(item?.revenue || 0);
+
+            const height =
+              revenue > 0 ? Math.max((revenue / maxRevenue) * 100, 8) : 2;
+
+            return (
+              <div
+                key={`${item.month}-${index}`}
+                className="group flex h-full min-w-[55px] flex-1 flex-col items-center justify-end"
+              >
+                {/* Bar area */}
+                <div className="relative flex h-[260px] w-full items-end justify-center">
+                  {/* Tooltip */}
+                  <div className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 -translate-x-1/2 scale-95 rounded-lg bg-slate-900 px-3 py-2 text-xs font-semibold whitespace-nowrap text-white opacity-0 shadow-lg transition-all group-hover:scale-100 group-hover:opacity-100 dark:bg-white dark:text-slate-900">
+                    {formatCurrency(revenue)}
+                  </div>
+
+                  {/* Bar */}
+                  <div
+                    className="w-full max-w-[44px] rounded-t-xl bg-blue-600 transition-all duration-500 hover:bg-blue-500 dark:bg-blue-500 dark:hover:bg-blue-400"
+                    style={{
+                      height: `${height}%`,
+                      minHeight: revenue > 0 ? "12px" : "3px",
+                    }}
+                  />
+                </div>
+
+                {/* Month */}
+                <span className="mt-2 text-xs font-medium text-slate-500 dark:text-slate-400">
+                  {item.month}
+                </span>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
+      {/* Summary */}
       <div className="flex items-center justify-between border-t border-slate-200 pt-4 dark:border-slate-800">
-        <span className="text-sm text-slate-500 dark:text-slate-400">
-          Selected period
-        </span>
+        <div>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            Revenue for selected period
+          </p>
 
-        <span className="font-semibold">
-          {formatCurrency(
-            data.reduce((sum, item) => sum + Number(item.revenue || 0), 0),
-          )}
-        </span>
+          <p className="mt-1 text-lg font-bold text-slate-900 dark:text-white">
+            {formatCurrency(totalRevenue)}
+          </p>
+        </div>
+
+        <div className="rounded-xl bg-blue-50 px-4 py-2 dark:bg-blue-950/30">
+          <p className="text-xs text-blue-600 dark:text-blue-400">
+            Transactions
+          </p>
+
+          <p className="mt-1 text-sm font-bold text-blue-700 dark:text-blue-300">
+            {formatNumber(
+              data.reduce((sum, item) => sum + Number(item?.bookings || 0), 0),
+            )}
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
-/* ---------------------------------- */
 /* Ticket Performance */
-/* ---------------------------------- */
-
 const TicketPerformance = ({ added, sold, loading }) => {
   if (loading) {
     return (
@@ -466,10 +545,7 @@ const TicketPerformance = ({ added, sold, loading }) => {
   );
 };
 
-/* ---------------------------------- */
 /* Recent Transactions */
-/* ---------------------------------- */
-
 const RecentTransactions = ({ transactions, loading }) => {
   if (loading) {
     return (
@@ -551,10 +627,7 @@ const RecentTransactions = ({ transactions, loading }) => {
   );
 };
 
-/* ---------------------------------- */
 /* Empty Chart */
-/* ---------------------------------- */
-
 const EmptyChart = ({ message }) => {
   return (
     <div className="flex h-[300px] flex-col items-center justify-center text-center">

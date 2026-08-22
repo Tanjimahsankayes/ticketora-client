@@ -90,3 +90,46 @@ export const updateBookingStatus = async (bookingId, status, vendorEmail) => {
     };
   }
 };
+
+export const getVendorRevenueTrend = async (
+  vendorEmail,
+  year = new Date().getFullYear(),
+) => {
+  if (!vendorEmail) {
+    return {
+      success: false,
+      data: [],
+      message: "Vendor email is required",
+    };
+  }
+
+  try {
+    const response = await fetch(
+      `${baseUrl}/api/vendor-revenue-trend?` +
+        new URLSearchParams({
+          vendorEmail,
+          period: "monthly",
+          year: String(year),
+        }),
+      {
+        cache: "no-store",
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(`Revenue API failed with status ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    return result;
+  } catch (error) {
+    console.error("getVendorRevenueTrend error:", error);
+
+    return {
+      success: false,
+      data: [],
+      message: error.message || "Failed to fetch revenue trend",
+    };
+  }
+};
