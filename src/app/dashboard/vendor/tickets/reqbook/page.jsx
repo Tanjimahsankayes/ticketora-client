@@ -38,28 +38,49 @@ export default function ReqBookingPage() {
   }, [vendorEmail, isPending]);
 
   const handleStatusUpdate = async (bookingId, status) => {
-    setUpdatingId(bookingId);
-    try {
-      const result = await updateBookingStatus(bookingId, status, vendorEmail);
+    if (!bookingId || !vendorEmail) {
+      toast.error("Invalid booking information");
+      return;
+    }
 
-      if (result.success) {
-        toast.success(`Booking ${status.toLowerCase()} successfully`);
-        setBookings((prev) =>
-          prev.map((booking) =>
-            booking._id === bookingId
-              ? {
-                  ...booking,
-                  status: status,
-                }
-              : booking,
-          ),
-        );
-      } else {
-        toast.error(result.message || "Something went wrong");
+    if (updatingId) return;
+
+    setUpdatingId(bookingId);
+
+    try {
+      // Always send lowercase to backend
+      const normalizedStatus = status.toLowerCase();
+
+      const result = await updateBookingStatus(
+        bookingId,
+        normalizedStatus,
+        vendorEmail,
+      );
+
+      if (!result?.success) {
+        toast.error(result?.message || "Failed to update booking");
+        return;
       }
+
+      // Update UI immediately
+      setBookings((prev) =>
+        prev.map((booking) =>
+          booking._id === bookingId
+            ? {
+                ...booking,
+                status: normalizedStatus,
+                updatedAt: new Date().toISOString(),
+              }
+            : booking,
+        ),
+      );
+
+      toast.success(
+        `Booking ${normalizedStatus === "accepted" ? "accepted" : "rejected"} successfully`,
+      );
     } catch (error) {
-      console.error("Error updating status:", error);
-      toast.error("Failed to update status");
+      console.error("Error updating booking status:", error);
+      toast.error("Failed to update booking status");
     } finally {
       setUpdatingId(null);
     }
@@ -77,11 +98,14 @@ export default function ReqBookingPage() {
       ticketTitle.toLowerCase().includes(searchQuery.toLowerCase());
 
     if (selectedStatus === "ALL") return matchesSearch;
-    const currentStatus = (booking.status || "Pending").toLowerCase();
+
+    // Normalize status strings for exact comparison
+    const currentStatus = (booking.status || "pending")
+      .toString()
+      .toLowerCase();
     return matchesSearch && currentStatus === selectedStatus.toLowerCase();
   });
 
-  // Early Return Loading State
   if (isPending || loading) {
     return (
       <div className="min-h-[60vh] flex justify-center items-center p-4">
@@ -94,10 +118,11 @@ export default function ReqBookingPage() {
     );
   }
 
+  console.log("bookings", bookings)
+
   return (
     <div className="min-h-screen text-slate-200 font-sans p-4 sm:p-6 md:p-10 antialiased selection:bg-indigo-500 selection:text-white">
       <div className="max-w-7xl mx-auto space-y-6">
-        {/* Main Card Container */}
         <div className="backdrop-blur-xl border border-slate-800/80 rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8">
           {/* Header Section */}
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-6 border-b border-slate-800/80">
@@ -110,9 +135,7 @@ export default function ReqBookingPage() {
               </p>
             </div>
 
-            {/* Controls Toolbar (Search + Filter) */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-              {/* Search Bar */}
               <div className="relative flex-1 sm:w-64">
                 <input
                   type="text"
@@ -136,7 +159,6 @@ export default function ReqBookingPage() {
                 </svg>
               </div>
 
-              {/* Status Filter Dropdown */}
               <select
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
@@ -167,13 +189,16 @@ export default function ReqBookingPage() {
                 {filteredBookings.length > 0 ? (
                   filteredBookings.map((booking) => {
                     const bookingId = booking._id;
-                    const status = booking.status || "Pending";
-                    const isPendingState = status === "Pending";
-                    const isAccepted = status === "Accepted";
-                    const isRejected = status === "Rejected";
+                    // Robust lower-case comparisons
+                    const currentStatus = (booking.status || "pending")
+                      .toString()
+                      .toLowerCase();
+                    const isPendingState = currentStatus === "pending";
+                    const isAccepted = currentStatus === "accepted";
+                    const isRejected = currentStatus === "rejected";
 
                     const userAvatar =
-                      booking.userAvatar ||
+                      booking.img ||
                       `https://ui-avatars.com/api/?name=${encodeURIComponent(
                         booking.userName || "User",
                       )}&background=random`;
@@ -183,12 +208,13 @@ export default function ReqBookingPage() {
                         key={bookingId}
                         className="bg-[#1a2332]/60 hover:bg-[#1f2a3c] transition-colors rounded-xl border border-slate-800/40"
                       >
-                        {/* CUSTOMER */}
                         <td className="px-4 py-3.5 rounded-l-xl">
                           <div className="flex items-center gap-3">
                             <img
-                              src={userAvatar}
+                              src={booking.img}
                               alt={booking.userName}
+                              width={20}
+                              height={20}
                               className="w-9 h-9 rounded-full object-cover border border-slate-700 shadow-sm"
                             />
                             <div className="flex flex-col">
@@ -202,7 +228,6 @@ export default function ReqBookingPage() {
                           </div>
                         </td>
 
-                        {/* TICKET / ROUTE */}
                         <td className="px-4 py-3.5">
                           <div className="flex flex-col">
                             <span className="font-semibold text-slate-200">
@@ -219,7 +244,6 @@ export default function ReqBookingPage() {
                           </div>
                         </td>
 
-                        {/* QUANTITY */}
                         <td className="px-4 py-3.5">
                           <span className="px-2.5 py-1 bg-[#1e2736] border border-slate-700/60 rounded-md text-xs font-semibold text-slate-300">
                             {booking.quantity}{" "}
@@ -227,12 +251,10 @@ export default function ReqBookingPage() {
                           </span>
                         </td>
 
-                        {/* PRICE */}
                         <td className="px-4 py-3.5 font-bold text-emerald-400">
                           ৳ {booking.totalPrice?.toLocaleString()}
                         </td>
 
-                        {/* STATUS */}
                         <td className="px-4 py-3.5">
                           {isAccepted ? (
                             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 uppercase tracking-wider">
@@ -308,13 +330,15 @@ export default function ReqBookingPage() {
             {filteredBookings.length > 0 ? (
               filteredBookings.map((booking) => {
                 const bookingId = booking._id;
-                const status = booking.status || "Pending";
-                const isPendingState = status === "Pending";
-                const isAccepted = status === "Accepted";
-                const isRejected = status === "Rejected";
+                const currentStatus = (booking.status || "pending")
+                  .toString()
+                  .toLowerCase();
+                const isPendingState = currentStatus === "pending";
+                const isAccepted = currentStatus === "accepted";
+                const isRejected = currentStatus === "rejected";
 
                 const userAvatar =
-                  booking.userAvatar ||
+                  booking.img ||
                   `https://ui-avatars.com/api/?name=${encodeURIComponent(
                     booking.userName || "User",
                   )}&background=random`;
@@ -324,11 +348,12 @@ export default function ReqBookingPage() {
                     key={bookingId}
                     className="bg-[#1a2332] border border-slate-800 rounded-2xl p-5 space-y-4 shadow-lg"
                   >
-                    {/* User Header */}
                     <div className="flex items-center gap-3">
                       <img
-                        src={userAvatar}
+                        src={booking.img}
                         alt={booking.userName}
+                        height={20}
+                        width={20}
                         className="w-12 h-12 rounded-full object-cover border-2 border-slate-700 shadow-md"
                       />
                       <div>
@@ -341,7 +366,6 @@ export default function ReqBookingPage() {
                       </div>
                     </div>
 
-                    {/* Ticket Details Box */}
                     <div className="bg-[#151c28] border border-slate-800/80 rounded-xl p-3.5 space-y-2 text-xs">
                       <div className="flex justify-between items-center">
                         <span className="text-slate-400 font-medium">
@@ -379,7 +403,6 @@ export default function ReqBookingPage() {
                       </div>
                     </div>
 
-                    {/* Status Badge & Actions */}
                     <div className="pt-2 border-t border-slate-800/80 space-y-3">
                       <div className="flex items-center justify-between">
                         <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
@@ -400,7 +423,7 @@ export default function ReqBookingPage() {
                         )}
                       </div>
 
-                      {isPendingState && (
+                      {isPendingState ? (
                         <div className="flex gap-2">
                           <button
                             onClick={() =>
@@ -421,6 +444,10 @@ export default function ReqBookingPage() {
                             <X size={14} /> Reject
                           </button>
                         </div>
+                      ) : (
+                        <div className="text-center text-xs text-slate-500 font-semibold uppercase tracking-wider italic pt-1">
+                          Action Completed
+                        </div>
                       )}
                     </div>
                   </div>
@@ -433,7 +460,7 @@ export default function ReqBookingPage() {
             )}
           </div>
 
-          {/* Footer / Pagination Placeholder */}
+          {/* Footer */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 mt-6 border-t border-slate-800/80 text-xs text-slate-400 font-medium">
             <div>
               Showing {filteredBookings.length} of {bookings.length} requests

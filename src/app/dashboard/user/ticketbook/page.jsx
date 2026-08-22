@@ -72,7 +72,6 @@ const MyBookedTickets = () => {
   const [isCancelling, setIsCancelling] = useState(false);
   const [cancelError, setCancelError] = useState(null);
 
-  // isInitial = true হলে লোডার দেখাবে, false হলে ব্যাকগ্রাউন্ডে সাইলেন্টলি ফেচ করবে
   const fetchUserBookings = useCallback(async (email, isInitial = false) => {
     if (isInitial) setLoading(true);
     try {
@@ -115,9 +114,38 @@ const MyBookedTickets = () => {
     };
   }, [user?.email, fetchUserBookings]);
 
-  const handlePayNow = (booking) => {
-    console.log("Proceeding to payment for booking:", booking);
-  };
+ const handlePayNow = async (booking) => {
+   try {
+     const response = await fetch("/api/checkout_sessions", {
+       method: "POST",
+
+       headers: {
+         "Content-Type": "application/json",
+       },
+
+       body: JSON.stringify({
+         bookingId: booking._id,
+       }),
+     });
+
+     const data = await response.json();
+
+     if (!response.ok) {
+       throw new Error(data.error || "Failed to create payment");
+     }
+
+     if (!data.checkoutUrl) {
+       throw new Error("Stripe checkout URL not found");
+     }
+
+     // Redirect user to Stripe
+     window.location.href = data.checkoutUrl;
+   } catch (error) {
+     console.error("Payment error:", error);
+
+     alert(error.message || "Failed to proceed with payment");
+   }
+ };
 
   const openCancelModal = (booking) => {
     setCancelError(null);
@@ -252,11 +280,7 @@ const MyBookedTickets = () => {
                 {/* Image Section */}
                 <div className="relative h-48 w-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
                   <img
-                    src={
-                      booking.img ||
-                      booking.ticketImage ||
-                      "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=600"
-                    }
+                    src={booking.img || booking.ticketImage}
                     alt={booking.ticketTitle}
                     className="w-full h-full object-cover"
                   />
@@ -340,12 +364,18 @@ const MyBookedTickets = () => {
                     )}
 
                     {isAccepted && !isExpired && (
-                      <button
-                        onClick={() => handlePayNow(booking)}
-                        className="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                      >
-                        Pay Now
-                      </button>
+                      <form action="/api/checkout_sessions" method="POST">
+                        <section>
+                          <button
+                            type="button"
+                            role="link"
+                            onClick={() => handlePayNow(booking)}
+                            className="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                          >
+                            Pay Now
+                          </button>
+                        </section>
+                      </form>
                     )}
 
                     {isAccepted && isExpired && (
@@ -389,7 +419,7 @@ const MyBookedTickets = () => {
             <p className="text-sm text-slate-600 dark:text-slate-300 mb-2">
               Are you sure you want to cancel your booking for{" "}
               <span className="font-semibold text-slate-900 dark:text-white">
-                "{selectedBookingForCancel.ticketTitle}"
+                {selectedBookingForCancel.ticketTitle}
               </span>
               ?
             </p>

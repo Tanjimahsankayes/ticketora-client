@@ -12,7 +12,9 @@ export const getVendorBookings = async (vendorEmail) => {
 
   try {
     const res = await fetch(
-      `${baseUrl}/api/vendor-bookings?vendorEmail=${vendorEmail}`,
+      `${baseUrl}/api/vendor-bookings?vendorEmail=${encodeURIComponent(
+        vendorEmail,
+      )}`,
       {
         cache: "no-store",
       },
@@ -22,14 +24,12 @@ export const getVendorBookings = async (vendorEmail) => {
 
     if (!res.ok) {
       console.error("Failed to fetch vendor bookings:", data);
-
       return [];
     }
 
     return Array.isArray(data) ? data : [];
   } catch (error) {
     console.error("Error fetching vendor bookings:", error);
-
     return [];
   }
 };
@@ -44,25 +44,36 @@ export const updateBookingStatus = async (bookingId, status, vendorEmail) => {
       };
     }
 
+    // Always use lowercase status
+    const normalizedStatus = status.toString().toLowerCase();
+
+    if (!["accepted", "rejected"].includes(normalizedStatus)) {
+      return {
+        success: false,
+        message: "Invalid booking status",
+      };
+    }
+
     const res = await fetch(
       `${baseUrl}/api/vendor-bookings/status/${bookingId}`,
       {
         method: "PATCH",
-
         headers: {
           "Content-Type": "application/json",
         },
-
         body: JSON.stringify({
-          status,
+          status: normalizedStatus,
           vendorEmail,
         }),
+        cache: "no-store",
       },
     );
 
     const data = await res.json().catch(() => ({}));
 
     if (!res.ok) {
+      console.error("Booking status update failed:", data);
+
       return {
         success: false,
         message: data.message || "Failed to update booking status",
@@ -75,7 +86,7 @@ export const updateBookingStatus = async (bookingId, status, vendorEmail) => {
 
     return {
       success: false,
-      message: error.message || "Server error",
+      message: error?.message || "Server error",
     };
   }
 };
