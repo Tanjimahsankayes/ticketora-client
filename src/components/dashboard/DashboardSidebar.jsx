@@ -47,7 +47,7 @@ export function DashboardSidebar() {
     {
       icon: ChartLineArrowUp,
       label: "Revenue Overview",
-      href: "/dashboard/vendor/tickets",
+      href: "/dashboard/vendor/tickets/revenue",
       color: "from-rose-500 to-pink-400",
       glow: "group-hover:shadow-rose-500/20",
     },
