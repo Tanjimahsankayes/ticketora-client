@@ -4,6 +4,7 @@ import { stripe } from "@/lib/stripe";
 const backendUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000";
 
 export async function POST(request) {
+
   const body = await request.text();
   const signature = request.headers.get("stripe-signature");
 
@@ -14,6 +15,7 @@ export async function POST(request) {
   }
 
   let event;
+
   try {
     event = stripe.webhooks.constructEvent(
       body,
@@ -28,16 +30,20 @@ export async function POST(request) {
     });
   }
 
+  console.log("========== STRIPE WEBHOOK RECEIVED ==========");
+  console.log("Event:", event.type);
+  console.log("Event ID:", event.id);
+
   try {
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
 
-      // Get metadata
-
       const bookingId = session.metadata?.bookingId;
-      const userId = session.metadata?.userId;
-      const ticketId = session.metadata?.ticketId;
 
+      console.log("Stripe session:", session.id);
+      console.log("Booking ID:", bookingId);
+
+      // Only bookingId is required for MongoDB update
       if (!bookingId) {
         console.error("Booking ID missing from Stripe metadata");
 
@@ -51,51 +57,33 @@ export async function POST(request) {
         );
       }
 
-      if (!userId) {
-        console.error("User ID missing from Stripe metadata");
-
-        return NextResponse.json(
-          {
-            error: "User ID missing",
-          },
-          {
-            status: 400,
-          },
+      // Make sure payment is actually completed
+      if (session.payment_status !== "paid") {
+        console.log(
+          "Checkout session completed but payment_status is:",
+          session.payment_status,
         );
+
+        return NextResponse.json({
+          received: true,
+          message: "Payment is not marked as paid yet",
+        });
       }
 
-      if (!ticketId) {
-        console.error("Ticket ID missing from Stripe metadata");
-
-        return NextResponse.json(
-          {
-            error: "Ticket ID missing",
-          },
-          {
-            status: 400,
-          },
-        );
-      }
-
-      // Stripe Payment Intent
-  
       const paymentIntentId =
         typeof session.payment_intent === "string"
           ? session.payment_intent
           : null;
 
-
-      // Update Booking
+      console.log("Updating MongoDB booking:", bookingId);
 
       const bookingResponse = await fetch(
         `${backendUrl}/api/bookings/${bookingId}/payment`,
         {
           method: "PATCH",
-
           headers: {
             "Content-Type": "application/json",
           },
-
           body: JSON.stringify({
             paymentStatus: "paid",
             stripeSessionId: session.id,
@@ -104,27 +92,30 @@ export async function POST(request) {
         },
       );
 
-      if (!bookingResponse.ok) {
-        const errorData = await bookingResponse.json().catch(() => ({}));
+      const responseText = await bookingResponse.text();
 
-        console.error("Backend payment update failed:", errorData);
+      console.log("Backend response:", {
+        status: bookingResponse.status,
+        ok: bookingResponse.ok,
+        body: responseText,
+      });
+
+      if (!bookingResponse.ok) {
+        console.error("Backend payment update failed:", responseText);
 
         return new NextResponse("Failed to update booking", {
           status: 500,
         });
       }
 
-
-      console.log("Payment completed successfully:", {
-        bookingId,
-        userId,
-        ticketId,
-        transactionId: `TXN-${session.id.slice(-8).toUpperCase()}`,
-        amount: session.amount_total ? session.amount_total / 100 : 0,
-      });
+      console.log("===========================================");
+      console.log("PAYMENT SUCCESSFULLY SAVED TO MONGODB");
+      console.log("Booking ID:", bookingId);
+      console.log("Stripe Session:", session.id);
+      console.log("Payment Intent:", paymentIntentId);
+      console.log("===========================================");
     }
-    // Response
- 
+
     return NextResponse.json({
       received: true,
     });
@@ -134,6 +125,7 @@ export async function POST(request) {
     return NextResponse.json(
       {
         error: "Webhook processing failed",
+        message: error.message,
       },
       {
         status: 500,

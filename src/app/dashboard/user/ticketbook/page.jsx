@@ -94,8 +94,6 @@ const MyBookedTickets = () => {
       setLoading(false);
       return;
     }
-
-
     fetchUserBookings(user.email, true);
 
     const handleFocus = () => {

@@ -158,6 +158,8 @@ export async function POST(request) {
 
       metadata: {
         bookingId: bookingId.toString(),
+        userId: booking.userId?.toString() || "",
+        ticketId: booking.ticketId?.toString() || "",
       },
 
       success_url:
