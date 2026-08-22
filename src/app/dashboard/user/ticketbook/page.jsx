@@ -363,20 +363,31 @@ const MyBookedTickets = () => {
                       </button>
                     )}
 
-                    {isAccepted && !isExpired && (
-                      <form action="/api/checkout_sessions" method="POST">
-                        <section>
-                          <button
-                            type="button"
-                            role="link"
-                            onClick={() => handlePayNow(booking)}
-                            className="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                          >
-                            Pay Now
-                          </button>
-                        </section>
-                      </form>
+                    {isAccepted &&
+                      !isExpired &&
+                      booking.paymentStatus !== "paid" && (
+                        <button
+                          type="button"
+                          onClick={() => handlePayNow(booking)}
+                          className="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        >
+                          Pay Now
+                        </button>
+                      )}
+
+                    {isAccepted && booking.paymentStatus === "paid" && (
+                      <div className="w-full py-2.5 px-4 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300 font-semibold rounded-xl text-center">
+                        Payment Completed ✓
+                      </div>
                     )}
+
+                    {isAccepted &&
+                      isExpired &&
+                      booking.paymentStatus !== "paid" && (
+                        <p className="text-xs text-center text-red-500 font-medium">
+                          Payment unavailable — Departure date has passed.
+                        </p>
+                      )}
 
                     {isAccepted && isExpired && (
                       <p className="text-xs text-center text-red-500 font-medium">
