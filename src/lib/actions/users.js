@@ -42,31 +42,32 @@ export const saveUserProfile = async (newUserData) => {
   }
 };
 
-export const getTransactionsByUser = async (userId) => {
-  if (!userId) return [];
+export const getTransactionsByUser = async (userEmail) => {
+  if (!userEmail) return [];
 
   try {
-    const response = await fetch(`${baseUrl}/api/bookings/user/${userId}`, {
-      cache: "no-store",
-    });
+    const response = await fetch(
+      `${baseUrl}/api/bookings?email=${encodeURIComponent(userEmail)}`,
+      {
+        cache: "no-store",
+      },
+    );
 
     if (!response.ok) {
       const errorText = await response.text();
 
       throw new Error(
-        `Failed to fetch bookings: ${response.status} ${errorText}`,
+        `Failed to fetch transactions: ${response.status} ${errorText}`,
       );
     }
 
     const data = await response.json();
 
-    // Only paid bookings
     const bookings = Array.isArray(data) ? data : data.bookings || [];
 
     return bookings.filter((booking) => booking.paymentStatus === "paid");
   } catch (error) {
     console.error("Error fetching transaction history:", error);
-
     throw error;
   }
 };

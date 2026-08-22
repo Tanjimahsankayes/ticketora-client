@@ -45,14 +45,14 @@ const TransactionHistoryPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const userId = session?.user?.id;
+  const userEmail = session?.user?.email;
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000";
 
 useEffect(() => {
   if (sessionLoading) return;
 
-  if (!userId) {
+  if (!userEmail) {
     setLoading(false);
     return;
   }
@@ -62,12 +62,11 @@ useEffect(() => {
       setLoading(true);
       setError("");
 
-      const data = await getTransactionsByUser(userId);
+      const data = await getTransactionsByUser(userEmail);
 
-      setTransactions(Array.isArray(data) ? data : data.transactions || []);
+      setTransactions(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Transaction fetch error:", error);
-
       setError("Failed to load transaction history.");
     } finally {
       setLoading(false);
@@ -75,7 +74,7 @@ useEffect(() => {
   };
 
   fetchTransactions();
-}, [userId, sessionLoading]);
+}, [userEmail, sessionLoading]);
 
 
   // Summary calculations
@@ -86,14 +85,15 @@ useEffect(() => {
     return transactions
       .filter((transaction) => transaction.paymentStatus === "paid")
       .reduce(
-        (total, transaction) => total + Number(transaction.amount || 0),
+        (total, transaction) => total + Number(transaction.totalPrice || 0),
         0,
       );
   }, [transactions]);
 
   const successfulPayments = useMemo(() => {
-    return transactions.filter((transaction) => transaction.status === "paid")
-      .length;
+    return transactions.filter(
+      (transaction) => transaction.paymentStatus === "paid",
+    ).length;
   }, [transactions]);
 
   // Date formatter
@@ -145,7 +145,7 @@ useEffect(() => {
 
   // User not logged in
 
-  if (!userId) {
+  if (!userEmail) {
     return (
       <main className="min-h-screen bg-background px-4 py-8 text-foreground sm:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
@@ -270,17 +270,13 @@ useEffect(() => {
 
                           <div className="min-w-0">
                             <p className="truncate font-medium">
-                              {transaction.ticketId?.title ||
-                                transaction.ticketName ||
-                                "Ticket Payment"}
+                              {transaction.ticketTitle || "Ticket Payment"}
                             </p>
 
                             <p className="mt-1 text-xs text-muted-foreground">
-                              {transaction.transactionId || transaction._id}
-                              {" · "}
-                              {transaction.ticketId?.type ||
-                                transaction.category ||
-                                "Ticket"}
+                              {transaction.stripePaymentIntentId ||
+                                transaction._id}
+                              {transaction.transportType || "Ticket"}
                             </p>
                           </div>
                         </div>
@@ -293,7 +289,7 @@ useEffect(() => {
 
                       {/* Amount */}
                       <p className="font-semibold">
-                        {formatAmount(transaction.amount, transaction.currency)}
+                        {formatAmount(transaction.totalPrice, "bdt")}
                       </p>
 
                       {/* Payment Method */}
@@ -327,7 +323,8 @@ useEffect(() => {
                             </p>
 
                             <p className="mt-1 text-xs text-muted-foreground">
-                              {transaction.transactionId || transaction._id}
+                              {transaction.stripePaymentIntentId ||
+                                transaction._id}
                             </p>
                           </div>
                         </div>
@@ -341,11 +338,7 @@ useEffect(() => {
                       </div>
 
                       <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
-                        <span>
-                          {transaction.ticketId?.type ||
-                            transaction.category ||
-                            "Ticket"}
-                        </span>
+                        <span>{transaction.transportType || "Ticket"}</span>
 
                         <span>{formatDate(transaction.createdAt)}</span>
 
