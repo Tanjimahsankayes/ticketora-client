@@ -479,7 +479,7 @@ const TicketPerformance = ({ added, sold, loading }) => {
         `}</style>
 
         <div className="flex h-36 w-36 flex-col items-center justify-center rounded-full bg-white dark:bg-slate-900">
-          <span className="text-3xl font-bold text-slate-900 dark:text-white">
+          <span className="text-3xl font-bold text-blue-400">
             {percentage.toFixed(1)}%
           </span>
           <span className="text-xs text-slate-500 dark:text-slate-400">
