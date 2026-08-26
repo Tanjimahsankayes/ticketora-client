@@ -2,7 +2,6 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
-  ArrowBarDown,
   ArrowRotateRight,
   ChartBar,
   CircleCheck,
@@ -136,10 +135,10 @@ const RevenuePage = () => {
 
   if (sessionLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 transition-colors duration-200">
         <div className="flex flex-col items-center gap-3">
-          <div className="h-10 w-10 animate-spin rounded-full border-4 border-slate-300 border-t-blue-600 dark:border-slate-700 dark:border-t-blue-400" />
-          <p className="text-sm text-slate-600 dark:text-slate-400">
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-slate-300 border-t-blue-600 dark:border-slate-800 dark:border-t-blue-500" />
+          <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
             Loading revenue dashboard...
           </p>
         </div>
@@ -149,15 +148,15 @@ const RevenuePage = () => {
 
   if (!user?.email) {
     return (
-      <div className="min-h-screen bg-slate-50 px-4 py-10 dark:bg-slate-950">
-        <div className="mx-auto max-w-4xl rounded-2xl border border-red-200 bg-red-50 p-6 dark:border-red-900/50 dark:bg-red-950/30">
+      <div className="min-h-screen bg-slate-50 px-4 py-10 dark:bg-slate-950 transition-colors duration-200">
+        <div className="mx-auto max-w-4xl rounded-2xl border border-red-200 bg-red-50/80 p-6 dark:border-red-900/40 dark:bg-red-950/20 backdrop-blur-sm">
           <div className="flex items-center gap-3">
-            <CircleXmark className="h-6 w-6 text-red-500" />
+            <CircleXmark className="h-6 w-6 text-red-600 dark:text-red-400 shrink-0" />
             <div>
-              <h3 className="font-semibold text-red-700 dark:text-red-400">
+              <h3 className="font-semibold text-red-900 dark:text-red-300">
                 Unable to load vendor information
               </h3>
-              <p className="mt-1 text-sm text-red-600 dark:text-red-300">
+              <p className="mt-1 text-sm text-red-700 dark:text-red-400">
                 Please login again and try again.
               </p>
             </div>
@@ -168,14 +167,11 @@ const RevenuePage = () => {
   }
 
   return (
-    <main className="min-h-screen w-full bg-slate-50 text-slate-900 transition-colors duration-200 dark:bg-slate-950 dark:text-white px-4 py-6 sm:px-6 lg:px-8">
+    <main className="min-h-screen w-full bg-slate-50 dark:bg-slate-900/60 text-slate-900 transition-colors duration-200 px-4 py-6 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl space-y-6">
         {/* Header */}
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="text-sm font-semibold text-blue-600 dark:text-blue-400">
-              Vendor Dashboard
-            </p>
             <h1 className="mt-1 text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">
               Revenue Overview
             </h1>
@@ -188,7 +184,7 @@ const RevenuePage = () => {
             <select
               value={dateRange}
               onChange={(e) => setDateRange(e.target.value)}
-              className="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-800 outline-none shadow-sm transition focus:border-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+              className="rounded-xl border border-slate-300 bg-slate-200 dark:bg-slate-900 px-4 py-2.5 text-sm font-medium text-slate-800 outline-none shadow-sm transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-800 dark:text-slate-200 dark:focus:border-blue-400"
             >
               <option value="7">Last 7 days</option>
               <option value="30">Last 30 days</option>
@@ -200,10 +196,10 @@ const RevenuePage = () => {
             <button
               onClick={() => fetchRevenue(true)}
               disabled={refreshing}
-              className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 shadow-sm transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 shadow-sm transition hover:bg-slate-100 hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800/80 dark:hover:text-white"
             >
               <ArrowRotateRight
-                className={`h-4 w-4 ${refreshing ? "animate-spin" : ""}`}
+                className={`h-4 w-4 text-slate-600 dark:text-slate-300 ${refreshing ? "animate-spin" : ""}`}
               />
               Refresh
             </button>
@@ -212,14 +208,14 @@ const RevenuePage = () => {
 
         {/* Error */}
         {error && (
-          <div className="rounded-2xl border border-red-200 bg-red-50 p-4 dark:border-red-900/50 dark:bg-red-950/30">
+          <div className="rounded-2xl border border-red-200 bg-red-50/80 p-4 dark:border-red-900/40 dark:bg-red-950/20">
             <div className="flex items-start gap-3">
-              <CircleXmark className="mt-0.5 h-5 w-5 shrink-0 text-red-500" />
+              <CircleXmark className="mt-0.5 h-5 w-5 shrink-0 text-red-600 dark:text-red-400" />
               <div>
-                <p className="font-semibold text-red-700 dark:text-red-400">
+                <p className="font-semibold text-red-900 dark:text-red-300">
                   Unable to load revenue
                 </p>
-                <p className="mt-1 text-sm text-red-600 dark:text-red-300">
+                <p className="mt-1 text-sm text-red-700 dark:text-red-400">
                   {error}
                 </p>
               </div>
@@ -261,7 +257,7 @@ const RevenuePage = () => {
 
         {/* Main Charts */}
         <section className="grid gap-6 xl:grid-cols-3">
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 xl:col-span-2">
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-colors duration-200 dark:border-slate-800 dark:bg-slate-900 xl:col-span-2">
             <div className="mb-5">
               <h2 className="text-lg font-bold text-slate-900 dark:text-white">
                 Revenue Trend
@@ -276,7 +272,7 @@ const RevenuePage = () => {
             />
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-colors duration-200 dark:border-slate-800 dark:bg-slate-900">
             <div className="mb-5">
               <h2 className="text-lg font-bold text-slate-900 dark:text-white">
                 Ticket Performance
@@ -294,7 +290,7 @@ const RevenuePage = () => {
         </section>
 
         {/* Recent Transactions */}
-        <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-colors duration-200 dark:border-slate-800 dark:bg-slate-900">
           <div className="flex flex-col gap-3 border-b border-slate-200 p-5 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800">
             <div>
               <h2 className="text-lg font-bold text-slate-900 dark:text-white">
@@ -304,8 +300,8 @@ const RevenuePage = () => {
                 Latest successful payments for your tickets.
               </p>
             </div>
-            <div className="inline-flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-              <CircleCheck className="h-4 w-4 text-emerald-500" />
+            <div className="inline-flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+              <CircleCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
               Successful payments
             </div>
           </div>
@@ -321,10 +317,10 @@ const RevenuePage = () => {
 
 const StatCard = ({ title, value, subtitle, icon, loading }) => {
   return (
-    <div className="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
+    <div className="group rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+          <p className="text-sm font-medium text-slate-800 dark:text-slate-400">
             {title}
           </p>
           {loading ? (
@@ -400,7 +396,7 @@ const RevenueChart = ({ data, loading }) => {
                 className="group flex h-full min-w-[55px] flex-1 flex-col items-center justify-end"
               >
                 <div className="relative flex h-[260px] w-full items-end justify-center">
-                  <div className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 -translate-x-1/2 scale-95 rounded-lg bg-slate-900 px-3 py-2 text-xs font-semibold whitespace-nowrap text-white opacity-0 shadow-lg transition-all group-hover:scale-100 group-hover:opacity-100 dark:bg-white dark:text-slate-900">
+                  <div className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 -translate-x-1/2 scale-95 rounded-lg bg-slate-900 px-3 py-2 text-xs font-semibold whitespace-nowrap text-white opacity-0 shadow-lg transition-all group-hover:scale-100 group-hover:opacity-100 dark:bg-slate-100 dark:text-slate-900">
                     {formatCurrency(revenue)}
                   </div>
 
@@ -432,7 +428,7 @@ const RevenueChart = ({ data, loading }) => {
           </p>
         </div>
 
-        <div className="rounded-xl bg-blue-50 px-4 py-2 dark:bg-blue-950/30">
+        <div className="rounded-xl bg-blue-50 px-4 py-2 dark:bg-blue-950/40">
           <p className="text-xs text-blue-600 dark:text-blue-400">
             Transactions
           </p>
@@ -469,10 +465,19 @@ const TicketPerformance = ({ added, sold, loading }) => {
         style={{
           background: `conic-gradient(
             rgb(37 99 235) ${percentage}%,
-            rgb(226 232 240) ${percentage}% 100%
+            var(--conic-bg, #e2e8f0) ${percentage}% 100%
           )`,
         }}
       >
+        <style jsx>{`
+          div {
+            --conic-bg: #e2e8f0;
+          }
+          :global(.dark) div {
+            --conic-bg: #1e293b;
+          }
+        `}</style>
+
         <div className="flex h-36 w-36 flex-col items-center justify-center rounded-full bg-white dark:bg-slate-900">
           <span className="text-3xl font-bold text-slate-900 dark:text-white">
             {percentage.toFixed(1)}%
@@ -491,7 +496,7 @@ const TicketPerformance = ({ added, sold, loading }) => {
           </p>
         </div>
 
-        <div className="rounded-xl bg-blue-50 p-3 dark:bg-blue-950/30">
+        <div className="rounded-xl bg-blue-50 p-3 dark:bg-blue-950/40">
           <p className="text-xs text-blue-600 dark:text-blue-400">Sold</p>
           <p className="mt-1 text-lg font-bold text-blue-700 dark:text-blue-300">
             {formatNumber(sold)}
@@ -501,6 +506,7 @@ const TicketPerformance = ({ added, sold, loading }) => {
     </div>
   );
 };
+
 
 const RecentTransactions = ({ transactions, loading }) => {
   if (loading) {
@@ -520,7 +526,7 @@ const RecentTransactions = ({ transactions, loading }) => {
     return (
       <div className="flex flex-col items-center justify-center px-5 py-14 text-center">
         <div className="rounded-full bg-slate-100 p-4 dark:bg-slate-800">
-          <CreditCard className="h-7 w-7 text-slate-400" />
+          <CreditCard className="h-7 w-7 text-slate-400 dark:text-slate-500" />
         </div>
         <h3 className="mt-4 font-semibold text-slate-900 dark:text-white">
           No transactions yet
@@ -537,10 +543,10 @@ const RecentTransactions = ({ transactions, loading }) => {
       {transactions.slice(0, 8).map((transaction, index) => (
         <div
           key={transaction._id || transaction.id || index}
-          className="flex flex-col gap-3 p-5 transition hover:bg-slate-50 sm:flex-row sm:items-center sm:justify-between dark:hover:bg-slate-800/40"
+          className="flex flex-col gap-3 p-5 transition hover:bg-slate-50/80 sm:flex-row sm:items-center sm:justify-between dark:hover:bg-slate-800/50"
         >
           <div className="flex min-w-0 items-center gap-3">
-            <div className="rounded-xl bg-emerald-50 p-3 dark:bg-emerald-950/30">
+            <div className="rounded-xl bg-emerald-50 p-3 dark:bg-emerald-950/40">
               <CircleCheck className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
             </div>
 
@@ -586,12 +592,12 @@ const EmptyChart = ({ message }) => {
   return (
     <div className="flex h-[300px] flex-col items-center justify-center text-center">
       <div className="rounded-full bg-slate-100 p-4 dark:bg-slate-800">
-        <ChartBar className="h-7 w-7 text-slate-400" />
+        <ChartBar className="h-7 w-7 text-slate-400 dark:text-slate-500" />
       </div>
       <p className="mt-4 text-sm font-medium text-slate-700 dark:text-slate-300">
         {message}
       </p>
-      <p className="mt-1 text-xs text-slate-500 dark:text-slate-500">
+      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
         Your statistics will appear here after ticket activity.
       </p>
     </div>

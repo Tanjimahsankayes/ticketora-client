@@ -14,8 +14,6 @@ const DashboardLayout = ({ children }) => {
 
   // Render sidebar based on user role
   const renderSidebar = () => {
-    // Keep the same layout while session is loading.
-    // Only replace the sidebar content with a loading state.
     if (isPending) {
       return (
         <div className="flex min-h-[220px] items-center justify-center">
@@ -45,9 +43,7 @@ const DashboardLayout = ({ children }) => {
 
   return (
     <div className="relative flex min-h-screen flex-col overflow-x-hidden bg-slate-50 text-[#115E59] antialiased selection:bg-indigo-500 selection:text-white dark:bg-slate-950 dark:text-slate-100 md:flex-row">
-      {/* =====================================================
-          Background Ambient Glows
-      ====================================================== */}
+      {/* Background Ambient Glows */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         {/* Top-left glow */}
         <div className="absolute -left-[10%] -top-[10%] h-[45%] w-[45%] rounded-full bg-indigo-500/5 blur-[120px] dark:bg-indigo-500/5" />
@@ -56,15 +52,13 @@ const DashboardLayout = ({ children }) => {
         <div className="absolute -right-[10%] top-[60%] h-[40%] w-[40%] rounded-full bg-blue-500/5 blur-[120px] dark:bg-blue-500/5" />
       </div>
 
-      {/* =====================================================
-          Sidebar
-      ====================================================== */}
-      <aside className="relative z-20 w-full shrink-0 border-b border-slate-200 bg-white backdrop-blur-xl transition-all duration-300 dark:border-slate-800/80 dark:bg-slate-900/60 md:sticky md:top-0 md:h-screen md:w-72 md:border-b-0 md:border-r">
+      {/* side bar */}
+      <aside className="relative z-20 w-full shrink-0 border-b border-slate-200 bg-white backdrop-blur-xl transition-all duration-300 dark:border-slate-800/80 dark:bg-slate-900/60 md:sticky md:top-0 md:w-72 md:border-b-0 md:border-r">
         {renderSidebar()}
       </aside>
 
-      <main className="relative z-10 min-w-0 flex-1 transition-all duration-300 sm:p-6 lg:p-8 xl:p-10">
-        <div className="mx-auto max-w-7xl">{children}</div>
+      <main className="relative z-10 min-w-0 flex-1 transition-all duration-300">
+        <div>{children}</div>
       </main>
     </div>
   );

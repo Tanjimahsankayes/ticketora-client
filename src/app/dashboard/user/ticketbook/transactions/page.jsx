@@ -166,7 +166,7 @@ useEffect(() => {
   }
 
   return (
-    <main className="min-h-screen bg-slate-50 dark:bg-slate-950 px-4 py-8 text-foreground sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-slate-50 dark:bg-slate-950 py-8 text-foreground">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-8">

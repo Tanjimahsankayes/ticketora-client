@@ -179,13 +179,17 @@ const VendorDashboardPage = () => {
   const displayImage = companyProfile?.image || user?.image;
 
   return (
-    <div className="text-slate-700 dark:text-slate-100">
-      <div className="max-w-6xl mx-auto space-y-8">
+    <div className="text-slate-700 dark:text-slate-100 max-w-5xl mx-auto pt-6">
+      <div className=" space-y-8">
         {/* Welcome Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 dark:border-slate-800 pb-6 gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-              Welcome, <span className="text-indigo-600 dark:text-indigo-400">{displayName}</span> 👋
+              Welcome,{" "}
+              <span className="text-indigo-600 dark:text-indigo-400">
+                {displayName}
+              </span>{" "}
+              👋
             </h1>
             <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
               Manage your profile, listed tickets, and account details.
@@ -369,7 +373,9 @@ const VendorDashboardPage = () => {
                       {user?.role || "Vendor"}
                     </span>
                   </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5">{user?.email}</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5">
+                    {user?.email}
+                  </p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-200 dark:border-slate-800/80">

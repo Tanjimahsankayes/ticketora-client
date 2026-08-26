@@ -158,7 +158,7 @@ const AdminDashboardPage = () => {
   const displayImage = adminProfile?.image || user?.image;
 
   return (
-    <div className="min-h-screen text-slate-700 dark:text-slate-100 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen text-slate-700 dark:text-slate-100 p-4 m-2 sm:p-6 lg:p-10">
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Admin Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 dark:border-slate-800 pb-6 gap-4">

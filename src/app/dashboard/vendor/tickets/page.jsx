@@ -203,8 +203,8 @@ const TicketsPage = () => {
   }
 
   return (
-    <div className="text-slate-700 dark:text-slate-100 relative">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="text-slate-700 dark:text-slate-100 relative max-w-5xl mx-auto py-6">
+      <div className="space-y-8">
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 dark:border-slate-800 pb-6">
           <div>
@@ -600,7 +600,9 @@ const TicketsPage = () => {
                 </svg>
               </div>
               <div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Delete Ticket?</h3>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                  Delete Ticket?
+                </h3>
                 <p className="text-xs text-slate-600 dark:text-slate-400">
                   This action cannot be undone.
                 </p>

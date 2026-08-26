@@ -51,7 +51,6 @@ export default function AddTicketPage() {
     });
   };
 
-  // ImgBB Image Upload Function
   const uploadImageToImgbb = async (file) => {
     if (!file) return "";
 
@@ -62,7 +61,9 @@ export default function AddTicketPage() {
         process.env.NEXT_PUBLIC_IMAGE_UPLOAD_API;
 
       if (!apiKey) {
-        throw new Error("ImgBB API Key not found. Please check your .env file.");
+        throw new Error(
+          "ImgBB API Key not found. Please check your .env file.",
+        );
       }
 
       const imageData = new FormData();
@@ -165,21 +166,21 @@ export default function AddTicketPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))] py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center font-sans antialiased">
-      <div className="max-w-3xl w-full bg-slate-900/60 backdrop-blur-2xl rounded-3xl shadow-2xl border border-slate-800/80 p-8 sm:p-12 relative overflow-hidden">
-        {/* Subtle Decorative Ambient Light */}
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))] py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center font-sans antialiased transition-colors duration-300">
+      <div className="max-w-3xl w-full bg-white/80 dark:bg-slate-900/60 backdrop-blur-2xl rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800/80 p-8 sm:p-12 relative overflow-hidden transition-colors duration-300">
+        {/* Decorative Ambient Light */}
         <div className="absolute -top-24 -right-24 w-60 h-60 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-24 -left-24 w-60 h-60 bg-violet-500/10 rounded-full blur-3xl pointer-events-none" />
 
         {/* Header Section */}
         <div className="text-center mb-10 relative z-10">
-          <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-indigo-500/10 text-indigo-400 mb-4 border border-indigo-500/20 shadow-inner">
+          <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-indigo-500/10 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 mb-4 border border-indigo-500/20 shadow-inner">
             <Ticket className="w-8 h-8" />
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
             Create New Ticket
           </h1>
-          <p className="mt-2 text-sm text-slate-400 max-w-md mx-auto">
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto">
             Fill in all required details to list a new travel route on
             TicketOra.
           </p>
@@ -190,8 +191,8 @@ export default function AddTicketPage() {
           <div
             className={`mb-8 p-4 rounded-2xl border text-sm font-medium flex items-center space-x-3 transition-all ${
               statusMessage.type === "error"
-                ? "bg-rose-500/10 border-rose-500/30 text-rose-400"
-                : "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
+                ? "bg-rose-50 dark:bg-rose-500/10 border-rose-200 dark:border-rose-500/30 text-rose-600 dark:text-rose-400"
+                : "bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/30 text-emerald-600 dark:text-emerald-400"
             }`}
           >
             <span className="h-2 w-2 rounded-full bg-current animate-pulse" />
@@ -201,10 +202,11 @@ export default function AddTicketPage() {
 
         <form onSubmit={handleSubmit} className="space-y-7 relative z-10">
           {/* Section 1: Basic Info */}
-          <div className="space-y-5 bg-slate-800/30 p-6 rounded-2xl border border-slate-800/60">
+          <div className="space-y-5 bg-slate-100/70 dark:bg-slate-800/30 p-6 rounded-2xl border border-slate-200 dark:border-slate-800/60 transition-colors">
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
-                Ticket Title <span className="text-rose-400">*</span>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
+                Ticket Title{" "}
+                <span className="text-rose-500 dark:text-rose-400">*</span>
               </label>
               <input
                 type="text"
@@ -213,15 +215,16 @@ export default function AddTicketPage() {
                 placeholder="e.g., Luxury Express: Dhaka to Cox's Bazar"
                 value={formData.title}
                 onChange={handleChange}
-                className="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-3.5 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all text-sm"
+                className="w-full bg-white dark:bg-slate-950/60 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3.5 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all text-sm"
               />
             </div>
 
             {/* From & To Locations */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
-                  From (Departure) <span className="text-rose-400">*</span>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
+                  From (Departure){" "}
+                  <span className="text-rose-500 dark:text-rose-400">*</span>
                 </label>
                 <input
                   type="text"
@@ -230,13 +233,14 @@ export default function AddTicketPage() {
                   placeholder="Departure city or terminal"
                   value={formData.fromLocation}
                   onChange={handleChange}
-                  className="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-3.5 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all text-sm"
+                  className="w-full bg-white dark:bg-slate-950/60 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3.5 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all text-sm"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
-                  To (Destination) <span className="text-rose-400">*</span>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
+                  To (Destination){" "}
+                  <span className="text-rose-500 dark:text-rose-400">*</span>
                 </label>
                 <input
                   type="text"
@@ -245,51 +249,65 @@ export default function AddTicketPage() {
                   placeholder="Destination city or terminal"
                   value={formData.toLocation}
                   onChange={handleChange}
-                  className="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-3.5 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all text-sm"
+                  className="w-full bg-white dark:bg-slate-950/60 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3.5 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all text-sm"
                 />
               </div>
             </div>
           </div>
 
           {/* Section 2: Pricing & Logistics */}
-          <div className="space-y-5 bg-slate-800/30 p-6 rounded-2xl border border-slate-800/60">
+          <div className="space-y-5 bg-slate-100/70 dark:bg-slate-800/30 p-6 rounded-2xl border border-slate-200 dark:border-slate-800/60 transition-colors">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
-                  Transport <span className="text-rose-400">*</span>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
+                  Transport{" "}
+                  <span className="text-rose-500 dark:text-rose-400">*</span>
                 </label>
                 <select
                   name="transportType"
                   required
                   value={formData.transportType}
                   onChange={handleChange}
-                  className="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all text-sm cursor-pointer"
+                  className="w-full bg-white dark:bg-slate-950/60 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all text-sm cursor-pointer"
                 >
                   <option
                     value=""
                     disabled
-                    className="bg-slate-900 text-slate-500"
+                    className="bg-white dark:bg-slate-900 text-slate-400 dark:text-slate-500"
                   >
                     Select Type
                   </option>
-                  <option value="Bus" className="bg-slate-900">
+                  <option
+                    value="Bus"
+                    className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
+                  >
                     Bus
                   </option>
-                  <option value="Train" className="bg-slate-900">
+                  <option
+                    value="Train"
+                    className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
+                  >
                     Train
                   </option>
-                  <option value="Flight" className="bg-slate-900">
+                  <option
+                    value="Flight"
+                    className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
+                  >
                     Flight
                   </option>
-                  <option value="Ferry" className="bg-slate-900">
+                  <option
+                    value="Ferry"
+                    className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
+                  >
                     Ferry
                   </option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
-                  Price ($) <span className="text-rose-400">*</span>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
+                  Price ($){" "}
+                  <span className="text-rose-500 dark:text-rose-400">*</span>
                 </label>
                 <input
                   type="number"
@@ -300,13 +318,14 @@ export default function AddTicketPage() {
                   placeholder="0.00"
                   value={formData.price}
                   onChange={handleChange}
-                  className="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-3.5 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all text-sm"
+                  className="w-full bg-white dark:bg-slate-950/60 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3.5 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all text-sm"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
-                  Quantity <span className="text-rose-400">*</span>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
+                  Quantity{" "}
+                  <span className="text-rose-500 dark:text-rose-400">*</span>
                 </label>
                 <input
                   type="number"
@@ -316,15 +335,16 @@ export default function AddTicketPage() {
                   placeholder="100"
                   value={formData.quantity}
                   onChange={handleChange}
-                  className="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-3.5 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all text-sm"
+                  className="w-full bg-white dark:bg-slate-950/60 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3.5 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all text-sm"
                 />
               </div>
             </div>
 
             {/* Departure Date & Time */}
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
-                Departure Date & Time <span className="text-rose-400">*</span>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
+                Departure Date & Time{" "}
+                <span className="text-rose-500 dark:text-rose-400">*</span>
               </label>
               <input
                 type="datetime-local"
@@ -332,15 +352,16 @@ export default function AddTicketPage() {
                 required
                 value={formData.departureDateTime}
                 onChange={handleChange}
-                className="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all text-sm [color-scheme:dark]"
+                className="w-full bg-white dark:bg-slate-950/60 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all text-sm [color-scheme:light] dark:[color-scheme:dark]"
               />
             </div>
           </div>
 
           {/* Section 3: Perks Section */}
-          <div className="bg-slate-800/30 p-6 rounded-2xl border border-slate-800/60">
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-3">
-              Select Perks <span className="text-rose-400">*</span>
+          <div className="bg-slate-100/70 dark:bg-slate-800/30 p-6 rounded-2xl border border-slate-200 dark:border-slate-800/60 transition-colors">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-3">
+              Select Perks{" "}
+              <span className="text-rose-500 dark:text-rose-400">*</span>
             </label>
             <div className="flex flex-wrap gap-2.5">
               {perkOptions.map((perk) => {
@@ -353,7 +374,7 @@ export default function AddTicketPage() {
                     className={`px-4 py-2.5 rounded-xl text-xs font-medium transition-all duration-200 border flex items-center space-x-1.5 ${
                       active
                         ? "bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-500/20"
-                        : "bg-slate-950/40 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-300"
+                        : "bg-white dark:bg-slate-950/40 border-slate-300 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-700 hover:text-slate-900 dark:hover:text-slate-300"
                     }`}
                   >
                     <span>{active ? "✓" : "+"}</span>
@@ -365,11 +386,12 @@ export default function AddTicketPage() {
           </div>
 
           {/* Section 4: Image Upload Box */}
-          <div className="bg-slate-800/30 p-6 rounded-2xl border border-slate-800/60">
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-3">
-              Upload Ticket Banner <span className="text-rose-400">*</span>
+          <div className="bg-slate-100/70 dark:bg-slate-800/30 p-6 rounded-2xl border border-slate-200 dark:border-slate-800/60 transition-colors">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-3">
+              Upload Ticket Banner{" "}
+              <span className="text-rose-500 dark:text-rose-400">*</span>
             </label>
-            <div className="relative border-2 border-dashed border-slate-700/80 hover:border-indigo-500/80 rounded-2xl p-6 text-center transition-all bg-slate-950/40 group cursor-pointer">
+            <div className="relative border-2 border-dashed border-slate-300 dark:border-slate-700/80 hover:border-indigo-500/80 rounded-2xl p-6 text-center transition-all bg-white dark:bg-slate-950/40 group cursor-pointer">
               <input
                 type="file"
                 accept="image/*"
@@ -378,7 +400,7 @@ export default function AddTicketPage() {
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
               />
               <div className="flex flex-col items-center justify-center space-y-3">
-                <div className="p-3 rounded-full bg-slate-800/80 text-slate-400 group-hover:text-indigo-400 group-hover:scale-110 transition-all">
+                <div className="p-3 rounded-full bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 group-hover:scale-110 transition-all">
                   <svg
                     className="w-6 h-6"
                     fill="none"
@@ -394,16 +416,16 @@ export default function AddTicketPage() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-slate-300">
+                  <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
                     {imageFile ? (
-                      <span className="text-indigo-400 font-semibold">
+                      <span className="text-indigo-600 dark:text-indigo-400 font-semibold">
                         {imageFile.name}
                       </span>
                     ) : (
                       "Click or drop ticket image here"
                     )}
                   </p>
-                  <p className="text-xs text-slate-500 mt-1">
+                  <p className="text-xs text-slate-500 dark:text-slate-500 mt-1">
                     PNG, JPG, WEBP up to 5MB
                   </p>
                 </div>
@@ -412,27 +434,27 @@ export default function AddTicketPage() {
           </div>
 
           {/* Section 5: Vendor Information (Readonly) */}
-          <div className="p-4 rounded-2xl bg-slate-950/40 border border-slate-800/60 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="p-4 rounded-2xl bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800/60 grid grid-cols-1 sm:grid-cols-2 gap-4 transition-colors">
             <div>
-              <label className="block text-[10px] font-bold uppercase text-indigo-400 tracking-wider mb-1">
+              <label className="block text-[10px] font-bold uppercase text-indigo-600 dark:text-indigo-400 tracking-wider mb-1">
                 Vendor Name
               </label>
               <input
                 type="text"
                 readOnly
                 value={user?.name || "TravelCorp Ltd."}
-                className="w-full bg-slate-900/40 border border-slate-800/80 text-slate-400 text-xs px-3 py-2 rounded-lg cursor-not-allowed focus:outline-none"
+                className="w-full bg-slate-100 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800/80 text-slate-600 dark:text-slate-400 text-xs px-3 py-2 rounded-lg cursor-not-allowed focus:outline-none"
               />
             </div>
             <div>
-              <label className="block text-[10px] font-bold uppercase text-indigo-400 tracking-wider mb-1">
+              <label className="block text-[10px] font-bold uppercase text-indigo-600 dark:text-indigo-400 tracking-wider mb-1">
                 Vendor Email
               </label>
               <input
                 type="email"
                 readOnly
                 value={user?.email || "vendor@travelcorp.com"}
-                className="w-full bg-slate-900/40 border border-slate-800/80 text-slate-400 text-xs px-3 py-2 rounded-lg cursor-not-allowed focus:outline-none"
+                className="w-full bg-slate-100 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800/80 text-slate-600 dark:text-slate-400 text-xs px-3 py-2 rounded-lg cursor-not-allowed focus:outline-none"
               />
             </div>
           </div>
@@ -441,7 +463,7 @@ export default function AddTicketPage() {
           <button
             type="submit"
             disabled={loading || isUploading}
-            className="w-full py-4 px-6 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-indigo-600/20 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-950 transition-all duration-200 transform active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-4 px-6 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-indigo-600/20 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-slate-950 transition-all duration-200 transform active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading || isUploading ? (
               <span className="flex items-center justify-center space-x-2">

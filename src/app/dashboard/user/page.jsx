@@ -179,7 +179,7 @@ const UserDashboardPage = () => {
   const displayImage = userProfile?.image || user?.image;
 
   return (
-    <div className="text-[#115E59] dark:text-slate-100">
+    <div className="text-[#115E59] dark:text-slate-100 pt-10">
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Welcome Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 dark:border-slate-800 pb-6 gap-4">
