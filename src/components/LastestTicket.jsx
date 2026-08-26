@@ -20,7 +20,7 @@ export default async function LatestTickets() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-10">
           <div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#0F766E] dark:text-white">
               Latest Tickets
             </h2>
             <p className="mt-3 max-w-2xl text-sm sm:text-base text-gray-600 dark:text-gray-400">
@@ -71,12 +71,12 @@ export default async function LatestTickets() {
 
                 {/* Card Body */}
                 <div className="p-5">
-                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 line-clamp-1 mb-2">
+                  <h3 className="text-xl font-bold text-[#0F766E] dark:text-gray-200 line-clamp-1 mb-2">
                     {ticket.title}
                   </h3>
 
                   {/* Route Information */}
-                  <div className="flex items-center font-semibold text-gray-700 dark:text-gray-400 bg-gray-50 dark:bg-slate-800 p-2.5 rounded-lg border border-gray-100 dark:border-slate-700 mb-3 text-sm">
+                  <div className="flex items-center font-semibold text-[#115E59] dark:text-gray-400 bg-gray-50 dark:bg-slate-800 p-2.5 rounded-lg border border-gray-100 dark:border-slate-700 mb-3 text-sm">
                     <span>{ticket.fromLocation}</span>
                     <span className="mx-2 text-indigo-500 dark:text-indigo-400">➔</span>
                     <span>{ticket.toLocation}</span>
@@ -116,7 +116,7 @@ export default async function LatestTickets() {
               <div className="px-5 pb-5 pt-3 border-t border-gray-100 dark:border-slate-700 flex items-center justify-between mt-2">
                 <div>
                   <p className="text-xs text-gray-400 dark:text-gray-500">Operator</p>
-                  <p className="text-xs font-semibold text-gray-700 dark:text-gray-400 truncate max-w-[130px]">
+                  <p className="text-xs font-semibold text-[#115E59] dark:text-gray-400 truncate max-w-[130px]">
                     {ticket.vendorName || "Verified Vendor"}
                   </p>
                 </div>

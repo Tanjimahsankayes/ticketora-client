@@ -1,18 +1,14 @@
 "use server";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+import { protectedFetch, serverMutation } from "../core/server";
 
-if (!baseUrl) {
-  console.warn("NEXT_PUBLIC_BASE_URL is not defined in environment variables");
-}
 
 export const getUserProfileByUserId = async (userId) => {
   if (!userId) return null;
+
   try {
-    const res = await fetch(`${baseUrl}/api/users/${userId}`, {
-      cache: "no-store",
-    });
-    if (!res.ok) return null;
+    const res = await protectedFetch(`/api/users/${userId}`);
+
     return await res.json();
   } catch (error) {
     console.error("Error fetching user profile:", error);
@@ -22,18 +18,7 @@ export const getUserProfileByUserId = async (userId) => {
 
 export const saveUserProfile = async (newUserData) => {
   try {
-    const res = await fetch(`${baseUrl}/api/users`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newUserData),
-    });
-
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      throw new Error(errorData.message || "Failed to save user profile");
-    }
+    const res = await serverMutation("/api/users", newUserData, "POST");
 
     return await res.json();
   } catch (error) {
@@ -46,28 +31,18 @@ export const getTransactionsByUser = async (userEmail) => {
   if (!userEmail) return [];
 
   try {
-    const response = await fetch(
-      `${baseUrl}/api/bookings?email=${encodeURIComponent(userEmail)}`,
-      {
-        cache: "no-store",
-      },
+    const res = await protectedFetch(
+      `/api/bookings?email=${encodeURIComponent(userEmail)}`,
     );
 
-    if (!response.ok) {
-      const errorText = await response.text();
+    const data = await res.json();
 
-      throw new Error(
-        `Failed to fetch transactions: ${response.status} ${errorText}`,
-      );
-    }
-
-    const data = await response.json();
-
-    const bookings = Array.isArray(data) ? data : data.bookings || [];
+    const bookings = Array.isArray(data) ? data : data?.bookings || [];
 
     return bookings.filter((booking) => booking.paymentStatus === "paid");
   } catch (error) {
     console.error("Error fetching transaction history:", error);
+
     throw error;
   }
 };

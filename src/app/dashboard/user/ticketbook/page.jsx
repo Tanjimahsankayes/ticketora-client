@@ -51,7 +51,7 @@ const CountdownTimer = ({ targetDate }) => {
   }
 
   return (
-    <div className="flex items-center space-x-1.5 text-xs font-mono font-bold text-slate-700 bg-slate-100 dark:bg-slate-800 dark:text-slate-200 px-3 py-1.5 rounded-lg">
+    <div className="flex items-center space-x-1.5 text-xs font-mono font-bold text-[#115E59] bg-slate-100 dark:bg-slate-800 dark:text-slate-200 px-3 py-1.5 rounded-lg">
       <span className="text-emerald-600 dark:text-emerald-400">⏳</span>
       <span>{timeLeft.days}d</span>:
       <span>{String(timeLeft.hours).padStart(2, "0")}h</span>:
@@ -245,7 +245,7 @@ const MyBookedTickets = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-slate-800 dark:text-white">
+        <h2 className="text-3xl font-bold text-[#0F766E] dark:text-white">
           My Booked Tickets
         </h2>
         <p className="text-slate-600 dark:text-slate-400 mt-1">
@@ -295,12 +295,12 @@ const MyBookedTickets = () => {
                 {/* Content Section */}
                 <div className="p-5 flex-1 flex flex-col justify-between">
                   <div>
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+                    <h3 className="text-xl font-bold text-[#0F766E] dark:text-white mb-2">
                       {booking.ticketTitle}
                     </h3>
 
                     {/* From -> To */}
-                    <div className="flex items-center space-x-2 text-sm font-medium text-slate-700 dark:text-slate-300 mb-4 bg-slate-50 dark:bg-slate-800/60 p-2.5 rounded-lg">
+                    <div className="flex items-center space-x-2 text-sm font-medium text-[#115E59] dark:text-slate-300 mb-4 bg-slate-50 dark:bg-slate-800/60 p-2.5 rounded-lg">
                       <span>{booking.fromLocation}</span>
                       <span className="text-slate-400">➔</span>
                       <span>{booking.toLocation}</span>
@@ -310,7 +310,7 @@ const MyBookedTickets = () => {
                     <div className="space-y-2 text-sm text-slate-600 dark:text-slate-400 mb-4">
                       <div className="flex justify-between">
                         <span>Departure:</span>
-                        <span className="font-semibold text-slate-800 dark:text-slate-200">
+                        <span className="font-semibold text-[#0F766E] dark:text-slate-200">
                           {new Date(booking.departureDateTime).toLocaleString(
                             "en-US",
                             {
@@ -322,12 +322,12 @@ const MyBookedTickets = () => {
                       </div>
                       <div className="flex justify-between">
                         <span>Booked Quantity:</span>
-                        <span className="font-semibold text-slate-800 dark:text-slate-200">
+                        <span className="font-semibold text-[#0F766E] dark:text-slate-200">
                           {booking.quantity}
                         </span>
                       </div>
                       <div className="flex justify-between text-base pt-2 border-t border-slate-100 dark:border-slate-800">
-                        <span className="font-semibold text-slate-900 dark:text-white">
+                        <span className="font-semibold text-[#0F766E] dark:text-white">
                           Total Price:
                         </span>
                         <span className="font-bold text-indigo-600 dark:text-indigo-400">
@@ -430,14 +430,14 @@ const MyBookedTickets = () => {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+              <h3 className="text-xl font-bold text-[#0F766E] dark:text-white">
                 Cancel Booking?
               </h3>
             </div>
 
             <p className="text-sm text-slate-600 dark:text-slate-300 mb-2">
               Are you sure you want to cancel your booking for{" "}
-              <span className="font-semibold text-slate-900 dark:text-white">
+              <span className="font-semibold text-[#0F766E] dark:text-white">
                 {selectedBookingForCancel.ticketTitle}
               </span>
               ?

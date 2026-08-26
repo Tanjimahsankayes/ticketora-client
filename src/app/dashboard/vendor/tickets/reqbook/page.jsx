@@ -118,8 +118,6 @@ export default function ReqBookingPage() {
     );
   }
 
-  console.log("bookings", bookings)
-
   return (
     <div className="min-h-screen text-slate-200 font-sans p-4 sm:p-6 md:p-10 antialiased selection:bg-indigo-500 selection:text-white">
       <div className="max-w-7xl mx-auto space-y-6">

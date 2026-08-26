@@ -97,7 +97,7 @@ const AllTicketPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-700 dark:text-slate-100 flex items-center justify-center theme-transition">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-[#115E59] dark:text-slate-100 flex items-center justify-center theme-transition">
         <div className="flex items-center space-x-3 text-indigo-600 dark:text-indigo-400">
           <RiLoader2Fill size={20} />
           <span className="text-sm font-medium">
@@ -109,12 +109,12 @@ const AllTicketPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-700 dark:text-slate-100 py-10 px-4 sm:px-6 lg:px-8 font-sans theme-transition">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-[#115E59] dark:text-slate-100 py-10 px-4 sm:px-6 lg:px-8 font-sans theme-transition">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 dark:border-slate-800 pb-6 gap-4">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F766E] dark:text-white tracking-tight">
               All Available Tickets
             </h1>
             <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
@@ -142,7 +142,7 @@ const AllTicketPage = () => {
                 placeholder="e.g. Dhaka"
                 value={fromSearch}
                 onChange={(e) => setFromSearch(e.target.value)}
-                className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition"
+                className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm text-[#115E59] dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition"
               />
             </div>
 
@@ -156,7 +156,7 @@ const AllTicketPage = () => {
                 placeholder="e.g. Chittagong"
                 value={toSearch}
                 onChange={(e) => setToSearch(e.target.value)}
-                className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition"
+                className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm text-[#115E59] dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition"
               />
             </div>
 
@@ -168,7 +168,7 @@ const AllTicketPage = () => {
               <select
                 value={transportFilter}
                 onChange={(e) => setTransportFilter(e.target.value)}
-                className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:border-indigo-500 transition"
+                className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm text-[#115E59] dark:text-slate-200 focus:outline-none focus:border-indigo-500 transition"
               >
                 <option value="all">All Types</option>
                 {uniqueTransportTypes.map((type) => (
@@ -187,7 +187,7 @@ const AllTicketPage = () => {
               <select
                 value={sortPriceOrder}
                 onChange={(e) => setSortPriceOrder(e.target.value)}
-                className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:border-indigo-500 transition"
+                className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm text-[#115E59] dark:text-slate-200 focus:outline-none focus:border-indigo-500 transition"
               >
                 <option value="default">Default Order</option>
                 <option value="lowToHigh">Price: Low to High</option>
@@ -203,7 +203,7 @@ const AllTicketPage = () => {
               <select
                 value={itemsPerPage}
                 onChange={(e) => setItemsPerPage(Number(e.target.value))}
-                className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:border-indigo-500 transition"
+                className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm text-[#115E59] dark:text-slate-200 focus:outline-none focus:border-indigo-500 transition"
               >
                 <option value={6}>6 items</option>
                 <option value={9}>9 items</option>
@@ -322,7 +322,7 @@ const AllTicketPage = () => {
                   {/* Content Container */}
                   <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                     <div className="space-y-4">
-                      <h2 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors line-clamp-1">
+                      <h2 className="text-lg font-bold text-[#0F766E] dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors line-clamp-1">
                         {ticket.title}
                       </h2>
 
@@ -332,7 +332,7 @@ const AllTicketPage = () => {
                           <p className="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-500">
                             From
                           </p>
-                          <p className="font-semibold text-slate-700 dark:text-slate-200 truncate">
+                          <p className="font-semibold text-[#115E59] dark:text-slate-200 truncate">
                             {ticket.fromLocation}
                           </p>
                         </div>
@@ -345,7 +345,7 @@ const AllTicketPage = () => {
                           <p className="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-500">
                             To
                           </p>
-                          <p className="font-semibold text-slate-700 dark:text-slate-200 truncate">
+                          <p className="font-semibold text-[#115E59] dark:text-slate-200 truncate">
                             {ticket.toLocation}
                           </p>
                         </div>
@@ -357,7 +357,7 @@ const AllTicketPage = () => {
                           <p className="text-[10px] text-slate-500 dark:text-slate-500 font-semibold uppercase">
                             Departure
                           </p>
-                          <p className="text-slate-700 dark:text-slate-300 font-medium">
+                          <p className="text-[#115E59] dark:text-slate-300 font-medium">
                             {departureDate}
                           </p>
                           <p className="text-slate-500 dark:text-slate-400 text-[11px]">
@@ -405,15 +405,15 @@ const AllTicketPage = () => {
           <div className="flex flex-col sm:flex-row items-center justify-between border-t border-slate-200 dark:border-slate-800 pt-6 gap-4">
             <p className="text-xs text-slate-600 dark:text-slate-400">
               Showing{" "}
-              <span className="font-semibold text-slate-800 dark:text-slate-200">
+              <span className="font-semibold text-[#0F766E] dark:text-slate-200">
                 {indexOfFirstTicket + 1}
               </span>{" "}
               to{" "}
-              <span className="font-semibold text-slate-800 dark:text-slate-200">
+              <span className="font-semibold text-[#0F766E] dark:text-slate-200">
                 {Math.min(indexOfLastTicket, filteredAndSortedTickets.length)}
               </span>{" "}
               of{" "}
-              <span className="font-semibold text-slate-800 dark:text-slate-200">
+              <span className="font-semibold text-[#0F766E] dark:text-slate-200">
                 {filteredAndSortedTickets.length}
               </span>{" "}
               entries
@@ -423,7 +423,7 @@ const AllTicketPage = () => {
               <button
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition"
+                className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[#115E59] dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition"
               >
                 Previous
               </button>
@@ -436,7 +436,7 @@ const AllTicketPage = () => {
                     className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
                       currentPage === pageNum
                         ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30"
-                        : "bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-800"
+                        : "bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-[#0F766E] dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-800"
                     }`}
                   >
                     {pageNum}
@@ -449,7 +449,7 @@ const AllTicketPage = () => {
                   setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                 }
                 disabled={currentPage === totalPages}
-                className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition"
+                className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[#115E59] dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition"
               >
                 Next
               </button>

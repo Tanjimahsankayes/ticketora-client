@@ -5,6 +5,8 @@ import { useSession } from "@/lib/auth-client";
 import { Spinner } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { Megaphone, Ticket } from "@gravity-ui/icons";
+import { MdAirlineSeatReclineNormal } from "react-icons/md";
 import { getApprovedTickets, toggleAdvertiseTicket } from "@/lib/actions/admin";
 
 export default function AdvertisePage() {
@@ -44,44 +46,44 @@ export default function AdvertisePage() {
 
   const advertisedCount = tickets.filter((t) => t.isAdvertised).length;
 
- const handleToggleAdvertise = async (ticketId, currentIsAdvertised) => {
-   if (!currentIsAdvertised && advertisedCount >= 6) {
-     toast.error("Limit reached! Maximum 6 tickets can be advertised.");
-     return;
-   }
+  const handleToggleAdvertise = async (ticketId, currentIsAdvertised) => {
+    if (!currentIsAdvertised && advertisedCount >= 6) {
+      toast.error("Limit reached! Maximum 6 tickets can be advertised.");
+      return;
+    }
 
-   setActionLoadingId(ticketId);
+    setActionLoadingId(ticketId);
 
-   try {
-     const data = await toggleAdvertiseTicket(ticketId);
+    try {
+      const data = await toggleAdvertiseTicket(ticketId);
 
-     if (data.success) {
-       toast.success(
-         data.ticket.isAdvertised
-           ? "Ticket added to homepage advertisements!"
-           : "Ticket removed from advertisements.",
-       );
+      if (data.success) {
+        toast.success(
+          data.ticket.isAdvertised
+            ? "Ticket added to homepage advertisements!"
+            : "Ticket removed from advertisements.",
+        );
 
-       setTickets((prev) =>
-         prev.map((t) =>
-           (t._id || t.id) === ticketId
-             ? {
-                 ...t,
-                 isAdvertised: data.ticket.isAdvertised,
-               }
-             : t,
-         ),
-       );
-     } else {
-       toast.error(data.message || "Failed to update status");
-     }
-   } catch (error) {
-     console.error(error);
-     toast.error("Error connecting to server");
-   } finally {
-     setActionLoadingId(null);
-   }
- };
+        setTickets((prev) =>
+          prev.map((t) =>
+            (t._id || t.id) === ticketId
+              ? {
+                  ...t,
+                  isAdvertised: data.ticket.isAdvertised,
+                }
+              : t,
+          ),
+        );
+      } else {
+        toast.error(data.message || "Failed to update status");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Error connecting to server");
+    } finally {
+      setActionLoadingId(null);
+    }
+  };
 
   if (isPending || loading) {
     return (
@@ -95,28 +97,28 @@ export default function AdvertisePage() {
     <div className="space-y-6">
       {/* Stats & Quota Banner */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-slate-900/80 border border-slate-800 p-5 rounded-2xl backdrop-blur-md flex items-center justify-between">
+        <div className="bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl backdrop-blur-md flex items-center justify-between shadow-sm dark:shadow-none">
           <div>
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
               Approved Tickets
             </p>
-            <h3 className="text-2xl font-extrabold text-white mt-1">
+            <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">
               {tickets.length}
             </h3>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center justify-center text-lg">
-            🎫
+          <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 flex items-center justify-center text-lg">
+            <Ticket />
           </div>
         </div>
 
-        <div className="bg-slate-900/80 border border-slate-800 p-5 rounded-2xl backdrop-blur-md flex items-center justify-between">
+        <div className="bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl backdrop-blur-md flex items-center justify-between shadow-sm dark:shadow-none">
           <div>
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
               Currently Advertised
             </p>
-            <h3 className="text-2xl font-extrabold text-white mt-1">
+            <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">
               {advertisedCount}{" "}
-              <span className="text-xs font-normal text-slate-400">
+              <span className="text-xs font-normal text-slate-500 dark:text-slate-400">
                 / 6 max
               </span>
             </h3>
@@ -124,45 +126,45 @@ export default function AdvertisePage() {
           <div
             className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg border ${
               advertisedCount >= 6
-                ? "bg-rose-500/10 text-rose-400 border-rose-500/20"
-                : "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                ? "bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20"
+                : "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20"
             }`}
           >
-            📢
+            <Megaphone />
           </div>
         </div>
 
-        <div className="bg-slate-900/80 border border-slate-800 p-5 rounded-2xl backdrop-blur-md flex items-center justify-between">
+        <div className="bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl backdrop-blur-md flex items-center justify-between shadow-sm dark:shadow-none">
           <div>
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
               Available Slots
             </p>
-            <h3 className="text-2xl font-extrabold text-white mt-1">
+            <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">
               {Math.max(0, 6 - advertisedCount)}
             </h3>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center text-lg">
-            ⚡
+          <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 flex items-center justify-center text-lg">
+            <MdAirlineSeatReclineNormal />
           </div>
         </div>
       </div>
 
       {/* Tickets Table Card */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-2xl shadow-xl overflow-hidden backdrop-blur-md">
+      <div className="bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm dark:shadow-xl overflow-hidden backdrop-blur-md">
         {tickets.length === 0 ? (
-          <div className="p-12 text-center text-slate-400 space-y-2">
+          <div className="p-12 text-center text-slate-500 dark:text-slate-400 space-y-2">
             <p className="text-3xl">📭</p>
-            <p className="text-base font-medium text-white">
+            <p className="text-base font-medium text-slate-900 dark:text-white">
               No Approved Tickets
             </p>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 dark:text-slate-500">
               Approved vendor tickets will appear here for advertisement setup.
             </p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs sm:text-sm">
-              <thead className="bg-slate-950/80 text-slate-400 uppercase text-[10px] font-bold tracking-wider border-b border-slate-800">
+              <thead className="bg-slate-50 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 uppercase text-[10px] font-bold tracking-wider border-b border-slate-200 dark:border-slate-800">
                 <tr>
                   <th className="py-4 px-6">Ticket Title / Route</th>
                   <th className="py-4 px-6">Vendor</th>
@@ -172,7 +174,7 @@ export default function AdvertisePage() {
                   <th className="py-4 px-6 text-right">Advertise Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
                 {tickets.map((ticket) => {
                   const id = ticket._id || ticket.id;
                   const isProcessing = actionLoadingId === id;
@@ -182,30 +184,30 @@ export default function AdvertisePage() {
                   return (
                     <tr
                       key={id}
-                      className="hover:bg-slate-800/30 transition-colors"
+                      className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors"
                     >
                       {/* Title & Route */}
-                      <td className="py-4 px-6 font-semibold text-white">
+                      <td className="py-4 px-6 font-semibold text-slate-900 dark:text-white">
                         <div>
                           {ticket.title || `${ticket.from} ➔ ${ticket.to}`}
                         </div>
-                        <div className="text-[11px] text-slate-500 font-normal">
+                        <div className="text-[11px] text-slate-500 dark:text-slate-500 font-normal">
                           Departure: {ticket.departureDate || "N/A"}
                         </div>
                       </td>
 
                       {/* Vendor */}
-                      <td className="py-4 px-6 text-slate-300">
+                      <td className="py-4 px-6 text-slate-600 dark:text-slate-300">
                         {ticket.vendorName || ticket.vendor?.name || "Vendor"}
                       </td>
 
                       {/* Price */}
-                      <td className="py-4 px-6 text-slate-200 font-medium">
+                      <td className="py-4 px-6 text-slate-800 dark:text-slate-200 font-medium">
                         ${ticket.price}
                       </td>
 
                       {/* Available Seats */}
-                      <td className="py-4 px-6 text-slate-400">
+                      <td className="py-4 px-6 text-slate-600 dark:text-slate-400">
                         {ticket.availableSeats ??
                           ticket.seats ??
                           ticket.quantity ??
@@ -216,12 +218,12 @@ export default function AdvertisePage() {
                       {/* Ad Status Badge */}
                       <td className="py-4 px-6">
                         {isAdvertised ? (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse"></span>
                             Live Ad
                           </span>
                         ) : (
-                          <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-slate-800 text-slate-400 border border-slate-700">
+                          <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
                             Off
                           </span>
                         )}
@@ -238,7 +240,7 @@ export default function AdvertisePage() {
                             className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
                               isAdvertised
                                 ? "bg-rose-500"
-                                : "bg-slate-800 border-slate-700"
+                                : "bg-slate-200 dark:bg-slate-800 border-slate-300 dark:border-slate-700"
                             } ${
                               limitReached || isProcessing
                                 ? "opacity-40 cursor-not-allowed"

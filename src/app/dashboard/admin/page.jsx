@@ -2,6 +2,7 @@
 
 import { getAdminProfileByUserId, saveAdminProfile } from "@/lib/actions/admin";
 import { useSession } from "@/lib/auth-client";
+import { PencilToSquare, Shield } from "@gravity-ui/icons";
 import { Spinner } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
@@ -181,19 +182,7 @@ const AdminDashboardPage = () => {
             onClick={handleOpenEdit}
             className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-sm transition-all shadow-lg shadow-rose-600/20 active:scale-95 flex items-center gap-2 self-start sm:self-auto"
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-              />
-            </svg>
+            <PencilToSquare size={20} ></PencilToSquare>
             Edit Profile
           </button>
         </div>
@@ -219,7 +208,7 @@ const AdminDashboardPage = () => {
                 className="absolute -bottom-2 -right-2 bg-rose-600 text-white p-1 rounded-lg text-xs shadow-md"
                 title="Super Admin"
               >
-                🛡️
+                <Shield></Shield>
               </span>
             </div>
 

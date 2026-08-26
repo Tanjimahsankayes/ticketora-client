@@ -128,7 +128,7 @@ export default function TicketDetailsPage() {
 
   if (loading || isSessionLoading) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-[#0F766E] dark:text-slate-100 flex items-center justify-center">
         <div className="flex items-center space-x-3 text-indigo-600 dark:text-indigo-400">
           <span className="animate-pulse font-medium">Loading Details...</span>
         </div>
@@ -138,7 +138,7 @@ export default function TicketDetailsPage() {
 
   if (!ticket) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-[#0F766E] dark:text-slate-100 flex items-center justify-center">
         <p className="text-slate-500 dark:text-slate-400">Ticket not found!</p>
       </div>
     );
@@ -148,7 +148,7 @@ export default function TicketDetailsPage() {
   const isButtonDisabled = isExpired || isOutOfStock;
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 py-12 px-4 sm:px-6 lg:px-8 font-sans">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-[#0F766E] dark:text-slate-100 py-12 px-4 sm:px-6 lg:px-8 font-sans">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Banner Image */}
         <div className="relative w-full h-72 sm:h-96 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl dark:shadow-2xl">
@@ -240,7 +240,7 @@ export default function TicketDetailsPage() {
           <div className="bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm dark:shadow-none">
             <div className="flex justify-between items-center text-sm">
               <span className="text-slate-500 dark:text-slate-400">Route:</span>
-              <span className="text-slate-800 dark:text-slate-200 font-semibold">
+              <span className="text-[#0F766E] dark:text-slate-200 font-semibold">
                 {ticket.fromLocation} ➔ {ticket.toLocation}
               </span>
             </div>
@@ -325,7 +325,7 @@ export default function TicketDetailsPage() {
                   max={ticket.quantity}
                   value={bookQuantity}
                   onChange={(e) => setBookQuantity(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-[#0F766E] dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   required
                 />
               </div>
@@ -349,7 +349,7 @@ export default function TicketDetailsPage() {
                     setIsModalOpen(false);
                     setErrorMessage("");
                   }}
-                  className="w-1/2 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-xl transition-colors"
+                  className="w-1/2 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-[#115E59] dark:text-slate-300 text-xs font-semibold rounded-xl transition-colors"
                 >
                   Cancel
                 </button>

@@ -81,7 +81,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative w-full h-[85vh] min-h-[600px] bg-slate-900 dark:bg-[#08090a] overflow-hidden text-slate-900 dark:text-white flex items-center justify-center theme-transition">
+    <section className="relative w-full h-[85vh] min-h-[600px] bg-slate-50 dark:bg-[#08090a] overflow-hidden text-[#0F766E] dark:text-white flex items-center justify-center transition-colors duration-300">
       {/* Background Images Layer */}
       {slides.map((slide, index) => (
         <div
@@ -96,9 +96,9 @@ export default function Hero() {
             backgroundRepeat: "no-repeat",
           }}
         >
-          {/* Dark Overlay with Blur Effects to match app design */}
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-900 dark:from-[#08090a] via-slate-900/80 dark:via-[#08090a]/80 to-transparent" />
-          <div className="absolute inset-0 bg-black/20 dark:bg-black/40" />
+          {/* Theme-Adaptive Gradient Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-50 via-slate-50/90 to-slate-50/20 dark:from-[#08090a] dark:via-[#08090a]/80 dark:to-transparent" />
+          <div className="absolute inset-0 bg-white/40 dark:bg-black/40" />
         </div>
       ))}
 
@@ -109,16 +109,16 @@ export default function Hero() {
       <div className="relative z-20 max-w-7xl w-full mx-auto px-6 flex flex-col justify-center h-full">
         <div className="max-w-2xl space-y-6">
           {/* Tagline Badge */}
-          <div className="inline-flex items-center gap-2 bg-slate-100/80 dark:bg-white/10 backdrop-blur-md border border-slate-200 dark:border-white/10 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-zinc-300">
+          <div className="inline-flex items-center gap-2 bg-slate-200/80 dark:bg-white/10 backdrop-blur-md border border-slate-300/60 dark:border-white/10 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-[#115E59] dark:text-zinc-300 shadow-sm">
             <span>Ticketora Premium Travel</span>
           </div>
 
-          {/* Title & Subtitle with smooth transition */}
+          {/* Title & Subtitle */}
           <div className="min-h-[160px] flex flex-col justify-center space-y-4">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight transition-all duration-500 text-slate-900 dark:text-white">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight transition-all duration-500 text-[#07443f] dark:text-white">
               {slides[currentSlide].title}
             </h1>
-            <p className="text-lg sm:text-xl text-slate-600 dark:text-zinc-300 font-normal leading-relaxed">
+            <p className="text-lg sm:text-xl text-[#64748B] dark:text-zinc-300 font-normal leading-relaxed">
               {slides[currentSlide].subtitle}
             </p>
           </div>
@@ -127,7 +127,7 @@ export default function Hero() {
           <div className="pt-2">
             <Link
               href={slides[currentSlide].buttonLink}
-              className="inline-flex items-center justify-center gap-3 bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-zinc-200 text-white dark:text-black font-semibold px-8 py-4 rounded-xl text-base transition-all duration-200 shadow-xl hover:scale-105 active:scale-95"
+              className="inline-flex items-center justify-center gap-3 bg-[#0F766E] hover:bg-[#115E59] dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-slate-950 font-semibold px-8 py-4 rounded-xl text-base transition-all duration-200 shadow-xl hover:scale-105 active:scale-95"
             >
               <span>{slides[currentSlide].buttonText}</span>
               <ArrowRight className="w-5 h-5" />
@@ -140,14 +140,14 @@ export default function Hero() {
       <div className="absolute bottom-10 right-10 z-30 hidden sm:flex items-center gap-3">
         <button
           onClick={prevSlide}
-          className="p-3 rounded-full bg-slate-200/50 dark:bg-white/10 hover:bg-slate-300/50 dark:hover:bg-white/20 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white backdrop-blur-md transition-all active:scale-95"
+          className="p-3 rounded-full bg-slate-200/80 hover:bg-slate-300/80 dark:bg-white/10 dark:hover:bg-white/20 border border-slate-300 dark:border-white/10 text-[#0F766E] dark:text-white backdrop-blur-md transition-all active:scale-95 shadow-sm"
           aria-label="Previous Slide"
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
         <button
           onClick={nextSlide}
-          className="p-3 rounded-full bg-slate-200/50 dark:bg-white/10 hover:bg-slate-300/50 dark:hover:bg-white/20 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white backdrop-blur-md transition-all active:scale-95"
+          className="p-3 rounded-full bg-slate-200/80 hover:bg-slate-300/80 dark:bg-white/10 dark:hover:bg-white/20 border border-slate-300 dark:border-white/10 text-[#0F766E] dark:text-white backdrop-blur-md transition-all active:scale-95 shadow-sm"
           aria-label="Next Slide"
         >
           <ChevronRight className="w-6 h-6" />
@@ -162,8 +162,8 @@ export default function Hero() {
             onClick={() => setCurrentSlide(index)}
             className={`h-2.5 rounded-full transition-all duration-300 ${
               index === currentSlide
-                ? "w-8 bg-slate-900 dark:bg-white"
-                : "w-2.5 bg-slate-300 dark:bg-white/30 hover:bg-slate-400 dark:hover:bg-white/50"
+                ? "w-8 bg-[#0F766E] dark:bg-white"
+                : "w-2.5 bg-slate-300/80 hover:bg-slate-400 dark:bg-white/30 dark:hover:bg-white/50"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
@@ -172,4 +172,3 @@ export default function Hero() {
     </section>
   );
 }
-    

@@ -30,18 +30,11 @@ export async function POST(request) {
     });
   }
 
-  console.log("========== STRIPE WEBHOOK RECEIVED ==========");
-  console.log("Event:", event.type);
-  console.log("Event ID:", event.id);
-
   try {
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
 
       const bookingId = session.metadata?.bookingId;
-
-      console.log("Stripe session:", session.id);
-      console.log("Booking ID:", bookingId);
 
       // Only bookingId is required for MongoDB update
       if (!bookingId) {
@@ -108,12 +101,7 @@ export async function POST(request) {
         });
       }
 
-      console.log("===========================================");
-      console.log("PAYMENT SUCCESSFULLY SAVED TO MONGODB");
-      console.log("Booking ID:", bookingId);
-      console.log("Stripe Session:", session.id);
-      console.log("Payment Intent:", paymentIntentId);
-      console.log("===========================================");
+      
     }
 
     return NextResponse.json({

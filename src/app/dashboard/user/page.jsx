@@ -69,6 +69,7 @@ const UserDashboardPage = () => {
     );
   }
 
+
   // Check if user profile exists in Database
   const hasProfile = Boolean(userProfile?.phone || userProfile?.name);
 
@@ -178,12 +179,12 @@ const UserDashboardPage = () => {
   const displayImage = userProfile?.image || user?.image;
 
   return (
-    <div className="text-slate-700 dark:text-slate-100">
+    <div className="text-[#115E59] dark:text-slate-100">
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Welcome Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 dark:border-slate-800 pb-6 gap-4">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F766E] dark:text-white tracking-tight">
               Welcome back, <span className="text-cyan-600 dark:text-cyan-400">{displayName}</span>{" "}
               👋
             </h1>
@@ -224,7 +225,7 @@ const UserDashboardPage = () => {
             <div className="w-16 h-16 bg-cyan-100 dark:bg-cyan-600/20 text-cyan-600 dark:text-cyan-400 rounded-2xl flex items-center justify-center mx-auto text-2xl font-bold">
               👤
             </div>
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+            <h2 className="text-xl font-bold text-[#0F766E] dark:text-white">
               Complete Your Profile
             </h2>
             <p className="text-sm text-slate-600 dark:text-slate-400">
@@ -244,7 +245,7 @@ const UserDashboardPage = () => {
         {!hasProfile && isCreating && (
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8 max-w-2xl mx-auto shadow-xl space-y-6">
             <div className="border-b border-slate-200 dark:border-slate-800 pb-4">
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+              <h2 className="text-xl font-bold text-[#0F766E] dark:text-white">
                 Setup Your Personal Profile
               </h2>
               <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
@@ -288,7 +289,7 @@ const UserDashboardPage = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Enter your full name"
-                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-[#0F766E] dark:text-white focus:outline-none focus:border-cyan-500"
                 />
               </div>
 
@@ -302,7 +303,7 @@ const UserDashboardPage = () => {
                   placeholder="+880 1700-000000"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-[#0F766E] dark:text-white focus:outline-none focus:border-cyan-500"
                 />
               </div>
 
@@ -315,7 +316,7 @@ const UserDashboardPage = () => {
                   placeholder="e.g. Dhaka, Bangladesh"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-[#0F766E] dark:text-white focus:outline-none focus:border-cyan-500"
                 />
               </div>
 
@@ -323,7 +324,7 @@ const UserDashboardPage = () => {
                 <button
                   type="button"
                   onClick={() => setIsCreating(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold"
+                  className="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-[#115E59] dark:text-slate-300 text-xs font-semibold"
                 >
                   Cancel
                 </button>
@@ -362,7 +363,7 @@ const UserDashboardPage = () => {
               <div className="flex-1 w-full space-y-4 text-center md:text-left">
                 <div>
                   <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
-                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
+                    <h2 className="text-2xl font-bold text-[#0F766E] dark:text-white">
                       {displayName}
                     </h2>
                     <span className="px-2.5 py-0.5 rounded-md text-xs font-bold uppercase tracking-wider bg-cyan-100 dark:bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-500/20">
@@ -377,7 +378,7 @@ const UserDashboardPage = () => {
                     <p className="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-500">
                       Phone Number
                     </p>
-                    <p className="text-xs font-semibold text-slate-800 dark:text-slate-200 mt-1">
+                    <p className="text-xs font-semibold text-[#0F766E] dark:text-slate-200 mt-1">
                       {displayPhone}
                     </p>
                   </div>
@@ -386,7 +387,7 @@ const UserDashboardPage = () => {
                     <p className="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-500">
                       Address
                     </p>
-                    <p className="text-xs font-semibold text-slate-800 dark:text-slate-200 mt-1 truncate">
+                    <p className="text-xs font-semibold text-[#0F766E] dark:text-slate-200 mt-1 truncate">
                       {displayAddress}
                     </p>
                   </div>
@@ -410,7 +411,7 @@ const UserDashboardPage = () => {
       {isEditOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl relative">
-            <h3 className="text-xl font-bold text-slate-900 dark:text-white">Edit User Profile</h3>
+            <h3 className="text-xl font-bold text-[#0F766E] dark:text-white">Edit User Profile</h3>
 
             <form onSubmit={handleSaveProfile} className="space-y-4">
               <div>
@@ -447,7 +448,7 @@ const UserDashboardPage = () => {
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-[#0F766E] dark:text-white focus:outline-none focus:border-cyan-500"
                 />
               </div>
 
@@ -461,7 +462,7 @@ const UserDashboardPage = () => {
                   placeholder="+880 1700-000000"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-[#0F766E] dark:text-white focus:outline-none focus:border-cyan-500"
                 />
               </div>
 
@@ -474,7 +475,7 @@ const UserDashboardPage = () => {
                   placeholder="e.g. Dhaka, Bangladesh"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-[#0F766E] dark:text-white focus:outline-none focus:border-cyan-500"
                 />
               </div>
 
@@ -482,7 +483,7 @@ const UserDashboardPage = () => {
                 <button
                   type="button"
                   onClick={() => setIsEditOpen(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold"
+                  className="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-[#115E59] dark:text-slate-300 text-xs font-semibold"
                 >
                   Cancel
                 </button>

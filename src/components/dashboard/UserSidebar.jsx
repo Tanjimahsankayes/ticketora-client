@@ -46,7 +46,7 @@ export function UserDashboardSidebar() {
             className={`group relative flex items-center gap-3.5 rounded-xl px-3.5 py-3 text-sm font-medium transition-all duration-300 ease-out ${
               isActive
                 ? "bg-slate-800/80 dark:bg-slate-800/80 text-white shadow-lg shadow-black/20 border border-slate-700/60 dark:border-slate-700/60"
-                : "text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800/40 hover:text-slate-900 dark:hover:text-slate-200 hover:translate-x-1"
+                : "text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800/40 hover:text-[#0F766E] dark:hover:text-slate-200 hover:translate-x-1"
             }`}
           >
             {/* Active Accent Indicator */}
@@ -61,7 +61,7 @@ export function UserDashboardSidebar() {
               className={`flex h-9 w-9 items-center justify-center rounded-lg transition-all duration-300 ${
                 isActive
                   ? `bg-gradient-to-tr ${item.color} text-white shadow-md shadow-black/40`
-                  : `bg-slate-100 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 group-hover:bg-slate-200 dark:group-hover:bg-slate-800 group-hover:text-slate-900 dark:group-hover:text-slate-100 ${item.glow}`
+                  : `bg-slate-100 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 group-hover:bg-slate-200 dark:group-hover:bg-slate-800 group-hover:text-[#0F766E] dark:group-hover:text-slate-100 ${item.glow}`
               }`}
             >
               <Icon className="size-4.5" />
@@ -90,7 +90,7 @@ export function UserDashboardSidebar() {
       <div className="p-4 md:hidden">
         <Drawer>
           <Button
-            className="w-full justify-start bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800"
+            className="w-full justify-start bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[#115E59] dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800"
             variant="secondary"
           >
             <LayoutSideContent className="size-4" />
@@ -101,10 +101,10 @@ export function UserDashboardSidebar() {
               placement="left"
               className="bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800"
             >
-              <Drawer.Dialog className="bg-white dark:bg-slate-950 text-slate-700 dark:text-slate-100">
+              <Drawer.Dialog className="bg-white dark:bg-slate-950 text-[#115E59] dark:text-slate-100">
                 <Drawer.CloseTrigger />
                 <Drawer.Header className="border-b border-slate-200 dark:border-slate-800/60 pb-3">
-                  <Drawer.Heading className="text-slate-800 dark:text-slate-200">
+                  <Drawer.Heading className="text-[#0F766E] dark:text-slate-200">
                     User Menu
                   </Drawer.Heading>
                 </Drawer.Header>

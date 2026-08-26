@@ -101,6 +101,9 @@ const VendorDashboardPage = () => {
       throw new Error("ImgBB API Key not found. Please check your .env file.");
     }
 
+    console.log("ImgBB key exists:", Boolean(IMGBB_API_KEY));
+    console.log("ImgBB key length:", IMGBB_API_KEY.length);
+
     const body = new FormData();
     body.append("image", file);
 

@@ -44,7 +44,7 @@ const DashboardLayout = ({ children }) => {
   };
 
   return (
-    <div className="relative flex min-h-screen flex-col overflow-x-hidden bg-slate-50 text-slate-700 antialiased selection:bg-indigo-500 selection:text-white dark:bg-slate-950 dark:text-slate-100 md:flex-row">
+    <div className="relative flex min-h-screen flex-col overflow-x-hidden bg-slate-50 text-[#115E59] antialiased selection:bg-indigo-500 selection:text-white dark:bg-slate-950 dark:text-slate-100 md:flex-row">
       {/* =====================================================
           Background Ambient Glows
       ====================================================== */}

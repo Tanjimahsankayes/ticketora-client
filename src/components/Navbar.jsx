@@ -49,12 +49,12 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 w-full bg-white/90 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 text-sm font-medium text-slate-800 dark:text-slate-200 z-50 transition-colors duration-200 shadow-sm dark:shadow-none">
+    <header className="sticky top-0 w-full bg-white/90 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 text-sm font-medium text-[#0F766E] dark:text-slate-200 z-50 transition-colors duration-200 shadow-sm dark:shadow-none">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Left: Brand Logo */}
         <Link
           href="/"
-          className="group flex items-center gap-3 text-slate-900 dark:text-white transition-all"
+          className="group flex items-center gap-3 text-[#0F766E] dark:text-white transition-all"
         >
           <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-violet-600 to-purple-500 text-white p-1.5 shadow-md shadow-indigo-500/20 group-hover:shadow-indigo-500/40 group-hover:scale-105 transition-all">
             <img
@@ -65,7 +65,7 @@ export default function Navbar() {
           </div>
 
           {/* Ticketora Title with MapPin icon as 'o' */}
-          <span className="font-extrabold text-2xl tracking-tight bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-800 dark:from-white dark:via-slate-100 dark:to-slate-400 bg-clip-text text-transparent flex items-center gap-[1px]">
+          <span className="font-extrabold text-2xl tracking-tight bg-gradient-to-r from-[#0F766E] via-[#115E59] to-[#0F766E] dark:from-white dark:via-slate-100 dark:to-slate-400 bg-clip-text text-transparent flex items-center gap-[1px]">
             Ticket
             <span className="inline-flex items-center justify-center text-indigo-600 dark:text-indigo-400 animate-bounce duration-1000 -mt-1 mx-[1px]">
               <MapPin className="w-5 h-5 stroke-[2.5]" />
@@ -81,7 +81,7 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className="px-4 py-1.5 rounded-full text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800/80 shadow-none hover:shadow-sm transition-all duration-200 font-semibold text-xs sm:text-sm"
+                className="px-4 py-1.5 rounded-full text-[#115E59] dark:text-slate-300 hover:text-[#0F766E] dark:hover:text-white hover:bg-white dark:hover:bg-slate-800/80 shadow-none hover:shadow-sm transition-all duration-200 font-semibold text-xs sm:text-sm"
               >
                 {link.name}
               </Link>
@@ -119,7 +119,7 @@ export default function Navbar() {
                     <Person className="w-4 h-4" />
                   </div>
                 )}
-                <span className="font-semibold text-sm text-slate-800 dark:text-slate-200 hidden lg:inline-block pr-1">
+                <span className="font-semibold text-sm text-[#0F766E] dark:text-slate-200 hidden lg:inline-block pr-1">
                   {user.name}
                 </span>
                 <ChevronDown
@@ -141,7 +141,7 @@ export default function Navbar() {
 
                   <div className="absolute right-0 mt-3 w-60 bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl py-2 text-sm z-20 origin-top-right overflow-hidden animate-in fade-in slide-in-from-top-2 duration-150">
                     <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800/80 mb-1 bg-slate-50/80 dark:bg-slate-950/40">
-                      <p className="font-semibold text-slate-900 dark:text-white truncate">
+                      <p className="font-semibold text-[#0F766E] dark:text-white truncate">
                         {user.name}
                       </p>
                       <p className="text-xs text-slate-500 dark:text-slate-400 truncate mt-0.5">
@@ -153,9 +153,9 @@ export default function Navbar() {
                       <Link
                         href="/profile"
                         onClick={() => setProfileDropdownOpen(false)}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors font-medium"
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[#115E59] dark:text-slate-300 hover:text-[#0F766E] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors font-medium"
                       >
-                        <div className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                        <div className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-[#115E59] dark:text-slate-300">
                           <Person className="w-4 h-4" />
                         </div>
                         My Profile
@@ -182,7 +182,7 @@ export default function Navbar() {
             <div className="flex items-center gap-3">
               <Link
                 href="/auth/signin"
-                className="text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-white font-semibold transition-colors duration-150 px-4 py-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800/50"
+                className="text-[#115E59] dark:text-slate-300 hover:text-[#0F766E] dark:hover:text-white font-semibold transition-colors duration-150 px-4 py-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800/50"
               >
                 Log in
               </Link>
@@ -202,7 +202,7 @@ export default function Navbar() {
           <ThemeToggle />
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus:outline-none p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900/60 transition-colors"
+            className="text-[#115E59] dark:text-slate-300 hover:text-[#0F766E] dark:hover:text-white focus:outline-none p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900/60 transition-colors"
             aria-label="Toggle Menu"
           >
             {mobileMenuOpen ? (
@@ -229,7 +229,7 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-slate-800 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-white px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 text-base font-semibold transition-colors"
+                  className="text-[#0F766E] dark:text-slate-200 hover:text-[#115E59] dark:hover:text-white px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 text-base font-semibold transition-colors"
                 >
                   {link.name}
                 </Link>
@@ -243,7 +243,7 @@ export default function Navbar() {
               <div className="h-10 w-24 bg-slate-200 dark:bg-slate-800 animate-pulse rounded-full"></div>
             ) : user ? (
               <div className="flex flex-col gap-3">
-                <div className="flex items-center gap-3 text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 p-3.5 rounded-2xl">
+                <div className="flex items-center gap-3 text-[#0F766E] dark:text-white bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 p-3.5 rounded-2xl">
                   {user.image ? (
                     <Image
                       src={user.image}
@@ -259,7 +259,7 @@ export default function Navbar() {
                     </div>
                   )}
                   <div className="overflow-hidden">
-                    <span className="font-semibold text-slate-900 dark:text-white block truncate">
+                    <span className="font-semibold text-[#0F766E] dark:text-white block truncate">
                       {user.name}
                     </span>
                     <span className="text-xs text-slate-500 dark:text-slate-400 block truncate">
@@ -271,7 +271,7 @@ export default function Navbar() {
                 <Link
                   href="/profile"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-3 text-slate-800 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-white px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors font-medium"
+                  className="flex items-center gap-3 text-[#0F766E] dark:text-slate-200 hover:text-[#115E59] dark:hover:text-white px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors font-medium"
                 >
                   <Person className="w-4 h-4 text-indigo-600 dark:text-violet-400" />
                   My Profile
@@ -290,7 +290,7 @@ export default function Navbar() {
                 <Link
                   href="/auth/signin"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-center w-full py-3 border border-slate-300 dark:border-slate-800 rounded-xl text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors text-base font-semibold"
+                  className="text-center w-full py-3 border border-slate-300 dark:border-slate-800 rounded-xl text-[#0F766E] dark:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors text-base font-semibold"
                 >
                   Log in
                 </Link>
