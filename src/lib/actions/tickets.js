@@ -1,61 +1,65 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { protectedFetch, serverFetch, serverMutation } from "../core/server";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000";
-
-if (!process.env.NEXT_PUBLIC_BASE_URL) {
-  console.warn(
-    "NEXT_PUBLIC_BASE_URL is not defined, using fallback: http://localhost:5000",
-  );
-}
 
 export const createTicket = async (newTicket) => {
   try {
-    const res = await fetch(`${baseUrl}/api/tickets`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newTicket),
-    });
+    const res = await serverMutation("/api/tickets", newTicket, "POST");
+
+    const data = await res.json().catch(() => ({}));
 
     if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      throw new Error(
-        errorData.message || `Server responded with status ${res.status}`,
-      );
+      return {
+        success: false,
+        error: data.message || `Server responded with status ${res.status}`,
+      };
     }
 
-    return await res.json();
+    revalidatePath("/dashboard/vendor/add-ticket");
+    revalidatePath("/dashboard/vendor/my-tickets");
+
+    return data;
   } catch (error) {
     console.error("Create ticket error:", error);
-    return { success: false, error: error.message };
+
+    return {
+      success: false,
+      error: error?.message || "Failed to create ticket",
+    };
   }
 };
 
 export const getTickets = async (vendorEmail) => {
   try {
     const url = vendorEmail
-      ? `${baseUrl}/api/tickets?vendorEmail=${encodeURIComponent(vendorEmail)}`
-      : `${baseUrl}/api/tickets`;
+      ? `/api/tickets?vendorEmail=${encodeURIComponent(vendorEmail)}`
+      : "/api/tickets";
 
-    const res = await fetch(url, {
-      cache: "no-store",
-    });
+    const res = vendorEmail
+      ? await protectedFetch(url, {
+          cache: "no-store",
+        })
+      : await serverFetch(url, {
+          cache: "no-store",
+        });
 
     if (!res.ok) {
-      console.error(`API Error Status: ${res.status}`);
+      console.error(`Get tickets API error: ${res.status}`);
       return [];
     }
 
     const contentType = res.headers.get("content-type");
-    if (!contentType || !contentType.includes("application/json")) {
-      console.error("API did not return JSON response");
+
+    if (!contentType?.includes("application/json")) {
+      console.error("Get tickets API did not return JSON");
       return [];
     }
 
-    return await res.json();
+    const data = await res.json();
+
+    return Array.isArray(data) ? data : [];
   } catch (error) {
     console.error("Get tickets action error:", error);
     return [];
@@ -64,10 +68,27 @@ export const getTickets = async (vendorEmail) => {
 
 export const getTicketById = async (id) => {
   try {
-    const res = await fetch(`${baseUrl}/api/tickets/${id}`, {
+    if (!id) {
+      console.error("Ticket ID is required");
+      return null;
+    }
+
+    const res = await serverFetch(`/api/tickets/${id}`, {
       cache: "no-store",
     });
-    if (!res.ok) return null;
+
+    if (!res.ok) {
+      console.error(`Get ticket API error: ${res.status}`);
+      return null;
+    }
+
+    const contentType = res.headers.get("content-type");
+
+    if (!contentType?.includes("application/json")) {
+      console.error("Get ticket API did not return JSON");
+      return null;
+    }
+
     return await res.json();
   } catch (error) {
     console.error("Fetch ticket error:", error);
@@ -75,91 +96,16 @@ export const getTicketById = async (id) => {
   }
 };
 
-export const createBooking = async (bookingData) => {
+export const deleteTicket = async (id) => {
   try {
-    const res = await fetch(`${baseUrl}/api/bookings`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(bookingData),
-    });
-
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      throw new Error(errorData.message || "Booking failed");
-    }
-
-    return await res.json();
-  } catch (error) {
-    console.error("Booking error:", error);
-    return { success: false, error: error.message };
-  }
-};
-
-export const getBookingsByEmail = async (email) => {
-  try {
-    const res = await fetch(`${baseUrl}/api/bookings?email=${email}`);
-
-    if (!res.ok) {
-      console.error(`API Error Status: ${res.status}`);
-      return [];
-    }
-
-    const contentType = res.headers.get("content-type");
-    if (!contentType || !contentType.includes("application/json")) {
-      console.error("API did not return JSON response");
-      return [];
-    }
-
-    return await res.json();
-  } catch (error) {
-    console.error("Fetch user bookings error:", error);
-    return [];
-  }
-};
-
-export async function cancelBooking(bookingId, userEmail) {
-  try {
-    const res = await fetch(`${baseUrl}/api/bookings/${bookingId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        status: "cancelled",
-        email: userEmail,
-      }),
-    });
-
-    const data = await res.json().catch(() => ({}));
-
-    if (!res.ok) {
+    if (!id) {
       return {
         success: false,
-        message: data.message || "Failed to cancel booking",
+        message: "Ticket ID is required",
       };
     }
 
-    revalidatePath("/dashboard/user/ticketbook");
-
-    return {
-      success: true,
-      message: "Booking cancelled successfully",
-    };
-  } catch (error) {
-    console.error("Cancel booking error:", error);
-
-    return {
-      success: false,
-      message: error.message || "An error occurred while cancelling booking",
-    };
-  }
-}
-
-export const deleteTicket = async (id) => {
-  try {
-    const res = await fetch(`${baseUrl}/api/tickets/${id}`, {
-      method: "DELETE",
-    });
+    const res = await serverMutation(`/api/tickets/${id}`, {}, "DELETE");
 
     const data = await res.json().catch(() => ({}));
 
@@ -170,28 +116,38 @@ export const deleteTicket = async (id) => {
       };
     }
 
+    revalidatePath("/dashboard/vendor/my-tickets");
+    revalidatePath("/dashboard");
+
     return {
       success: true,
-      message: "Ticket deleted successfully",
+      message: data.message || "Ticket deleted successfully",
+      data,
     };
   } catch (error) {
     console.error("Delete ticket error:", error);
+
     return {
       success: false,
-      message: error.message || "An error occurred while deleting ticket",
+      message: error?.message || "An error occurred while deleting ticket",
     };
   }
 };
 
 export const updateTicket = async (id, updatedData) => {
   try {
-    const res = await fetch(`${baseUrl}/api/tickets/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedData),
-    });
+    if (!id) {
+      return {
+        success: false,
+        message: "Ticket ID is required",
+      };
+    }
+
+    const res = await serverMutation(
+      `/api/tickets/${id}`,
+      updatedData,
+      "PATCH",
+    );
 
     const data = await res.json().catch(() => ({}));
 
@@ -202,28 +158,39 @@ export const updateTicket = async (id, updatedData) => {
       };
     }
 
+    revalidatePath("/dashboard/vendor/my-tickets");
+    revalidatePath(`/dashboard/vendor/my-tickets/${id}`);
+
     return {
       success: true,
-      message: "Ticket updated successfully",
+      message: data.message || "Ticket updated successfully",
       data,
     };
   } catch (error) {
     console.error("Update ticket error:", error);
+
     return {
       success: false,
-      message: error.message || "An error occurred while updating ticket",
+      message: error?.message || "An error occurred while updating ticket",
     };
   }
 };
 
 export const getAdvertisedTickets = async () => {
   try {
-    const res = await fetch(`${baseUrl}/api/advertised-tickets`, {
+    const res = await serverFetch("/api/advertised-tickets", {
       cache: "no-store",
     });
 
     if (!res.ok) {
-      console.error("Failed to fetch advertised tickets");
+      console.error(`Failed to fetch advertised tickets: ${res.status}`);
+      return [];
+    }
+
+    const contentType = res.headers.get("content-type");
+
+    if (!contentType?.includes("application/json")) {
+      console.error("Advertised tickets API did not return JSON");
       return [];
     }
 
@@ -232,21 +199,31 @@ export const getAdvertisedTickets = async () => {
     return Array.isArray(data) ? data : [];
   } catch (error) {
     console.error("Error fetching advertised tickets:", error);
+
     return [];
   }
 };
 
 export const getLatestTickets = async (limit = 6) => {
   try {
-    const res = await fetch(
-      `${baseUrl}/api/tickets?latest=true&limit=${limit}`,
+    const safeLimit = Number(limit) || 6;
+
+    const res = await serverFetch(
+      `/api/tickets?latest=true&limit=${safeLimit}`,
       {
         cache: "no-store",
       },
     );
 
     if (!res.ok) {
-      console.error("Failed to fetch latest tickets");
+      console.error(`Failed to fetch latest tickets: ${res.status}`);
+      return [];
+    }
+
+    const contentType = res.headers.get("content-type");
+
+    if (!contentType?.includes("application/json")) {
+      console.error("Latest tickets API did not return JSON");
       return [];
     }
 
@@ -258,3 +235,118 @@ export const getLatestTickets = async (limit = 6) => {
     return [];
   }
 };
+
+export const createBooking = async (bookingData) => {
+  try {
+    const res = await serverMutation("/api/bookings", bookingData, "POST");
+
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+      return {
+        success: false,
+        error: data.message || "Booking failed",
+      };
+    }
+
+    revalidatePath("/dashboard/user/ticketbook");
+    revalidatePath("/dashboard/user");
+
+    return data;
+  } catch (error) {
+    console.error("Booking error:", error);
+
+    return {
+      success: false,
+      error: error?.message || "Booking failed",
+    };
+  }
+};
+
+//  Get bookings by user email
+export const getBookingsByEmail = async (email) => {
+  try {
+    if (!email) {
+      console.error("User email is required");
+      return [];
+    }
+
+    const res = await protectedFetch(
+      `/api/bookings?email=${encodeURIComponent(email)}`,
+      {
+        cache: "no-store",
+      },
+    );
+
+    if (!res.ok) {
+      console.error(`Get bookings API error: ${res.status}`);
+      return [];
+    }
+
+    const contentType = res.headers.get("content-type");
+
+    if (!contentType?.includes("application/json")) {
+      console.error("Bookings API did not return JSON");
+      return [];
+    }
+
+    const data = await res.json();
+
+    return Array.isArray(data) ? data : [];
+  } catch (error) {
+    console.error("Fetch user bookings error:", error);
+
+    return [];
+  }
+};
+
+export async function cancelBooking(bookingId, userEmail) {
+  try {
+    if (!bookingId) {
+      return {
+        success: false,
+        message: "Booking ID is required",
+      };
+    }
+
+    if (!userEmail) {
+      return {
+        success: false,
+        message: "User email is required",
+      };
+    }
+
+    const res = await serverMutation(
+      `/api/bookings/${bookingId}`,
+      {
+        status: "cancelled",
+        email: userEmail,
+      },
+      "PATCH",
+    );
+
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+      return {
+        success: false,
+        message: data.message || "Failed to cancel booking",
+      };
+    }
+
+    revalidatePath("/dashboard/user/ticketbook");
+    revalidatePath("/dashboard/user");
+
+    return {
+      success: true,
+      message: data.message || "Booking cancelled successfully",
+    };
+  } catch (error) {
+    console.error("Cancel booking error:", error);
+
+    return {
+      success: false,
+      message: error?.message || "An error occurred while cancelling booking",
+    };
+  }
+}
