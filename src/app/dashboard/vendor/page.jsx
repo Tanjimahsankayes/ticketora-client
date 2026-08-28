@@ -179,7 +179,7 @@ const VendorDashboardPage = () => {
   const displayImage = companyProfile?.image || user?.image;
 
   return (
-    <div className="text-slate-700 dark:text-slate-100 max-w-5xl mx-auto pt-6">
+    <div className="text-slate-700 dark:text-slate-100 max-w-5xl mx-auto pt-6 px-8">
       <div className=" space-y-8">
         {/* Welcome Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 dark:border-slate-800 pb-6 gap-4">

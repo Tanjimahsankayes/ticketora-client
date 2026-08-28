@@ -296,7 +296,7 @@ const AllTicketPage = () => {
                         {ticket.transportType || "Transport"}
                       </span>
 
-                      <span
+                      {/* <span
                         className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold capitalize border backdrop-blur-md shadow-md ${
                           ticket.verificationStatus === "pending"
                             ? "bg-slate-950/80 dark:bg-slate-950/80 text-amber-600 dark:text-amber-400 border-amber-500/30 dark:border-amber-500/30"
@@ -315,7 +315,7 @@ const AllTicketPage = () => {
                           }`}
                         />
                         {ticket.verificationStatus || "Pending"}
-                      </span>
+                      </span> */}
                     </div>
                   </div>
 

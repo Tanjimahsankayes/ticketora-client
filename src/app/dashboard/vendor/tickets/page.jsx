@@ -203,7 +203,7 @@ const TicketsPage = () => {
   }
 
   return (
-    <div className="text-slate-700 dark:text-slate-100 relative max-w-5xl mx-auto py-6">
+    <div className="text-slate-700 dark:text-slate-100 relative max-w-5xl mx-auto py-6 px-8">
       <div className="space-y-8">
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 dark:border-slate-800 pb-6">
@@ -290,23 +290,23 @@ const TicketsPage = () => {
 
                       <span
                         className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold capitalize border backdrop-blur-md shadow-md ${
-                          ticket.verificationStatus === "pending"
+                          ticket.status === "pending"
                             ? "bg-slate-950/80 text-amber-400 border-amber-500/30"
-                            : ticket.verificationStatus === "verified"
+                            : ticket.status === "verified"
                               ? "bg-slate-950/80 text-emerald-400 border-emerald-500/30"
                               : "bg-slate-950/80 text-rose-400 border-rose-500/30"
                         }`}
                       >
                         <span
                           className={`w-1.5 h-1.5 rounded-full ${
-                            ticket.verificationStatus === "pending"
+                            ticket.status === "pending"
                               ? "bg-amber-400 animate-pulse"
-                              : ticket.verificationStatus === "verified"
+                              : ticket.status === "verified"
                                 ? "bg-emerald-400"
                                 : "bg-rose-400"
                           }`}
                         />
-                        {ticket.verificationStatus || "Pending"}
+                        {ticket.status || "Pending"}
                       </span>
                     </div>
                   </div>

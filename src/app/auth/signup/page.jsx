@@ -73,6 +73,7 @@ export default function RegisterPage() {
     { icon: Plane, text: "Easy Flight Ticketing" },
   ];
 
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#08090a] flex text-[#115E59] dark:text-zinc-300 theme-transition">
       <div

@@ -119,7 +119,7 @@ export default function ReqBookingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-200 font-sans p-4 sm:p-6 md:p-10 antialiased selection:bg-indigo-500 selection:text-white transition-colors duration-200">
+    <div className="min-h-screen bg-slate-200 dark:bg-slate-950 text-slate-800 dark:text-slate-200 font-sans p-4 sm:p-6 md:p-10 antialiased selection:bg-indigo-500 selection:text-white transition-colors duration-200">
       <div className="max-w-7xl mx-auto space-y-6">
         <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800/80 rounded-2xl shadow-xl dark:shadow-2xl p-4 sm:p-6 md:p-8">
           {/* Header Section */}
