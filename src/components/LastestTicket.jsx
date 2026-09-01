@@ -15,7 +15,7 @@ export default async function LatestTickets() {
   }
 
   return (
-    <section className="w-full py-16 sm:py-20 bg-gray-50 dark:bg-slate-900 theme-transition">
+    <section className="w-full py-16 sm:py-20 bg-gray-50 dark:bg-[#08090a] theme-transition">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-10">
@@ -46,7 +46,7 @@ export default async function LatestTickets() {
           {tickets.map((ticket) => (
             <div
               key={ticket._id}
-              className="group relative bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+              className="group relative bg-white dark:bg-[#111215] border border-gray-200 dark:border-slate-700 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
             >
               <div>
                 {/* Image & Price Tag */}
@@ -76,15 +76,17 @@ export default async function LatestTickets() {
                   </h3>
 
                   {/* Route Information */}
-                  <div className="flex items-center font-semibold text-[#115E59] dark:text-gray-400 bg-gray-50 dark:bg-slate-800 p-2.5 rounded-lg border border-gray-100 dark:border-slate-700 mb-3 text-sm">
+                  <div className="flex items-center font-semibold text-[#115E59] dark:text-gray-400 bg-gray-50 dark:bg-slate-950 p-2.5 rounded-lg border border-gray-100 dark:border-slate-700 mb-3 text-sm">
                     <span>{ticket.fromLocation}</span>
-                    <span className="mx-2 text-indigo-500 dark:text-indigo-400">➔</span>
+                    <span className="mx-2 text-indigo-500 dark:text-indigo-400">
+                      ➔
+                    </span>
                     <span>{ticket.toLocation}</span>
                   </div>
 
                   {/* Date & Departure */}
                   {ticket.departureDateTime && (
-                    <p className="text-xs flex gap-1 items-center text-gray-500 dark:text-gray-400 mb-3">
+                    <p className="text-xs flex gap-1 items-center text-gray-600 dark:text-gray-300 mb-3">
                       <Calendar></Calendar> Departure:{" "}
                       {new Date(ticket.departureDateTime).toLocaleString(
                         "en-US",
@@ -115,7 +117,9 @@ export default async function LatestTickets() {
               {/* Card Footer */}
               <div className="px-5 pb-5 pt-3 border-t border-gray-100 dark:border-slate-700 flex items-center justify-between mt-2">
                 <div>
-                  <p className="text-xs text-gray-400 dark:text-gray-500">Operator</p>
+                  <p className="text-xs text-gray-400 dark:text-gray-500">
+                    Operator
+                  </p>
                   <p className="text-xs font-semibold text-[#115E59] dark:text-gray-400 truncate max-w-[130px]">
                     {ticket.vendorName || "Verified Vendor"}
                   </p>
