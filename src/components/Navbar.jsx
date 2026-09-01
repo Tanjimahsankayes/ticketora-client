@@ -229,7 +229,7 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-[#0F766E] dark:text-slate-200 hover:text-[#115E59] dark:hover:text-white px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 text-base font-semibold transition-colors"
+                  className="text-[#0F766E] dark:text-slate-400 hover:text-[#115E59] dark:hover:text-white px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 text-base font-semibold transition-colors"
                 >
                   {link.name}
                 </Link>
