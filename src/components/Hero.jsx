@@ -115,7 +115,7 @@ export default function Hero() {
 
           {/* Title & Subtitle */}
           <div className="min-h-[160px] flex flex-col justify-center space-y-4">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight transition-all duration-500 text-[#07443f] dark:text-white">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight transition-all duration-500 text-[#07443f] dark:text-[#04ed27]">
               {slides[currentSlide].title}
             </h1>
             <p className="text-lg sm:text-xl text-[#64748B] dark:text-zinc-300 font-normal leading-relaxed">

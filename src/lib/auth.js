@@ -12,7 +12,7 @@ export const auth = betterAuth({
     "https://ticketora-client.vercel.app",
     "http://localhost:3000",
   ],
-  
+
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID,
