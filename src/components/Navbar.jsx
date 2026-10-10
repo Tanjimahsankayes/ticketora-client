@@ -54,23 +54,18 @@ export default function Navbar() {
         {/* Left: Brand Logo */}
         <Link
           href="/"
-          className="group flex items-center gap-3 text-[#0F766E] dark:text-white transition-all"
+          aria-label="Ticketora Home"
+          className="group flex items-center transition-all"
         >
-          <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-violet-600 to-purple-500 text-white p-1.5 shadow-md shadow-indigo-500/20 group-hover:shadow-indigo-500/40 group-hover:scale-105 transition-all">
-            <img
-              src="/images/nav.png"
-              alt="navImg"
-              className="w-full h-full object-contain"
+          <span className="rounded-lg bg-transparent px-0 py-0 transition-colors dark:bg-white dark:px-2 dark:py-1">
+            <Image
+              src="/images/TicketoraLogo.png"
+              alt="Ticketora"
+              width={190}
+              height={40}
+              priority
+              className="h-9 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02]"
             />
-          </div>
-
-          {/* Ticketora Title with MapPin icon as 'o' */}
-          <span className="font-extrabold text-2xl tracking-tight bg-gradient-to-r from-[#0F766E] via-[#115E59] to-[#0F766E] dark:from-white dark:via-slate-100 dark:to-slate-400 bg-clip-text text-transparent flex items-center gap-[1px]">
-            Ticket
-            <span className="inline-flex items-center justify-center text-indigo-600 dark:text-indigo-400 animate-bounce duration-1000 -mt-1 mx-[1px]">
-              <MapPin className="w-5 h-5 stroke-[2.5]" />
-            </span>
-            ra
           </span>
         </Link>
 

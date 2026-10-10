@@ -21,7 +21,7 @@ export default async function LatestTickets() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-10">
           <div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#0F766E] dark:text-white">
-              Latest Tickets
+              Latest Tickets  
             </h2>
             <p className="mt-3 max-w-2xl text-sm sm:text-base text-gray-600 dark:text-gray-400">
               Discover the newest travel tickets and book your journey quickly

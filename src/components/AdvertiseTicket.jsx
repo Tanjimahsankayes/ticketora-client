@@ -50,7 +50,7 @@ const AdvertiseTicket = () => {
   return (
     <section className="relative py-16 sm:py-20 overflow-hidden theme-transition">
       {/* Background decoration */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-blue-50/70 dark:from-slate-900/50 via-white dark:via-slate-900 to-white dark:to-slate-950" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-blue-900/70 dark:from-slate-900/50 via-white dark:via-slate-900 to-white dark:to-slate-950" />
 
       <div className="absolute top-10 left-10 w-40 h-40 bg-blue-200/30 dark:bg-blue-500/10 rounded-full blur-3xl -z-10" />
       <div className="absolute bottom-10 right-10 w-52 h-52 bg-indigo-200/30 dark:bg-indigo-500/10 rounded-full blur-3xl -z-10" />
