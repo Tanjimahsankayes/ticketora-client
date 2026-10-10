@@ -1,7 +1,6 @@
 import { ShieldCheck, ThumbsUp } from "@gravity-ui/icons";
-import { FaTrainSubway } from "react-icons/fa6";
+import { FaTrainSubway, FaHandshakeSimple } from "react-icons/fa6";
 import { Car, Plane } from "@gravity-ui/icons";
-import { FaHandshakeSimple } from "react-icons/fa6";
 import { GoZap } from "react-icons/go";
 
 export default function WhyChooseUs() {
@@ -33,7 +32,7 @@ export default function WhyChooseUs() {
     },
   ];
 
-  // Icons for decorative purpose
+  // Travel Mode Icons
   const travelIcons = [
     { icon: Car, label: "Bus" },
     { icon: FaTrainSubway, label: "Train" },
@@ -41,34 +40,37 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section className="w-full bg-slate-50 dark:bg-[#08090a] py-20 px-6 text-slate-700 dark:text-zinc-300 relative overflow-hidden theme-transition">
-      {/* Decorative ambient glows */}
-      <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
+    <section className="relative isolate overflow-hidden bg-slate-50 py-12 transition-colors duration-300 sm:py-16 dark:bg-slate-950">
+      {/* Background ambient blur */}
+      <div className="pointer-events-none absolute -left-32 top-10 -z-10 h-64 w-64 rounded-full bg-indigo-200/30 blur-3xl dark:bg-indigo-600/10" />
+      <div className="pointer-events-none absolute -right-32 bottom-0 -z-10 h-64 w-64 rounded-full bg-violet-200/30 blur-3xl dark:bg-violet-600/10" />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16 space-y-3">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white leading-tight tracking-tighter">
+        <div className="mb-10 text-center sm:mb-12">
+          <div className="mb-2.5 inline-flex items-center rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-indigo-700 dark:border-indigo-400/20 dark:bg-indigo-500/10 dark:text-indigo-300">
+            Unmatched Reliability
+          </div>
+          <h2 className="text-2xl font-extrabold tracking-tight text-slate-950 sm:text-3xl lg:text-4xl dark:text-white">
             Why Choose TicketTora?
           </h2>
-          <p className="text-lg text-slate-600 dark:text-zinc-400 leading-relaxed max-w-2xl mx-auto">
+          <p className="mx-auto mt-2 max-w-xl text-xs text-slate-500 sm:text-sm dark:text-slate-400">
             Experience seamless travel booking with unmatched reliability and
             service. Here's what sets us apart.
           </p>
         </div>
 
-        {/* Travel Type Icons (Decorative) */}
-        <div className="flex items-center justify-center gap-6 mb-20">
+        {/* Decorative Travel Mode Icons */}
+        <div className="mb-12 flex items-center justify-center gap-6 sm:gap-10">
           {travelIcons.map((item, index) => (
             <div
               key={index}
-              className="flex flex-col items-center gap-3 text-center"
+              className="group flex flex-col items-center gap-2 text-center"
             >
-              <div className="p-4 bg-slate-200 dark:bg-zinc-900 border border-slate-300 dark:border-white/5 rounded-2xl text-slate-800 dark:text-white">
-                <item.icon className="w-10 h-10" />
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200/80 bg-white p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-indigo-300 group-hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:group-hover:border-indigo-400/30">
+                <item.icon className="h-6 w-6 text-indigo-600 transition-colors group-hover:text-violet-600 dark:text-indigo-400 dark:group-hover:text-violet-400" />
               </div>
-              <span className="text-sm text-slate-500 dark:text-zinc-500 font-medium max-w-[100px]">
+              <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">
                 {item.label}
               </span>
             </div>
@@ -76,24 +78,24 @@ export default function WhyChooseUs() {
         </div>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-3xl p-8 shadow-2xl transition-all duration-300 hover:border-slate-300 dark:hover:border-white/20 hover:bg-slate-50 dark:hover:bg-[#16171a] space-y-6 flex flex-col items-start"
+              className="group relative flex flex-col items-start overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-indigo-400/30"
             >
-              {/* Feature Icon */}
-              <div className="p-4 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-white/5 rounded-2xl text-slate-800 dark:text-white">
-                <feature.icon className="w-8 h-8" />
+              {/* Feature Icon Badge */}
+              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 transition-colors group-hover:bg-indigo-600 group-hover:text-white dark:bg-indigo-500/10 dark:text-indigo-400 dark:group-hover:bg-indigo-500 dark:group-hover:text-white">
+                <feature.icon className="h-6 w-6" />
               </div>
 
               {/* Feature Title */}
-              <h3 className="text-2xl font-semibold text-slate-900 dark:text-white tracking-tight">
+              <h3 className="mb-2 text-lg font-bold text-slate-900 dark:text-white">
                 {feature.title}
               </h3>
 
               {/* Feature Description */}
-              <p className="text-base text-slate-600 dark:text-zinc-400 leading-relaxed flex-grow">
+              <p className="text-xs leading-relaxed text-slate-500 sm:text-sm dark:text-slate-400">
                 {feature.description}
               </p>
             </div>

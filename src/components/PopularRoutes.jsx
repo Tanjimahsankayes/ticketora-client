@@ -4,7 +4,7 @@ import { Car, Plane } from "@gravity-ui/icons";
 import Link from "next/link";
 
 export default function PopularRoutes() {
-  // Routes data array (You can customize these routes)
+  // Routes data array
   const routes = [
     {
       type: "Bus",
@@ -63,100 +63,102 @@ export default function PopularRoutes() {
   ];
 
   return (
-    <section className="w-full bg-slate-50 dark:bg-[#08090a] py-20 px-6 text-slate-700 dark:text-zinc-300 relative overflow-hidden theme-transition">
-      {/* Decorative ambient glows (Matching WhyChooseUs aesthetic) */}
-      <div className="absolute -top-40 -left-40 w-80 h-80 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none" />
+    <section className="relative isolate overflow-hidden bg-slate-50 py-12 transition-colors duration-300 sm:py-16 dark:bg-slate-950">
+      {/* Background ambient blur matching previous design */}
+      <div className="pointer-events-none absolute -left-32 top-10 -z-10 h-64 w-64 rounded-full bg-indigo-200/30 blur-3xl dark:bg-indigo-600/10" />
+      <div className="pointer-events-none absolute -right-32 bottom-0 -z-10 h-64 w-64 rounded-full bg-violet-200/30 blur-3xl dark:bg-violet-600/10" />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16 space-y-3">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white leading-tight tracking-tighter">
+        <div className="mb-8 text-center sm:mb-12">
+          <h2 className="text-2xl font-extrabold tracking-tight text-slate-950 sm:text-3xl lg:text-4xl dark:text-white">
             Popular Routes
           </h2>
-          <p className="text-lg text-slate-600 dark:text-zinc-400 leading-relaxed max-w-2xl mx-auto">
+          <p className="mx-auto mt-2 max-w-xl text-xs text-slate-500 sm:text-sm dark:text-slate-400">
             Explore the most traveled routes in Bangladesh, booked by thousands
             daily. Seamlessly connect to your next destination.
           </p>
         </div>
 
         {/* Routes Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
           {routes.map((route, index) => (
             <div
               key={index}
-              className="bg-white dark:bg-[#111215] border border-slate-200 dark:border-white/10 rounded-3xl p-7 shadow-2xl transition-all duration-300 hover:border-slate-300 dark:hover:border-white/20 hover:bg-slate-50 dark:hover:bg-[#16171a] space-y-6 flex flex-col group"
+              className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-indigo-200 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-indigo-400/30"
             >
-              {/* Route Header: Type & Rating */}
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-3 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-white/5 rounded-full px-4 py-2">
-                  <route.icon className="w-5 h-5 text-slate-800 dark:text-white" />
-                  <span className="text-sm text-slate-800 dark:text-white font-semibold">
-                    {route.type}
-                  </span>
+              <div className="space-y-4">
+                {/* Route Header: Type Badge & Rating */}
+                <div className="flex items-center justify-between">
+                  <div className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700 dark:border-slate-800 dark:bg-slate-800 dark:text-slate-200">
+                    <route.icon className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400" />
+                    <span>{route.type}</span>
+                  </div>
+
+                  <div className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-bold text-amber-600 dark:bg-amber-500/10 dark:text-amber-400">
+                    <StarFill className="h-3.5 w-3.5" />
+                    <span>{route.rating}</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-1.5 text-yellow-600 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-500/10 rounded-full px-3 py-1">
-                  <StarFill className="w-4 h-4" />
-                  <span className="text-sm font-bold text-slate-900 dark:text-white">
-                    {route.rating}
-                  </span>
+
+                {/* Route Details: From - To */}
+                <div className="relative flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 p-3.5 dark:border-slate-800 dark:bg-slate-950">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <MapPin className="h-4 w-4 shrink-0 text-indigo-500" />
+                    <div className="min-w-0">
+                      <span className="block text-[10px] font-medium uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                        FROM
+                      </span>
+                      <span className="block truncate text-base font-bold text-slate-900 dark:text-white">
+                        {route.from}
+                      </span>
+                    </div>
+                  </div>
+
+                  <ArrowRight className="h-4 w-4 shrink-0 text-indigo-500 transition-transform group-hover:translate-x-1 dark:text-indigo-400" />
+
+                  <div className="text-right min-w-0">
+                    <span className="block text-[10px] font-medium uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                      TO
+                    </span>
+                    <span className="block truncate text-base font-bold text-slate-900 dark:text-white">
+                      {route.to}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Route Info: Price & Frequency */}
+                <div className="flex items-center justify-between pt-1">
+                  <div>
+                    <span className="block text-[10px] font-medium uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                      Starting From
+                    </span>
+                    <span className="text-lg font-black text-slate-900 dark:text-white">
+                      ৳{route.price}
+                    </span>
+                  </div>
+
+                  <div className="text-right">
+                    <span className="block text-[10px] font-medium uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                      Frequency
+                    </span>
+                    <span className="text-xs font-semibold text-slate-600 dark:text-slate-300">
+                      {route.trips}
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              {/* Route Details: From - To */}
-              <div className="flex items-center justify-center gap-4 py-3 bg-slate-100 dark:bg-white/5 rounded-2xl relative">
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 flex flex-col items-center gap-1">
-                  <MapPin className="w-5 h-5 text-slate-500 dark:text-zinc-600" />
-                  <div className="h-6 w-[2px] bg-slate-300 dark:bg-zinc-700/50 rounded-full"></div>
-                  <MapPin className="w-5 h-5 text-slate-800 dark:text-white" />
-                </div>
-                <div className="text-center pl-10">
-                  <span className="block text-sm text-slate-500 dark:text-zinc-500 font-medium tracking-wide">
-                    FROM
-                  </span>
-                  <span className="block text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                    {route.from}
-                  </span>
-                </div>
-                <ArrowRight className="w-7 h-7 text-slate-300 dark:text-white/20 group-hover:text-slate-500 dark:group-hover:text-white transition-colors group-hover:translate-x-1 transition-transform" />
-                <div className="text-center">
-                  <span className="block text-sm text-slate-500 dark:text-zinc-500 font-medium tracking-wide">
-                    TO
-                  </span>
-                  <span className="block text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                    {route.to}
-                  </span>
-                </div>
+              {/* Book Now Button */}
+              <div className="mt-5 border-t border-slate-100 pt-3.5 dark:border-slate-800/80">
+                <Link
+                  href="/all-tickets"
+                  className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-bold text-white shadow-sm transition-all hover:bg-indigo-700 active:scale-[0.98] dark:bg-indigo-500 dark:hover:bg-indigo-400"
+                >
+                  <span>Book Tickets</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
               </div>
-
-              {/* Route Footer: Price & Trips */}
-              <div className="flex items-end justify-between gap-4 pt-3 flex-grow">
-                <div>
-                  <span className="block text-xs text-slate-500 dark:text-zinc-500 font-medium tracking-wide">
-                    STARTING FROM
-                  </span>
-                  <span className="block text-2xl font-extrabold text-slate-900 dark:text-white">
-                    BDT {route.price}
-                  </span>
-                </div>
-                <div className="text-right">
-                  <span className="block text-xs text-slate-500 dark:text-zinc-500 font-medium tracking-wide">
-                    FREQUENCY
-                  </span>
-                  <span className="block text-sm text-slate-800 dark:text-white font-semibold whitespace-nowrap">
-                    {route.trips}
-                  </span>
-                </div>
-              </div>
-
-              {/* Book Now Button (Matching overall button style) */}
-              <Link
-                href="/all-tickets"
-                className="w-full bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-zinc-200 text-white dark:text-black font-semibold py-3 px-6 rounded-xl text-base flex items-center justify-center gap-2.5 transition-all duration-150 shadow-lg group-hover:shadow-slate-900/5 dark:group-hover:shadow-white/5"
-              >
-                <span>Book Tickets</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
             </div>
           ))}
         </div>
