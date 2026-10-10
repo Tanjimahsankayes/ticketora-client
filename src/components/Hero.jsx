@@ -2,14 +2,23 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, ChevronLeft, ChevronRight } from "@gravity-ui/icons";
+import { useRouter } from "next/navigation";
+import {
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Magnifier,
+} from "@gravity-ui/icons";
 
 export default function Hero() {
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
+
   const slides = [
     {
       id: 1,
       image: "/images/car.jpg",
-      title: "Explore Bangladesh Without Boundries",
+      title: "Explore Bangladesh Without Boundaries",
       subtitle:
         "Book Bus, Train, and Flight tickets seamlessly with Ticketora.",
       buttonText: "Book Tickets Now",
@@ -80,8 +89,17 @@ export default function Hero() {
     setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
   };
 
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/all-tickets?search=${encodeURIComponent(searchQuery)}`);
+    } else {
+      router.push("/all-tickets");
+    }
+  };
+
   return (
-    <section className="relative w-full h-[85vh] min-h-[600px] bg-slate-50 dark:bg-[#08090a] overflow-hidden text-[#0F766E] dark:text-white flex items-center justify-center transition-colors duration-300">
+    <section className="relative w-full h-[88vh] min-h-[650px] bg-slate-50 dark:bg-[#08090a] overflow-hidden text-slate-800 dark:text-white flex items-center justify-center transition-colors duration-300">
       {/* Background Images Layer */}
       {slides.map((slide, index) => (
         <div
@@ -97,37 +115,60 @@ export default function Hero() {
           }}
         >
           {/* Theme-Adaptive Gradient Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-50 via-slate-50/90 to-slate-50/20 dark:from-[#08090a] dark:via-[#08090a]/80 dark:to-transparent" />
-          <div className="absolute inset-0 bg-white/40 dark:bg-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/70 to-transparent dark:from-[#08090a] dark:via-[#08090a]/85 dark:to-transparent" />
+          <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px]" />
         </div>
       ))}
 
       {/* Decorative Ambient Glows */}
-      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-blue-500/10 dark:bg-blue-500/20 rounded-full blur-[120px] pointer-events-none z-20" />
+      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-teal-500/15 dark:bg-teal-500/20 rounded-full blur-[120px] pointer-events-none z-20" />
 
       {/* Content Container */}
-      <div className="relative z-20 max-w-7xl w-full mx-auto px-6 flex flex-col justify-center h-full">
-        <div className="max-w-2xl space-y-6">
+      <div className="relative z-20 max-w-7xl w-full mx-auto px-4 sm:px-6 flex flex-col justify-center h-full">
+        <div className="max-w-3xl space-y-6">
           {/* Tagline Badge */}
-          <div className="inline-flex items-center gap-2 bg-slate-200/80 dark:bg-white/10 backdrop-blur-md border border-slate-300/60 dark:border-white/10 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-[#115E59] dark:text-zinc-300 shadow-sm">
+          <div className="inline-flex items-center gap-2 bg-white/10 dark:bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-teal-300 dark:text-teal-400 shadow-sm">
             <span>Ticketora Premium Travel</span>
           </div>
 
           {/* Title & Subtitle */}
-          <div className="min-h-[160px] flex flex-col justify-center space-y-4">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight transition-all duration-500 text-[#07443f] dark:text-[#04ed27]">
+          <div className="min-h-[140px] sm:min-h-[160px] flex flex-col justify-center space-y-3">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight text-white transition-all duration-500">
               {slides[currentSlide].title}
             </h1>
-            <p className="text-lg sm:text-xl text-[#64748B] dark:text-zinc-300 font-normal leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-200 dark:text-slate-300 font-normal leading-relaxed max-w-2xl">
               {slides[currentSlide].subtitle}
             </p>
           </div>
+
+          {/* Global Search Bar */}
+          <form
+            onSubmit={handleSearchSubmit}
+            className="flex items-center bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl p-2 rounded-2xl border border-slate-200/50 dark:border-slate-800 shadow-2xl max-w-xl transition-all"
+          >
+            <div className="flex items-center pl-3 pr-2 text-teal-600 dark:text-teal-400">
+              <Magnifier className="w-5 h-5" />
+            </div>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search buses, trains, flights, destinations..."
+              className="w-full bg-transparent border-none focus:outline-none text-slate-800 dark:text-white placeholder-slate-400 text-sm sm:text-base px-2 py-2"
+            />
+            <button
+              type="submit"
+              className="bg-teal-600 hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-all shadow-md shrink-0"
+            >
+              Search
+            </button>
+          </form>
 
           {/* Action Button */}
           <div className="pt-2">
             <Link
               href={slides[currentSlide].buttonLink}
-              className="inline-flex items-center justify-center gap-3 bg-[#0F766E] hover:bg-[#115E59] dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-slate-950 font-semibold px-8 py-4 rounded-xl text-base transition-all duration-200 shadow-xl hover:scale-105 active:scale-95"
+              className="inline-flex items-center justify-center gap-3 bg-teal-600 hover:bg-teal-700 dark:bg-white dark:hover:bg-slate-200 text-white dark:text-slate-950 font-semibold px-7 py-3.5 rounded-xl text-sm sm:text-base transition-all duration-200 shadow-xl hover:scale-105 active:scale-95"
             >
               <span>{slides[currentSlide].buttonText}</span>
               <ArrowRight className="w-5 h-5" />
@@ -140,14 +181,14 @@ export default function Hero() {
       <div className="absolute bottom-10 right-10 z-30 hidden sm:flex items-center gap-3">
         <button
           onClick={prevSlide}
-          className="p-3 rounded-full bg-slate-200/80 hover:bg-slate-300/80 dark:bg-white/10 dark:hover:bg-white/20 border border-slate-300 dark:border-white/10 text-[#0F766E] dark:text-white backdrop-blur-md transition-all active:scale-95 shadow-sm"
+          className="p-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white backdrop-blur-md transition-all active:scale-95 shadow-sm"
           aria-label="Previous Slide"
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
         <button
           onClick={nextSlide}
-          className="p-3 rounded-full bg-slate-200/80 hover:bg-slate-300/80 dark:bg-white/10 dark:hover:bg-white/20 border border-slate-300 dark:border-white/10 text-[#0F766E] dark:text-white backdrop-blur-md transition-all active:scale-95 shadow-sm"
+          className="p-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white backdrop-blur-md transition-all active:scale-95 shadow-sm"
           aria-label="Next Slide"
         >
           <ChevronRight className="w-6 h-6" />
@@ -155,15 +196,15 @@ export default function Hero() {
       </div>
 
       {/* Dots Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2.5">
+      <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2.5">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
             className={`h-2.5 rounded-full transition-all duration-300 ${
               index === currentSlide
-                ? "w-8 bg-[#0F766E] dark:bg-white"
-                : "w-2.5 bg-slate-300/80 hover:bg-slate-400 dark:bg-white/30 dark:hover:bg-white/50"
+                ? "w-8 bg-teal-400 dark:bg-white"
+                : "w-2.5 bg-white/30 hover:bg-white/50"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />

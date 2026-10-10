@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Bars, Xmark, Person, ChevronDown, MapPin } from "@gravity-ui/icons";
+import { Bars, Xmark, Person, ChevronDown } from "@gravity-ui/icons";
 import { PiSignOutThin } from "react-icons/pi";
 
 import { useSession, signOut } from "@/lib/auth-client";
@@ -49,34 +49,34 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 w-full bg-white/90 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 text-sm font-medium text-[#0F766E] dark:text-slate-200 z-50 transition-colors duration-200 shadow-sm dark:shadow-none">
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Left: Brand Logo */}
+    <header className="sticky top-0 w-full bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 text-sm font-medium z-50 transition-colors duration-200 shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        {/* Left: Brand Logo (Optimized for Light/Dark Mode Visibility) */}
         <Link
           href="/"
           aria-label="Ticketora Home"
-          className="group flex items-center transition-all"
+          className="group flex items-center gap-2 transition-transform duration-200 hover:scale-[1.02]"
         >
-          <span className="rounded-lg bg-transparent px-0 py-0 transition-colors dark:bg-white dark:px-2 dark:py-1">
+          <div className="flex items-center justify-center rounded-xl bg-slate-900/5 dark:bg-white/95 px-2.5 py-1 backdrop-blur-sm border border-slate-200/50 dark:border-white transition-all shadow-sm">
             <Image
               src="/images/TicketoraLogo.png"
               alt="Ticketora"
-              width={190}
-              height={40}
+              width={160}
+              height={36}
               priority
-              className="h-9 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02]"
+              className="h-8 sm:h-9 w-auto object-contain"
             />
-          </span>
+          </div>
         </Link>
 
         {/* Center/Right: Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-6">
-          <nav className="flex items-center gap-1.5 bg-slate-100/90 dark:bg-slate-900/60 p-1.5 rounded-full border border-slate-200 dark:border-slate-800/80">
+        <div className="hidden md:flex items-center gap-5">
+          <nav className="flex items-center gap-1 bg-slate-100/80 dark:bg-slate-900/80 p-1.5 rounded-full border border-slate-200/80 dark:border-slate-800">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="px-4 py-1.5 rounded-full text-[#115E59] dark:text-slate-300 hover:text-[#0F766E] dark:hover:text-white hover:bg-white dark:hover:bg-slate-800/80 shadow-none hover:shadow-sm transition-all duration-200 font-semibold text-xs sm:text-sm"
+                className="px-4 py-1.5 rounded-full text-slate-700 dark:text-slate-300 hover:text-teal-700 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800 shadow-none hover:shadow-sm transition-all duration-200 font-semibold text-xs sm:text-sm"
               >
                 {link.name}
               </Link>
@@ -92,13 +92,13 @@ export default function Navbar() {
 
           {/* Conditional Auth / User Section */}
           {isAuthPending ? (
-            <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 animate-pulse border border-slate-300 dark:border-slate-700/50"></div>
+            <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 animate-pulse border border-slate-300 dark:border-slate-700" />
           ) : user ? (
             /* User Profile Dropdown */
             <div className="relative">
               <button
                 onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                className="flex items-center gap-2.5 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800 focus:outline-none transition-all group"
+                className="flex items-center gap-2 p-1.5 pr-2.5 rounded-full bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 focus:outline-none transition-all group"
               >
                 {user.image ? (
                   <Image
@@ -107,20 +107,20 @@ export default function Navbar() {
                     width={32}
                     height={32}
                     unoptimized
-                    className="w-8 h-8 rounded-full object-cover border border-violet-500/30"
+                    className="w-8 h-8 rounded-full object-cover border border-teal-500/30"
                   />
                 ) : (
-                  <div className="w-8 h-8 rounded-full bg-indigo-50 dark:bg-slate-800 border border-indigo-200 dark:border-slate-700 flex items-center justify-center text-indigo-600 dark:text-slate-300 group-hover:border-violet-500/50 transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-teal-50 dark:bg-teal-950/50 border border-teal-200 dark:border-teal-800/60 flex items-center justify-center text-teal-700 dark:text-teal-300 group-hover:border-teal-500 transition-colors">
                     <Person className="w-4 h-4" />
                   </div>
                 )}
-                <span className="font-semibold text-sm text-[#0F766E] dark:text-slate-200 hidden lg:inline-block pr-1">
+                <span className="font-semibold text-sm text-slate-800 dark:text-slate-200 hidden lg:inline-block">
                   {user.name}
                 </span>
                 <ChevronDown
                   className={`w-4 h-4 text-slate-500 dark:text-slate-400 transition-transform duration-200 ${
                     profileDropdownOpen
-                      ? "rotate-180 text-violet-600 dark:text-violet-400"
+                      ? "rotate-180 text-teal-600 dark:text-teal-400"
                       : ""
                   }`}
                 />
@@ -132,11 +132,11 @@ export default function Navbar() {
                   <div
                     className="fixed inset-0 z-10"
                     onClick={() => setProfileDropdownOpen(false)}
-                  ></div>
+                  />
 
-                  <div className="absolute right-0 mt-3 w-60 bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl py-2 text-sm z-20 origin-top-right overflow-hidden animate-in fade-in slide-in-from-top-2 duration-150">
-                    <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800/80 mb-1 bg-slate-50/80 dark:bg-slate-950/40">
-                      <p className="font-semibold text-[#0F766E] dark:text-white truncate">
+                  <div className="absolute right-0 mt-3 w-64 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200/90 dark:border-slate-800 rounded-2xl shadow-xl py-2 text-sm z-20 origin-top-right overflow-hidden animate-in fade-in slide-in-from-top-2 duration-150">
+                    <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800/80 mb-1 bg-slate-50/60 dark:bg-slate-950/40">
+                      <p className="font-semibold text-slate-900 dark:text-white truncate">
                         {user.name}
                       </p>
                       <p className="text-xs text-slate-500 dark:text-slate-400 truncate mt-0.5">
@@ -148,9 +148,9 @@ export default function Navbar() {
                       <Link
                         href="/profile"
                         onClick={() => setProfileDropdownOpen(false)}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[#115E59] dark:text-slate-300 hover:text-[#0F766E] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors font-medium"
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:text-teal-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors font-medium"
                       >
-                        <div className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-[#115E59] dark:text-slate-300">
+                        <div className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-teal-700 dark:text-teal-400">
                           <Person className="w-4 h-4" />
                         </div>
                         My Profile
@@ -162,7 +162,7 @@ export default function Navbar() {
                         onClick={handleSignOut}
                         className="w-full flex items-center gap-3 text-left px-3 py-2.5 rounded-xl text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors font-medium"
                       >
-                        <div className="p-1.5 rounded-lg bg-rose-100 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400">
+                        <div className="p-1.5 rounded-lg bg-rose-100/60 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400">
                           <PiSignOutThin className="w-4 h-4" />
                         </div>
                         Logout
@@ -177,7 +177,7 @@ export default function Navbar() {
             <div className="flex items-center gap-3">
               <Link
                 href="/auth/signin"
-                className="text-[#115E59] dark:text-slate-300 hover:text-[#0F766E] dark:hover:text-white font-semibold transition-colors duration-150 px-4 py-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800/50"
+                className="text-slate-700 dark:text-slate-300 hover:text-teal-700 dark:hover:text-white font-semibold transition-colors duration-150 px-4 py-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800/60"
               >
                 Log in
               </Link>
@@ -197,7 +197,7 @@ export default function Navbar() {
           <ThemeToggle />
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="text-[#115E59] dark:text-slate-300 hover:text-[#0F766E] dark:hover:text-white focus:outline-none p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900/60 transition-colors"
+            className="text-slate-700 dark:text-slate-300 hover:text-teal-700 dark:hover:text-white focus:outline-none p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-900/80 transition-colors"
             aria-label="Toggle Menu"
           >
             {mobileMenuOpen ? (
@@ -213,32 +213,32 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <>
           <div
-            className="fixed inset-0 top-16 bg-slate-950/30 dark:bg-slate-950/70 backdrop-blur-md z-40 md:hidden"
+            className="fixed inset-0 top-16 bg-slate-950/40 dark:bg-slate-950/80 backdrop-blur-sm z-40 md:hidden"
             onClick={() => setMobileMenuOpen(false)}
-          ></div>
+          />
 
-          <div className="absolute top-16 left-0 w-full md:hidden bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-6 py-6 flex flex-col gap-6 z-50 shadow-xl animate-in fade-in slide-in-from-top-4 duration-200">
-            <nav className="flex flex-col gap-2">
+          <div className="absolute top-16 left-0 w-full md:hidden bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-6 py-6 flex flex-col gap-6 z-50 shadow-2xl animate-in fade-in slide-in-from-top-4 duration-200">
+            <nav className="flex flex-col gap-1.5">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-[#0F766E] dark:text-slate-400 hover:text-[#115E59] dark:hover:text-white px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 text-base font-semibold transition-colors"
+                  className="text-slate-700 dark:text-slate-300 hover:text-teal-700 dark:hover:text-white px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 text-base font-semibold transition-colors"
                 >
                   {link.name}
                 </Link>
               ))}
             </nav>
 
-            <div className="h-[1px] w-full bg-slate-200 dark:bg-slate-800/80" />
+            <div className="h-[1px] w-full bg-slate-200 dark:bg-slate-800" />
 
             {/* Mobile Auth Options */}
             {isAuthPending ? (
-              <div className="h-10 w-24 bg-slate-200 dark:bg-slate-800 animate-pulse rounded-full"></div>
+              <div className="h-10 w-24 bg-slate-200 dark:bg-slate-800 animate-pulse rounded-full" />
             ) : user ? (
               <div className="flex flex-col gap-3">
-                <div className="flex items-center gap-3 text-[#0F766E] dark:text-white bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 p-3.5 rounded-2xl">
+                <div className="flex items-center gap-3 text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3.5 rounded-2xl">
                   {user.image ? (
                     <Image
                       src={user.image}
@@ -246,15 +246,15 @@ export default function Navbar() {
                       width={40}
                       height={40}
                       unoptimized
-                      className="w-10 h-10 rounded-full object-cover border border-violet-500/40"
+                      className="w-10 h-10 rounded-full object-cover border border-teal-500/40"
                     />
                   ) : (
-                    <div className="w-10 h-10 rounded-full bg-indigo-50 dark:bg-slate-800 border border-indigo-200 dark:border-slate-700 flex items-center justify-center text-indigo-600 dark:text-slate-300">
+                    <div className="w-10 h-10 rounded-full bg-teal-50 dark:bg-teal-950/50 border border-teal-200 dark:border-teal-800 flex items-center justify-center text-teal-700 dark:text-teal-300">
                       <Person className="w-5 h-5" />
                     </div>
                   )}
                   <div className="overflow-hidden">
-                    <span className="font-semibold text-[#0F766E] dark:text-white block truncate">
+                    <span className="font-semibold text-slate-900 dark:text-white block truncate">
                       {user.name}
                     </span>
                     <span className="text-xs text-slate-500 dark:text-slate-400 block truncate">
@@ -266,9 +266,9 @@ export default function Navbar() {
                 <Link
                   href="/profile"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-3 text-[#0F766E] dark:text-slate-200 hover:text-[#115E59] dark:hover:text-white px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors font-medium"
+                  className="flex items-center gap-3 text-slate-700 dark:text-slate-300 hover:text-teal-700 dark:hover:text-white px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors font-medium"
                 >
-                  <Person className="w-4 h-4 text-indigo-600 dark:text-violet-400" />
+                  <Person className="w-4 h-4 text-teal-600 dark:text-teal-400" />
                   My Profile
                 </Link>
 
@@ -285,7 +285,7 @@ export default function Navbar() {
                 <Link
                   href="/auth/signin"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-center w-full py-3 border border-slate-300 dark:border-slate-800 rounded-xl text-[#0F766E] dark:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors text-base font-semibold"
+                  className="text-center w-full py-3 border border-slate-300 dark:border-slate-800 rounded-xl text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors text-base font-semibold"
                 >
                   Log in
                 </Link>
